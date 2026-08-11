@@ -1,0 +1,57 @@
+# --- Virtual environments ---
+venv/
+labelstudio_env/
+*.venv/
+env/
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+build/
+dist/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# --- Model / weight files ---
+*.pt
+*.pth
+*.ckpt
+*.bin
+*.safetensors
+*.h5
+*.hdf5
+*.onnx
+*.pb
+*.pkl
+*.pickle
+*.joblib
+*.model
+*.weights
+*.npz
+models/
+checkpoints/
+*.gguf
+
+# --- Data caches / HF / torch ---
+.cache/
+huggingface/
+.huggingface/
+
+# --- Env / secrets ---
+.env
+.env.*
+*.local
+
+# --- Node (in case any subproject uses it) ---
+node_modules/
+
+# --- OS / editor junk ---
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.log

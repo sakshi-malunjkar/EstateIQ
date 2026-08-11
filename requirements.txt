@@ -1,0 +1,14 @@
+flask
+sqlalchemy
+psycopg[binary]
+transformers
+torch
+datasets
+seqeval
+spacy
+scikit-learn
+xgboost
+shap
+streamlit
+python-dotenv
+pandas
