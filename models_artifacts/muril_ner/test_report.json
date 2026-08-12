@@ -1,0 +1,47 @@
+{
+  "overall": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0,
+    "num_examples": 70
+  },
+  "per_entity": {
+    "LOCATION": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "support": 70
+    },
+    "PROPERTY_TYPE": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "support": 42
+    },
+    "BUDGET": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "support": 26
+    },
+    "AMENITY": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "support": 143
+    },
+    "BHK": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "support": 28
+    },
+    "FURNISHING": {
+      "precision": null,
+      "recall": null,
+      "f1": null,
+      "support": 0,
+      "note": "no training examples for this entity type"
+    }
+  }
+}
