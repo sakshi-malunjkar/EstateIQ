@@ -3,11 +3,13 @@ Load the fine-tuned MuRIL NER model from models_artifacts/muril_ner and
 extract entities from a raw transcript string.
 
 Returns the same shape as rule_extractor.extract_all() — {location,
-property_type, amenities, budget} — so it's a drop-in replacement. The
-model also recognizes BHK (and would recognize FURNISHING if the training
-data had any), but those aren't part of rule_extractor's output shape, so
-they're left out of the returned dict; use predict_raw_entities() if you
-want everything the model found, BHK included.
+property_type, amenities, budget} — so it's a drop-in replacement. BHK
+spans (e.g. "2BHK", "3BHK") are merged into property_type alongside
+PROPERTY_TYPE spans (e.g. "Villa"), since BHK is effectively a
+property-type detail and rule_extractor's PROPERTY_TYPE list already
+mixes configuration with type. FURNISHING would appear here too if the
+training data had had any labeled examples for it; use
+predict_raw_entities() if you want the untouched per-label breakdown.
 
 Usage:
     python app/nlp/predict.py "Namaste, mujhe ek 2BHK chahiye Baner mein, budget 50 lakhs, swimming pool chahiye"
@@ -109,7 +111,7 @@ def extract_all(text, model_dir=DEFAULT_MODEL_DIR):
     entities = predict_raw_entities(text, model_dir=model_dir)
 
     location = [e["text"] for e in entities if e["label"] == "LOCATION"]
-    property_type = [e["text"] for e in entities if e["label"] == "PROPERTY_TYPE"]
+    property_type = [e["text"] for e in entities if e["label"] in ("PROPERTY_TYPE", "BHK")]
     amenities = [e["text"] for e in entities if e["label"] == "AMENITY"]
     budgets = [e["text"] for e in entities if e["label"] == "BUDGET"]
 
