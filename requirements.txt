@@ -5,6 +5,7 @@ transformers
 torch
 datasets
 seqeval
+accelerate
 spacy
 scikit-learn
 xgboost
