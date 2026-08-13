@@ -12,6 +12,7 @@ Usage:
 
 import argparse
 import json
+import math
 from pathlib import Path
 
 import numpy as np
@@ -115,6 +116,13 @@ def main():
     out_dir = Path(args.out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
 
+    # TrainingArguments in this transformers version dropped warmup_ratio
+    # (only warmup_steps remains), so compute the equivalent 10%-of-training
+    # step count by hand.
+    steps_per_epoch = math.ceil(len(train_rows) / args.batch_size)
+    total_steps = int(steps_per_epoch * args.epochs)
+    warmup_steps = int(0.1 * total_steps)
+
     training_args = TrainingArguments(
         output_dir=str(out_dir / "checkpoints"),
         eval_strategy="epoch",
@@ -124,7 +132,7 @@ def main():
         per_device_eval_batch_size=args.batch_size,
         num_train_epochs=args.epochs,
         weight_decay=0.01,
-        warmup_ratio=0.1,
+        warmup_steps=warmup_steps,
         logging_steps=20,
         report_to=[],
         seed=args.seed,
