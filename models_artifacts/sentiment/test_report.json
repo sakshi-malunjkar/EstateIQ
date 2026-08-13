@@ -1,28 +1,28 @@
 {
   "overall": {
-    "precision": 1.0,
-    "recall": 1.0,
-    "f1": 1.0,
+    "precision": 0.9824561403508771,
+    "recall": 0.9866666666666667,
+    "f1": 0.9841882699025556,
     "num_examples": 70
   },
   "per_class": {
     "enthusiastic": {
       "precision": 1.0,
-      "recall": 1.0,
-      "f1": 1.0,
-      "support": 23
+      "recall": 0.96,
+      "f1": 0.9795918367346939,
+      "support": 25
     },
     "frustrated": {
       "precision": 1.0,
       "recall": 1.0,
       "f1": 1.0,
-      "support": 28
+      "support": 27
     },
     "hesitant": {
-      "precision": 1.0,
+      "precision": 0.9473684210526315,
       "recall": 1.0,
-      "f1": 1.0,
-      "support": 19
+      "f1": 0.972972972972973,
+      "support": 18
     }
   }
 }
