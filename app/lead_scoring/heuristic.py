@@ -66,13 +66,21 @@ def budget_component(budget_amount):
 
 
 def engagement_component(turn_count, message_length):
-    """0.5 * turn count (capped at 6) + 0.5 * message length (capped at 300 chars).
+    """0.5 * turn count (capped at 6) + 0.5 * message length (capped at 150 chars).
+
+    message_length must be the CLIENT's own text only (sum of "Client:"
+    line lengths), not the full transcript -- the agent's scripted
+    reply length says nothing about the client's engagement. The cap
+    was set from the actual client-only length range on the current
+    synthetic dataset (53-105 chars, avg 71), with headroom above the
+    observed max so it doesn't saturate at 1.0 for every lead; revisit
+    once real call data gives a wider range.
 
     On the current synthetic dataset turn_count is constant (see
     LIMITATIONS.md) -- message_length is the only real signal here for
     now."""
     turn_norm = min(turn_count or 0, 6) / 6
-    length_norm = min(message_length or 0, 300) / 300
+    length_norm = min(message_length or 0, 150) / 150
     return 0.5 * turn_norm + 0.5 * length_norm
 
 
@@ -132,11 +140,11 @@ if __name__ == "__main__":
 
     examples = [
         dict(sentiment="enthusiastic", sentiment_confidence=0.95, entity_completeness=1.0,
-             amenity_count=3, budget_amount=5000000, turn_count=2, message_length=280),
+             amenity_count=3, budget_amount=5000000, turn_count=2, message_length=100),
         dict(sentiment="frustrated", sentiment_confidence=0.9, entity_completeness=0.5,
-             amenity_count=1, budget_amount=None, turn_count=1, message_length=90),
+             amenity_count=1, budget_amount=None, turn_count=1, message_length=55),
         dict(sentiment="hesitant", sentiment_confidence=0.6, entity_completeness=0.75,
-             amenity_count=2, budget_amount=3000000, turn_count=2, message_length=210),
+             amenity_count=2, budget_amount=3000000, turn_count=2, message_length=75),
     ]
     for ex in examples:
         print(json.dumps(compute_heuristic_score(**ex), indent=2))

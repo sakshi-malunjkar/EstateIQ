@@ -150,16 +150,25 @@ regardless of label source, since it explains the model's actual
 learned behavior on whatever labels it was trained on — it just can't
 tell you whether those labels reflect real lead quality.
 
-**Two of the four heuristic signal groups show zero variance on the
-current synthetic dataset, so they don't discriminate leads yet:**
-budget is stated in 700/700 synthetic transcripts (the budget-signal
-component is 1.0 for essentially every lead), and client turn count is
-constant at exactly 2 across all 700 (the turn-count half of the
-engagement component is likewise constant). Only sentiment, entity/
-amenity completeness, and message length actually vary on this data.
-This is an honest, known limitation of testing against synthetic,
-templated data — not a bug in the formula. The formula is deliberately
-built for real-world variance (real callers sometimes never state a
-budget, some conversations are one line, some go back and forth for
-ten turns), so it should start discriminating properly once real,
-messier call data replaces or supplements the synthetic set.
+**Correction (verified after running the actual extraction pipeline):**
+an earlier draft of this note claimed budget showed zero variance
+(700/700 stated) — that was checked against the synthetic generator's
+ground-truth metadata field, not what the NER model actually extracts
+from the transcript text, and it was wrong. Not every dialogue template
+mentions a budget number in the text even though the generator always
+records one in its metadata, so real NER-extracted `budget_amount` is
+present in only **226/700 (32%)** of transcripts — genuine variance,
+and the budget-signal component does discriminate leads correctly.
+
+**One of the four heuristic signal groups genuinely shows zero
+variance on the current synthetic dataset:** client turn count is
+constant at exactly 2 across all 700 transcripts (every dialogue
+template has exactly one client follow-up turn), so the turn-count
+half of the engagement component contributes nothing to
+discrimination — only its message-length half (client-only text,
+53-105 chars) actually varies. This is an honest, known limitation of
+testing against synthetic, templated data, not a bug in the formula:
+real conversations vary in turn count (a one-line reply vs. a ten-turn
+back-and-forth) in a way this generator's fixed dialogue structure
+doesn't, so this component should start discriminating properly once
+real, messier call data replaces or supplements the synthetic set.
