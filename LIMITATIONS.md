@@ -130,3 +130,36 @@ before being trusted.
 project but has zero labeled examples in the current annotated export —
 the model cannot recognize it at all. It would need labeled training
 data before it could be added.
+
+## Lead scoring (`app/lead_scoring`)
+
+**The training labels are a heuristic proxy, not real conversion
+outcomes — because this is a new project with no sales history yet,
+there is no "did this lead actually convert" data to learn from.**
+`lead_scores.label_source = "heuristic_bootstrap"` rows are generated
+by the documented formula in `app/lead_scoring/heuristic.py` (sentiment
+35%, entity completeness 20%, budget signal 25%, engagement 20%), not
+by any real outcome. Understand this model as encoding the same domain
+logic a rule-based scoring system would apply, just expressed in a form
+(a trained XGBoost model) that **can be retrained on real data later
+without a rebuild** — once real outcomes start accumulating as
+`label_source = "agent_confirmed"` rows, retraining should prefer or
+blend those over the heuristic labels, and eventually phase the
+heuristic out entirely. SHAP explainability is real and meaningful
+regardless of label source, since it explains the model's actual
+learned behavior on whatever labels it was trained on — it just can't
+tell you whether those labels reflect real lead quality.
+
+**Two of the four heuristic signal groups show zero variance on the
+current synthetic dataset, so they don't discriminate leads yet:**
+budget is stated in 700/700 synthetic transcripts (the budget-signal
+component is 1.0 for essentially every lead), and client turn count is
+constant at exactly 2 across all 700 (the turn-count half of the
+engagement component is likewise constant). Only sentiment, entity/
+amenity completeness, and message length actually vary on this data.
+This is an honest, known limitation of testing against synthetic,
+templated data — not a bug in the formula. The formula is deliberately
+built for real-world variance (real callers sometimes never state a
+budget, some conversations are one line, some go back and forth for
+ten turns), so it should start discriminating properly once real,
+messier call data replaces or supplements the synthetic set.
