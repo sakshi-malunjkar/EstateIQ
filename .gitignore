@@ -41,6 +41,11 @@ checkpoints/
 huggingface/
 .huggingface/
 
+# --- Local databases (SQLite dev DB; real deployments use Postgres) ---
+*.db
+*.sqlite
+*.sqlite3
+
 # --- Env / secrets ---
 .env
 .env.*
