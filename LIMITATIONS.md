@@ -172,3 +172,32 @@ real conversations vary in turn count (a one-line reply vs. a ten-turn
 back-and-forth) in a way this generator's fixed dialogue structure
 doesn't, so this component should start discriminating properly once
 real, messier call data replaces or supplements the synthetic set.
+
+### XGBoost model results
+
+Test set (70 held-out leads): MAE=0.079, RMSE=0.137, R²=0.99996 on the
+0-100 score; tier classification (derived from the predicted score)
+100% accuracy on all three tiers.
+
+**This near-perfect fit is expected, not a sign of real predictive
+skill.** The training target *is* a deterministic function of exactly
+the 7 input features the model receives — it's the heuristic formula
+in `heuristic.py`, computed directly from those same features. So this
+evaluation measures how well XGBoost distilled a known formula, which
+should be near-perfect by construction, not how well it predicts real
+lead conversion (which nothing in this pipeline has ever been trained
+on — see the "heuristic proxy" note above). Once real
+`agent_confirmed` outcomes exist and retraining shifts toward them,
+these metrics should be expected to *degrade* from this baseline —
+that's a sign retraining moved from memorizing a formula to learning
+real, noisier human behavior, not a regression.
+
+SHAP feature importance on the test set (mean |SHAP value|):
+`entity_completeness` (13.04) and `sentiment` (12.20) dominate,
+`amenities_count` (1.30) and `message_length` (0.38) contribute
+modestly, `sentiment_confidence` (0.16) and `budget_amount` (0.03)
+barely register, and **`turn_count` is exactly 0.0** — a clean
+confirmation that the model correctly learned to ignore a feature that
+never varies in this dataset, consistent with the zero-variance
+finding above. This is a good sign the explainability tooling is
+honest, not evidence the model understands real lead behavior.

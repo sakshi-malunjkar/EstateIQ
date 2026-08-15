@@ -1,0 +1,14 @@
+{
+  "features": [
+    "sentiment",
+    "sentiment_confidence",
+    "entity_completeness",
+    "amenities_count",
+    "budget_amount",
+    "turn_count",
+    "message_length"
+  ],
+  "categorical": [
+    "sentiment"
+  ]
+}

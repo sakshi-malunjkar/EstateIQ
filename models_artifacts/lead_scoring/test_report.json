@@ -1,0 +1,50 @@
+{
+  "regression": {
+    "mae": 0.07924876839774002,
+    "rmse": 0.13710512895000965,
+    "r2": 0.999957415274804
+  },
+  "tier_classification_report": {
+    "cold": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 26.0
+    },
+    "hot": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 14.0
+    },
+    "warm": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 30.0
+    },
+    "accuracy": 1.0,
+    "macro avg": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 70.0
+    },
+    "weighted avg": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 70.0
+    }
+  },
+  "shap_mean_abs": {
+    "entity_completeness": 13.03953742980957,
+    "sentiment": 12.202156066894531,
+    "amenities_count": 1.2981643676757812,
+    "message_length": 0.3800339698791504,
+    "sentiment_confidence": 0.1641816943883896,
+    "budget_amount": 0.02912566065788269,
+    "turn_count": 0.0
+  },
+  "num_examples": 70
+}
