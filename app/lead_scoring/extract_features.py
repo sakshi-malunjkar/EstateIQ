@@ -47,7 +47,20 @@ def parse_budget_amount(budget_text):
 
 
 def client_only_text(transcript_text):
-    return [line[len("Client:"):].strip() for line in transcript_text.split("\n") if line.startswith("Client:")]
+    """Extracts just the client's turns from an "Agent: ...\\nClient: ..."
+    formatted transcript. Falls back to treating the whole input as one
+    client turn when there's no such structure (e.g. a bare freeform
+    sentence passed straight to predict_lead_score.py) -- otherwise
+    turn_count and message_length would silently come out as 0 for any
+    input that isn't in the full transcript format, which is wrong: a
+    real customer message is at least one turn with real length, not
+    zero. This matches how predict.py and sentiment_predict.py already
+    accept plain freeform text with no required structure."""
+    client_lines = [line[len("Client:"):].strip() for line in transcript_text.split("\n") if line.startswith("Client:")]
+    if client_lines:
+        return client_lines
+    stripped = transcript_text.strip()
+    return [stripped] if stripped else []
 
 
 def compute_entity_completeness(entities):

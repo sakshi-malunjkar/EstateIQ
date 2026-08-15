@@ -35,10 +35,17 @@ _explainer = None
 def _load(model_dir=DEFAULT_MODEL_DIR):
     global _model, _explainer
     if _model is None:
-        _model = xgb.XGBRegressor()
+        # enable_categorical must be passed to the constructor again --
+        # load_model() restores the booster's raw config but not every
+        # sklearn-wrapper-level convenience flag, and predict() fails
+        # without it once the frame has a real categorical column.
+        _model = xgb.XGBRegressor(enable_categorical=True)
         _model.load_model(str(Path(model_dir) / "model.json"))
         _explainer = shap.TreeExplainer(_model)
     return _model, _explainer
+
+
+NUMERIC_COLUMNS = [c for c in FEATURE_COLUMNS if c not in ("sentiment",)]
 
 
 def predict_lead_score(text, model_dir=DEFAULT_MODEL_DIR):
@@ -51,6 +58,12 @@ def predict_lead_score(text, model_dir=DEFAULT_MODEL_DIR):
     row = {col: feats.get(col) for col in FEATURE_COLUMNS}
     df = pd.DataFrame([row])
     df["sentiment"] = df["sentiment"].astype(SENTIMENT_DTYPE)
+    # A single-row frame built from a dict infers 'object' dtype for a
+    # None value (e.g. budget_amount when none was extracted) instead of
+    # float64/NaN like pd.read_csv gives the training data -- cast
+    # explicitly so inference sees the same dtypes training did.
+    for col in NUMERIC_COLUMNS:
+        df[col] = df[col].astype(float)
 
     score = float(model.predict(df)[0])
     tier = score_to_tier(score)
