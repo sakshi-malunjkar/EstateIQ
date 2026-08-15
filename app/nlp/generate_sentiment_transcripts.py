@@ -78,13 +78,7 @@ TONE_BANK = {
         "Great option, I'm ready to move ahead.",
         "I'm thrilled, this fits everything we need.",
         "This checks every box, let's proceed right away.",
-        "This is exactly what my family has been hoping to find for months.",
-        "I'm so pleased with this, it checks every single thing on our list.",
-        "This genuinely exceeds what I expected, I'd love to move forward.",
-        "My whole family will be delighted when they see this option.",
         "I have a really good feeling about this one, let's proceed.",
-        "Honestly, this is better than anything else I've seen so far.",
-        "I'm delighted with how well this matches what we were hoping for.",
         "Everything about this feels right, I'm ready to commit.",
         "Really glad I found this, it's better than I imagined.",
         # longer, multi-clause / formal register
@@ -102,6 +96,26 @@ TONE_BANK = {
         "Mast ahe, mala khup avadla, chala baghuya.",
         "Mala vatla hech aamhala pahije hota, chala pudhla step karuya.",
         "Yeh dekhkar bahut khushi hui, hum aage badhna chahte hain.",
+        # more code-mixed enthusiasm -- targeted fix: testing found the
+        # model misreads code-mixed enthusiastic sentences as hesitant
+        # (3/3 failures), while code-mixed frustrated/hesitant worked
+        # fine, pointing at a representation gap in this bank
+        # specifically. Trimmed to 6 (from an earlier 19, which grew
+        # this bank to 53 total vs 34 for the other two classes and
+        # caused a general enthusiastic-prediction bias -- see commit
+        # history). Word counts kept in the same ~6-10 range as the
+        # existing code-mixed phrasings and as frustrated/hesitant's
+        # code-mixed banks. Two entries below are deliberately
+        # paraphrased rather than reused verbatim from earlier drafts,
+        # since those exact strings turned out to be identical to two
+        # of the freeform test sentences -- keeping them would have
+        # made those "fixes" literal memorization, not generalization.
+        "Khup avadla mala, ekdum perfect ahe!",
+        "Zakas ahe ekdum, chala confirm karuya!",
+        "Ekdum best ahe, yaha se aage badhte hain!",
+        "Mala ha ghar khup avadla, lagech pudhe jauya.",
+        "Yeh ghar bahut pasand aaya, hum turant aage badhenge.",
+        "Sahi hai yaar, ekdum pasand aaya mujhe!",
     ],
     "frustrated": [
         # short, direct (original register)

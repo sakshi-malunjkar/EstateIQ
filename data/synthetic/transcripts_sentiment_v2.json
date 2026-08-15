@@ -89,7 +89,7 @@
   },
   {
     "id": 7,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Mala Deolali madhe Villa baghaycha ahe\nAgent: Sure, let me check Villa options in Deolali with Clubhouse, Power Backup.\nClient: Bahut badhiya hai, main isko lena chahta hoon.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Mala Deolali madhe Villa baghaycha ahe\nAgent: Sure, let me check Villa options in Deolali with Clubhouse, Power Backup.\nClient: Yeh dekhkar bahut khushi hui, hum aage badhna chahte hain.",
     "city": "Nashik",
     "location": "Deolali",
     "property_type": "Villa",
@@ -179,7 +179,7 @@
   },
   {
     "id": 14,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Namaste, mujhe ek Studio Apartment chahiye Wagholi mein\nAgent: Sure, let me check Studio Apartment options in Wagholi with Children Play Area, Gym, Parking.\nClient: I'm so pleased with this, it checks every single thing on our list.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Namaste, mujhe ek Studio Apartment chahiye Wagholi mein\nAgent: Sure, let me check Studio Apartment options in Wagholi with Children Play Area, Gym, Parking.\nClient: Everything about this feels right, I'm ready to commit.",
     "city": "Pune",
     "location": "Wagholi",
     "property_type": "Studio Apartment",
@@ -193,7 +193,7 @@
   },
   {
     "id": 15,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Hi, I'm looking for a 1BHK in Gangapur Road\nAgent: Sure, let me check 1BHK options in Gangapur Road with Swimming Pool, Parking, Gym.\nClient: I have a really good feeling about this one, let's proceed.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Hi, I'm looking for a 1BHK in Gangapur Road\nAgent: Sure, let me check 1BHK options in Gangapur Road with Swimming Pool, Parking, Gym.\nClient: I couldn't be happier with this, when can we sign the papers?",
     "city": "Nashik",
     "location": "Gangapur Road",
     "property_type": "1BHK",
@@ -326,7 +326,7 @@
   },
   {
     "id": 25,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I want to buy a Bungalow, budget around 50 lakhs\nAgent: Sure, let me check Bungalow options in Baner with Gym, Clubhouse, Power Backup.\nClient: This is exactly what my family has been hoping to find for months. Really glad I found this, it's better than I imagined.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I want to buy a Bungalow, budget around 50 lakhs\nAgent: Sure, let me check Bungalow options in Baner with Gym, Clubhouse, Power Backup.\nClient: I have a really good feeling about this one, let's proceed. Bahut badhiya hai, main isko lena chahta hoon.",
     "city": "Pune",
     "location": "Baner",
     "property_type": "Bungalow",
@@ -390,7 +390,7 @@
   },
   {
     "id": 30,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Mala Kothrud madhe 2BHK baghaycha ahe\nAgent: Sure, let me check 2BHK options in Kothrud with Garden.\nClient: Sounds fantastic, please book a visit for me.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Mala Kothrud madhe 2BHK baghaycha ahe\nAgent: Sure, let me check 2BHK options in Kothrud with Garden.\nClient: Mala vatla hech aamhala pahije hota, chala pudhla step karuya.",
     "city": "Pune",
     "location": "Kothrud",
     "property_type": "2BHK",
@@ -530,7 +530,7 @@
   },
   {
     "id": 41,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I'm searching for a Plot near Kharadi, budget is 1.2 crore.\nAgent: Sure, let me check Plot options in Kharadi with Lift, Garden, Children Play Area.\nClient: This genuinely exceeds what I expected, I'd love to move forward.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I'm searching for a Plot near Kharadi, budget is 1.2 crore.\nAgent: Sure, let me check Plot options in Kharadi with Lift, Garden, Children Play Area.\nClient: Really glad I found this, it's better than I imagined.",
     "city": "Pune",
     "location": "Kharadi",
     "property_type": "Plot",
@@ -544,7 +544,7 @@
   },
   {
     "id": 42,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I want to buy a Bungalow, budget around 65 lakhs\nAgent: Sure, let me check Bungalow options in Viman Nagar with Parking, Power Backup, Children Play Area.\nClient: Everything about this feels right, I'm ready to commit. Finally, something that ticks all the boxes!",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I want to buy a Bungalow, budget around 65 lakhs\nAgent: Sure, let me check Bungalow options in Viman Nagar with Parking, Power Backup, Children Play Area.\nClient: Sounds fantastic, please book a visit for me. Finally, something that ticks all the boxes!",
     "city": "Pune",
     "location": "Viman Nagar",
     "property_type": "Bungalow",
@@ -558,7 +558,7 @@
   },
   {
     "id": 43,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Can you tell me about properties in Indira Nagar?\nAgent: Sure, let me check Villa options in Indira Nagar with Parking.\nClient: Sounds fantastic, please book a visit for me.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Can you tell me about properties in Indira Nagar?\nAgent: Sure, let me check Villa options in Indira Nagar with Parking.\nClient: Mala vatla hech aamhala pahije hota, chala pudhla step karuya.",
     "city": "Nashik",
     "location": "Indira Nagar",
     "property_type": "Villa",
@@ -570,7 +570,7 @@
   },
   {
     "id": 44,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Can you tell me about properties in Cidco?\nAgent: Sure, let me check Villa options in Cidco with Swimming Pool, Garden, Children Play Area.\nClient: Sounds fantastic, please book a visit for me.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Can you tell me about properties in Cidco?\nAgent: Sure, let me check Villa options in Cidco with Swimming Pool, Garden, Children Play Area.\nClient: Mala vatla hech aamhala pahije hota, chala pudhla step karuya.",
     "city": "Nashik",
     "location": "Cidco",
     "property_type": "Villa",
@@ -584,7 +584,7 @@
   },
   {
     "id": 45,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Mujhe Indira Nagar ke aas paas Row House dhundh rahe hain, budget 45 lakhs.\nAgent: Sure, let me check Row House options in Indira Nagar with Garden, Children Play Area.\nClient: Yeh toh bilkul sahi hai, aage badhte hain.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Mujhe Indira Nagar ke aas paas Row House dhundh rahe hain, budget 45 lakhs.\nAgent: Sure, let me check Row House options in Indira Nagar with Garden, Children Play Area.\nClient: Zakas ahe ekdum, chala confirm karuya!",
     "city": "Nashik",
     "location": "Indira Nagar",
     "property_type": "Row House",
@@ -597,7 +597,7 @@
   },
   {
     "id": 46,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I want to buy a Villa, budget around 80 lakhs\nAgent: Sure, let me check Villa options in Baner with Swimming Pool, Gym, Garden.\nClient: This has honestly made my day, thank you so much for finding it. Everything about this feels right, I'm ready to commit.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I want to buy a Villa, budget around 80 lakhs\nAgent: Sure, let me check Villa options in Baner with Swimming Pool, Gym, Garden.\nClient: Superb choice, let's finalize the details. Sounds fantastic, please book a visit for me.",
     "city": "Pune",
     "location": "Baner",
     "property_type": "Villa",
@@ -624,7 +624,7 @@
   },
   {
     "id": 48,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I want to buy a 1RK, budget around 1.2 crore\nAgent: Sure, let me check 1RK options in College Road with Parking.\nClient: Superb choice, let's finalize the details. I can't wait to see it in person!",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I want to buy a 1RK, budget around 1.2 crore\nAgent: Sure, let me check 1RK options in College Road with Parking.\nClient: Ekdum best ahe, yaha se aage badhte hain! I can't wait to see it in person!",
     "city": "Nashik",
     "location": "College Road",
     "property_type": "1RK",
@@ -728,7 +728,7 @@
   },
   {
     "id": 56,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Mujhe Indira Nagar ke aas paas Row House dhundh rahe hain, budget 1 crore.\nAgent: Sure, let me check Row House options in Indira Nagar with Children Play Area, CCTV, Swimming Pool.\nClient: I'm delighted with how well this matches what we were hoping for.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Mujhe Indira Nagar ke aas paas Row House dhundh rahe hain, budget 1 crore.\nAgent: Sure, let me check Row House options in Indira Nagar with Children Play Area, CCTV, Swimming Pool.\nClient: Is it possible to visit this property as soon as possible? I really don't want to miss it.",
     "city": "Nashik",
     "location": "Indira Nagar",
     "property_type": "Row House",
@@ -831,7 +831,7 @@
   },
   {
     "id": 64,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Mala Cidco madhe Row House baghaycha ahe\nAgent: Sure, let me check Row House options in Cidco with Children Play Area, Power Backup, Swimming Pool.\nClient: Yeh toh bilkul sahi hai, aage badhte hain.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Mala Cidco madhe Row House baghaycha ahe\nAgent: Sure, let me check Row House options in Cidco with Children Play Area, Power Backup, Swimming Pool.\nClient: Zakas ahe ekdum, chala confirm karuya!",
     "city": "Nashik",
     "location": "Cidco",
     "property_type": "Row House",
@@ -859,7 +859,7 @@
   },
   {
     "id": 66,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Can you tell me about properties in Nashik Road?\nAgent: Sure, let me check 4BHK options in Nashik Road with CCTV, Power Backup, Children Play Area.\nClient: I have a really good feeling about this one, let's proceed.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Can you tell me about properties in Nashik Road?\nAgent: Sure, let me check 4BHK options in Nashik Road with CCTV, Power Backup, Children Play Area.\nClient: I couldn't be happier with this, when can we sign the papers?",
     "city": "Nashik",
     "location": "Nashik Road",
     "property_type": "4BHK",
@@ -925,7 +925,7 @@
   },
   {
     "id": 71,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Hello, Indira Nagar mein koi acha Bungalow hai kya, budget 50 lakhs tak\nAgent: Sure, let me check Bungalow options in Indira Nagar with Children Play Area, CCTV, Swimming Pool.\nClient: Mala he perfect vatla, chala pudhe jauya.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Hello, Indira Nagar mein koi acha Bungalow hai kya, budget 50 lakhs tak\nAgent: Sure, let me check Bungalow options in Indira Nagar with Children Play Area, CCTV, Swimming Pool.\nClient: Khup avadla mala, ekdum perfect ahe!",
     "city": "Nashik",
     "location": "Indira Nagar",
     "property_type": "Bungalow",
@@ -1084,7 +1084,7 @@
   },
   {
     "id": 83,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Mala Kharadi madhe 4BHK baghaycha ahe\nAgent: Sure, let me check 4BHK options in Kharadi with Children Play Area, Gym.\nClient: Honestly, this is better than anything else I've seen so far.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Mala Kharadi madhe 4BHK baghaycha ahe\nAgent: Sure, let me check 4BHK options in Kharadi with Children Play Area, Gym.\nClient: This has honestly made my day, thank you so much for finding it.",
     "city": "Pune",
     "location": "Kharadi",
     "property_type": "4BHK",
@@ -1097,7 +1097,7 @@
   },
   {
     "id": 84,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Can you tell me about properties in Cidco?\nAgent: Sure, let me check 4BHK options in Cidco with Swimming Pool, Children Play Area, Power Backup.\nClient: This checks every box, let's proceed right away. My whole family will be delighted when they see this option.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Can you tell me about properties in Cidco?\nAgent: Sure, let me check 4BHK options in Cidco with Swimming Pool, Children Play Area, Power Backup.\nClient: This checks every box, let's proceed right away. This is wonderful news, please share the next steps with me.",
     "city": "Nashik",
     "location": "Cidco",
     "property_type": "4BHK",
@@ -1111,7 +1111,7 @@
   },
   {
     "id": 85,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I want to buy a 1BHK, budget around 1 crore\nAgent: Sure, let me check 1BHK options in Hinjewadi with Swimming Pool, Power Backup, Children Play Area.\nClient: Honestly, this is better than anything else I've seen so far. Everything about this feels right, I'm ready to commit.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I want to buy a 1BHK, budget around 1 crore\nAgent: Sure, let me check 1BHK options in Hinjewadi with Swimming Pool, Power Backup, Children Play Area.\nClient: This has honestly made my day, thank you so much for finding it. Sounds fantastic, please book a visit for me.",
     "city": "Pune",
     "location": "Hinjewadi",
     "property_type": "1BHK",
@@ -1125,7 +1125,7 @@
   },
   {
     "id": 86,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Mujhe Hinjewadi ke aas paas 3BHK dhundh rahe hain, budget 45 lakhs.\nAgent: Sure, let me check 3BHK options in Hinjewadi with Security, Lift, Power Backup.\nClient: Honestly, this is better than anything else I've seen so far.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Mujhe Hinjewadi ke aas paas 3BHK dhundh rahe hain, budget 45 lakhs.\nAgent: Sure, let me check 3BHK options in Hinjewadi with Security, Lift, Power Backup.\nClient: This has honestly made my day, thank you so much for finding it.",
     "city": "Pune",
     "location": "Hinjewadi",
     "property_type": "3BHK",
@@ -1139,7 +1139,7 @@
   },
   {
     "id": 87,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I'm searching for a 1BHK near Hadapsar, budget is 65 lakhs.\nAgent: Sure, let me check 1BHK options in Hadapsar with Clubhouse.\nClient: I couldn't be happier with this, when can we sign the papers?",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I'm searching for a 1BHK near Hadapsar, budget is 65 lakhs.\nAgent: Sure, let me check 1BHK options in Hadapsar with Clubhouse.\nClient: Yeh toh bilkul sahi hai, aage badhte hain.",
     "city": "Pune",
     "location": "Hadapsar",
     "property_type": "1BHK",
@@ -1205,7 +1205,7 @@
   },
   {
     "id": 92,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Hello, Indira Nagar mein koi acha Studio Apartment hai kya, budget 30 lakhs tak\nAgent: Sure, let me check Studio Apartment options in Indira Nagar with Security, Lift, CCTV.\nClient: Yeh toh bilkul sahi hai, aage badhte hain.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Hello, Indira Nagar mein koi acha Studio Apartment hai kya, budget 30 lakhs tak\nAgent: Sure, let me check Studio Apartment options in Indira Nagar with Security, Lift, CCTV.\nClient: Zakas ahe ekdum, chala confirm karuya!",
     "city": "Nashik",
     "location": "Indira Nagar",
     "property_type": "Studio Apartment",
@@ -1219,7 +1219,7 @@
   },
   {
     "id": 93,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I want to buy a Plot, budget around 30 lakhs\nAgent: Sure, let me check Plot options in Indira Nagar with Security.\nClient: This is exactly what my family has been hoping to find for months. I'm so pleased with this, it checks every single thing on our list.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I want to buy a Plot, budget around 30 lakhs\nAgent: Sure, let me check Plot options in Indira Nagar with Security.\nClient: I have a really good feeling about this one, let's proceed. Everything about this feels right, I'm ready to commit.",
     "city": "Nashik",
     "location": "Indira Nagar",
     "property_type": "Plot",
@@ -1307,7 +1307,7 @@
   },
   {
     "id": 100,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I'm searching for a Studio Apartment near College Road, budget is 65 lakhs.\nAgent: Sure, let me check Studio Apartment options in College Road with Power Backup, Security.\nClient: Finally, something that ticks all the boxes! Bahut badhiya hai, main isko lena chahta hoon.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I'm searching for a Studio Apartment near College Road, budget is 65 lakhs.\nAgent: Sure, let me check Studio Apartment options in College Road with Power Backup, Security.\nClient: Finally, something that ticks all the boxes! Yeh dekhkar bahut khushi hui, hum aage badhna chahte hain.",
     "city": "Nashik",
     "location": "College Road",
     "property_type": "Studio Apartment",
@@ -1460,7 +1460,7 @@
   },
   {
     "id": 112,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Hello, Cidco mein koi acha Bungalow hai kya, budget 30 lakhs tak\nAgent: Sure, let me check Bungalow options in Cidco with Power Backup, Security.\nClient: I can't wait to see it in person! Yeh dekhkar bahut khushi hui, hum aage badhna chahte hain.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Hello, Cidco mein koi acha Bungalow hai kya, budget 30 lakhs tak\nAgent: Sure, let me check Bungalow options in Cidco with Power Backup, Security.\nClient: I can't wait to see it in person! Sahi hai yaar, ekdum pasand aaya mujhe!",
     "city": "Nashik",
     "location": "Cidco",
     "property_type": "Bungalow",
@@ -1605,7 +1605,7 @@
   },
   {
     "id": 123,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I want to buy a 2BHK, budget around 45 lakhs\nAgent: Sure, let me check 2BHK options in Nashik Road with CCTV, Clubhouse, Children Play Area.\nClient: Honestly, this is better than anything else I've seen so far.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I want to buy a 2BHK, budget around 45 lakhs\nAgent: Sure, let me check 2BHK options in Nashik Road with CCTV, Clubhouse, Children Play Area.\nClient: This has honestly made my day, thank you so much for finding it.",
     "city": "Nashik",
     "location": "Nashik Road",
     "property_type": "2BHK",
@@ -1645,7 +1645,7 @@
   },
   {
     "id": 126,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Can you tell me about properties in College Road?\nAgent: Sure, let me check Bungalow options in College Road with Power Backup.\nClient: Mala vatla hech aamhala pahije hota, chala pudhla step karuya.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Can you tell me about properties in College Road?\nAgent: Sure, let me check Bungalow options in College Road with Power Backup.\nClient: Yeh ghar bahut pasand aaya, hum turant aage badhenge.",
     "city": "Nashik",
     "location": "College Road",
     "property_type": "Bungalow",
@@ -1684,7 +1684,7 @@
   },
   {
     "id": 129,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Hello, Kharadi mein koi acha Row House hai kya, budget 80 lakhs tak\nAgent: Sure, let me check Row House options in Kharadi with Gym.\nClient: Yeh dekhkar bahut khushi hui, hum aage badhna chahte hain.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Hello, Kharadi mein koi acha Row House hai kya, budget 80 lakhs tak\nAgent: Sure, let me check Row House options in Kharadi with Gym.\nClient: Sahi hai yaar, ekdum pasand aaya mujhe!",
     "city": "Pune",
     "location": "Kharadi",
     "property_type": "Row House",
@@ -1696,7 +1696,7 @@
   },
   {
     "id": 130,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I'm searching for a 3BHK near Panchavati, budget is 50 lakhs.\nAgent: Sure, let me check 3BHK options in Panchavati with Swimming Pool.\nClient: Mast ahe, mala khup avadla, chala baghuya. Perfect, exactly what I was looking for!",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I'm searching for a 3BHK near Panchavati, budget is 50 lakhs.\nAgent: Sure, let me check 3BHK options in Panchavati with Swimming Pool.\nClient: Mala ha ghar khup avadla, lagech pudhe jauya. Perfect, exactly what I was looking for!",
     "city": "Nashik",
     "location": "Panchavati",
     "property_type": "3BHK",
@@ -1735,7 +1735,7 @@
   },
   {
     "id": 133,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Hi, I'm looking for a Studio Apartment in Gangapur Road\nAgent: Sure, let me check Studio Apartment options in Gangapur Road with Security.\nClient: Really glad I found this, it's better than I imagined.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Hi, I'm looking for a Studio Apartment in Gangapur Road\nAgent: Sure, let me check Studio Apartment options in Gangapur Road with Security.\nClient: Bahut badhiya hai, main isko lena chahta hoon.",
     "city": "Nashik",
     "location": "Gangapur Road",
     "property_type": "Studio Apartment",
@@ -1967,7 +1967,7 @@
   },
   {
     "id": 151,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I want to buy a Row House, budget around 45 lakhs\nAgent: Sure, let me check Row House options in Viman Nagar with Garden, Power Backup, Children Play Area.\nClient: Superb choice, let's finalize the details.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I want to buy a Row House, budget around 45 lakhs\nAgent: Sure, let me check Row House options in Viman Nagar with Garden, Power Backup, Children Play Area.\nClient: Ekdum best ahe, yaha se aage badhte hain!",
     "city": "Pune",
     "location": "Viman Nagar",
     "property_type": "Row House",
@@ -1994,7 +1994,7 @@
   },
   {
     "id": 153,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Mujhe Deolali ke aas paas 1BHK dhundh rahe hain, budget 50 lakhs.\nAgent: Sure, let me check 1BHK options in Deolali with Parking, Clubhouse.\nClient: Sounds fantastic, please book a visit for me.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Mujhe Deolali ke aas paas 1BHK dhundh rahe hain, budget 50 lakhs.\nAgent: Sure, let me check 1BHK options in Deolali with Parking, Clubhouse.\nClient: Mala vatla hech aamhala pahije hota, chala pudhla step karuya.",
     "city": "Nashik",
     "location": "Deolali",
     "property_type": "1BHK",
@@ -2073,7 +2073,7 @@
   },
   {
     "id": 159,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Mala Kharadi madhe 2BHK baghaycha ahe\nAgent: Sure, let me check 2BHK options in Kharadi with Clubhouse, Security, Lift.\nClient: Mala vatla hech aamhala pahije hota, chala pudhla step karuya.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Mala Kharadi madhe 2BHK baghaycha ahe\nAgent: Sure, let me check 2BHK options in Kharadi with Clubhouse, Security, Lift.\nClient: Yeh ghar bahut pasand aaya, hum turant aage badhenge.",
     "city": "Pune",
     "location": "Kharadi",
     "property_type": "2BHK",
@@ -2112,7 +2112,7 @@
   },
   {
     "id": 162,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I want to buy a 3BHK, budget around 30 lakhs\nAgent: Sure, let me check 3BHK options in College Road with Security, Garden.\nClient: Superb choice, let's finalize the details.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I want to buy a 3BHK, budget around 30 lakhs\nAgent: Sure, let me check 3BHK options in College Road with Security, Garden.\nClient: Ekdum best ahe, yaha se aage badhte hain!",
     "city": "Nashik",
     "location": "College Road",
     "property_type": "3BHK",
@@ -2137,7 +2137,7 @@
   },
   {
     "id": 164,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Can you tell me about properties in Kharadi?\nAgent: Sure, let me check Bungalow options in Kharadi with Security, Power Backup, Children Play Area.\nClient: I'm so pleased with this, it checks every single thing on our list.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Can you tell me about properties in Kharadi?\nAgent: Sure, let me check Bungalow options in Kharadi with Security, Power Backup, Children Play Area.\nClient: Everything about this feels right, I'm ready to commit.",
     "city": "Pune",
     "location": "Kharadi",
     "property_type": "Bungalow",
@@ -2357,7 +2357,7 @@
   },
   {
     "id": 181,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I'm searching for a Row House near Wakad, budget is 30 lakhs.\nAgent: Sure, let me check Row House options in Wakad with Garden, Clubhouse.\nClient: This has honestly made my day, thank you so much for finding it.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I'm searching for a Row House near Wakad, budget is 30 lakhs.\nAgent: Sure, let me check Row House options in Wakad with Garden, Clubhouse.\nClient: Superb choice, let's finalize the details.",
     "city": "Pune",
     "location": "Wakad",
     "property_type": "Row House",
@@ -2370,7 +2370,7 @@
   },
   {
     "id": 182,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Mujhe Cidco ke aas paas Villa dhundh rahe hain, budget 30 lakhs.\nAgent: Sure, let me check Villa options in Cidco with Lift, Clubhouse, Security.\nClient: I'm so pleased with this, it checks every single thing on our list.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Mujhe Cidco ke aas paas Villa dhundh rahe hain, budget 30 lakhs.\nAgent: Sure, let me check Villa options in Cidco with Lift, Clubhouse, Security.\nClient: Everything about this feels right, I'm ready to commit.",
     "city": "Nashik",
     "location": "Cidco",
     "property_type": "Villa",
@@ -2410,7 +2410,7 @@
   },
   {
     "id": 185,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Hi, I'm looking for a Villa in Gangapur Road\nAgent: Sure, let me check Villa options in Gangapur Road with Lift.\nClient: Honestly, this is better than anything else I've seen so far. I'm so pleased with this, it checks every single thing on our list.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Hi, I'm looking for a Villa in Gangapur Road\nAgent: Sure, let me check Villa options in Gangapur Road with Lift.\nClient: This has honestly made my day, thank you so much for finding it. Everything about this feels right, I'm ready to commit.",
     "city": "Nashik",
     "location": "Gangapur Road",
     "property_type": "Villa",
@@ -2422,7 +2422,7 @@
   },
   {
     "id": 186,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I want to buy a Plot, budget around 80 lakhs\nAgent: Sure, let me check Plot options in Hadapsar with Security, Parking, Power Backup.\nClient: I have a really good feeling about this one, let's proceed.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I want to buy a Plot, budget around 80 lakhs\nAgent: Sure, let me check Plot options in Hadapsar with Security, Parking, Power Backup.\nClient: I couldn't be happier with this, when can we sign the papers?",
     "city": "Pune",
     "location": "Hadapsar",
     "property_type": "Plot",
@@ -2463,7 +2463,7 @@
   },
   {
     "id": 189,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Mala Cidco madhe Bungalow baghaycha ahe\nAgent: Sure, let me check Bungalow options in Cidco with Garden.\nClient: Mala he perfect vatla, chala pudhe jauya.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Mala Cidco madhe Bungalow baghaycha ahe\nAgent: Sure, let me check Bungalow options in Cidco with Garden.\nClient: Khup avadla mala, ekdum perfect ahe!",
     "city": "Nashik",
     "location": "Cidco",
     "property_type": "Bungalow",
@@ -2487,7 +2487,7 @@
   },
   {
     "id": 191,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Hi, I'm looking for a Row House in Kothrud\nAgent: Sure, let me check Row House options in Kothrud with Power Backup, Swimming Pool.\nClient: Superb choice, let's finalize the details.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Hi, I'm looking for a Row House in Kothrud\nAgent: Sure, let me check Row House options in Kothrud with Power Backup, Swimming Pool.\nClient: Ekdum best ahe, yaha se aage badhte hain!",
     "city": "Pune",
     "location": "Kothrud",
     "property_type": "Row House",
@@ -2528,7 +2528,7 @@
   },
   {
     "id": 194,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Hello, Baner mein koi acha 4BHK hai kya, budget 80 lakhs tak\nAgent: Sure, let me check 4BHK options in Baner with CCTV, Garden, Power Backup.\nClient: This genuinely exceeds what I expected, I'd love to move forward.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Hello, Baner mein koi acha 4BHK hai kya, budget 80 lakhs tak\nAgent: Sure, let me check 4BHK options in Baner with CCTV, Garden, Power Backup.\nClient: Really glad I found this, it's better than I imagined.",
     "city": "Pune",
     "location": "Baner",
     "property_type": "4BHK",
@@ -2542,7 +2542,7 @@
   },
   {
     "id": 195,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Can you tell me about properties in Satpur?\nAgent: Sure, let me check 4BHK options in Satpur with Children Play Area, CCTV.\nClient: Mast ahe, mala khup avadla, chala baghuya. I'm thrilled, this fits everything we need.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Can you tell me about properties in Satpur?\nAgent: Sure, let me check 4BHK options in Satpur with Children Play Area, CCTV.\nClient: Mala ha ghar khup avadla, lagech pudhe jauya. I'm thrilled, this fits everything we need.",
     "city": "Nashik",
     "location": "Satpur",
     "property_type": "4BHK",
@@ -2567,7 +2567,7 @@
   },
   {
     "id": 197,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Mujhe Deolali ke aas paas Studio Apartment dhundh rahe hain, budget 30 lakhs.\nAgent: Sure, let me check Studio Apartment options in Deolali with CCTV, Children Play Area, Lift.\nClient: Yeh dekhkar bahut khushi hui, hum aage badhna chahte hain. I have a really good feeling about this one, let's proceed.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Mujhe Deolali ke aas paas Studio Apartment dhundh rahe hain, budget 30 lakhs.\nAgent: Sure, let me check Studio Apartment options in Deolali with CCTV, Children Play Area, Lift.\nClient: Sahi hai yaar, ekdum pasand aaya mujhe! I couldn't be happier with this, when can we sign the papers?",
     "city": "Nashik",
     "location": "Deolali",
     "property_type": "Studio Apartment",
@@ -2581,7 +2581,7 @@
   },
   {
     "id": 198,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I want to buy a 1RK, budget around 80 lakhs\nAgent: Sure, let me check 1RK options in Panchavati with Garden, Clubhouse, Gym.\nClient: Yeh dekhkar bahut khushi hui, hum aage badhna chahte hain. My whole family will be delighted when they see this option.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I want to buy a 1RK, budget around 80 lakhs\nAgent: Sure, let me check 1RK options in Panchavati with Garden, Clubhouse, Gym.\nClient: Sahi hai yaar, ekdum pasand aaya mujhe! This is wonderful news, please share the next steps with me.",
     "city": "Nashik",
     "location": "Panchavati",
     "property_type": "1RK",
@@ -2696,7 +2696,7 @@
   },
   {
     "id": 207,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Hello, College Road mein koi acha 1RK hai kya, budget 50 lakhs tak\nAgent: Sure, let me check 1RK options in College Road with Security, Power Backup.\nClient: Mala vatla hech aamhala pahije hota, chala pudhla step karuya.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Hello, College Road mein koi acha 1RK hai kya, budget 50 lakhs tak\nAgent: Sure, let me check 1RK options in College Road with Security, Power Backup.\nClient: Yeh ghar bahut pasand aaya, hum turant aage badhenge.",
     "city": "Nashik",
     "location": "College Road",
     "property_type": "1RK",
@@ -2709,7 +2709,7 @@
   },
   {
     "id": 208,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Mujhe Gangapur Road ke aas paas 1BHK dhundh rahe hain, budget 50 lakhs.\nAgent: Sure, let me check 1BHK options in Gangapur Road with Gym, Security, Garden.\nClient: This genuinely exceeds what I expected, I'd love to move forward.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Mujhe Gangapur Road ke aas paas 1BHK dhundh rahe hain, budget 50 lakhs.\nAgent: Sure, let me check 1BHK options in Gangapur Road with Gym, Security, Garden.\nClient: Really glad I found this, it's better than I imagined.",
     "city": "Nashik",
     "location": "Gangapur Road",
     "property_type": "1BHK",
@@ -2802,7 +2802,7 @@
   },
   {
     "id": 215,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Can you tell me about properties in Wagholi?\nAgent: Sure, let me check Bungalow options in Wagholi with Lift, Gym.\nClient: Wow, I love it, let's move forward! Is it possible to visit this property as soon as possible? I really don't want to miss it.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Can you tell me about properties in Wagholi?\nAgent: Sure, let me check Bungalow options in Wagholi with Lift, Gym.\nClient: Wow, I love it, let's move forward! Mast ahe, mala khup avadla, chala baghuya.",
     "city": "Pune",
     "location": "Wagholi",
     "property_type": "Bungalow",
@@ -2840,7 +2840,7 @@
   },
   {
     "id": 218,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I'm searching for a 3BHK near Deolali, budget is 80 lakhs.\nAgent: Sure, let me check 3BHK options in Deolali with Security, Children Play Area.\nClient: I'm delighted with how well this matches what we were hoping for. Wow, I love it, let's move forward!",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I'm searching for a 3BHK near Deolali, budget is 80 lakhs.\nAgent: Sure, let me check 3BHK options in Deolali with Security, Children Play Area.\nClient: Is it possible to visit this property as soon as possible? I really don't want to miss it. Wow, I love it, let's move forward!",
     "city": "Nashik",
     "location": "Deolali",
     "property_type": "3BHK",
@@ -2945,7 +2945,7 @@
   },
   {
     "id": 226,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I want to buy a Row House, budget around 65 lakhs\nAgent: Sure, let me check Row House options in Wagholi with Children Play Area, CCTV, Clubhouse.\nClient: I have a really good feeling about this one, let's proceed. I'm so pleased with this, it checks every single thing on our list.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I want to buy a Row House, budget around 65 lakhs\nAgent: Sure, let me check Row House options in Wagholi with Children Play Area, CCTV, Clubhouse.\nClient: I couldn't be happier with this, when can we sign the papers? Everything about this feels right, I'm ready to commit.",
     "city": "Pune",
     "location": "Wagholi",
     "property_type": "Row House",
@@ -2986,7 +2986,7 @@
   },
   {
     "id": 229,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Can you tell me about properties in Wakad?\nAgent: Sure, let me check Row House options in Wakad with Parking.\nClient: Bahut badhiya hai, main isko lena chahta hoon.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Can you tell me about properties in Wakad?\nAgent: Sure, let me check Row House options in Wakad with Parking.\nClient: Yeh dekhkar bahut khushi hui, hum aage badhna chahte hain.",
     "city": "Pune",
     "location": "Wakad",
     "property_type": "Row House",
@@ -3010,7 +3010,7 @@
   },
   {
     "id": 231,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I'm searching for a 4BHK near Panchavati, budget is 80 lakhs.\nAgent: Sure, let me check 4BHK options in Panchavati with Lift, Gym.\nClient: I have a really good feeling about this one, let's proceed.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I'm searching for a 4BHK near Panchavati, budget is 80 lakhs.\nAgent: Sure, let me check 4BHK options in Panchavati with Lift, Gym.\nClient: I couldn't be happier with this, when can we sign the papers?",
     "city": "Nashik",
     "location": "Panchavati",
     "property_type": "4BHK",
@@ -3023,7 +3023,7 @@
   },
   {
     "id": 232,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I'm searching for a 2BHK near Hinjewadi, budget is 45 lakhs.\nAgent: Sure, let me check 2BHK options in Hinjewadi with Security.\nClient: I have a really good feeling about this one, let's proceed.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I'm searching for a 2BHK near Hinjewadi, budget is 45 lakhs.\nAgent: Sure, let me check 2BHK options in Hinjewadi with Security.\nClient: I couldn't be happier with this, when can we sign the papers?",
     "city": "Pune",
     "location": "Hinjewadi",
     "property_type": "2BHK",
@@ -3076,7 +3076,7 @@
   },
   {
     "id": 236,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I want to buy a Row House, budget around 65 lakhs\nAgent: Sure, let me check Row House options in Nashik Road with Garden.\nClient: I'm delighted with how well this matches what we were hoping for.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I want to buy a Row House, budget around 65 lakhs\nAgent: Sure, let me check Row House options in Nashik Road with Garden.\nClient: Is it possible to visit this property as soon as possible? I really don't want to miss it.",
     "city": "Nashik",
     "location": "Nashik Road",
     "property_type": "Row House",
@@ -3101,7 +3101,7 @@
   },
   {
     "id": 238,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Hello, College Road mein koi acha 1BHK hai kya, budget 30 lakhs tak\nAgent: Sure, let me check 1BHK options in College Road with Children Play Area.\nClient: Mala he perfect vatla, chala pudhe jauya.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Hello, College Road mein koi acha 1BHK hai kya, budget 30 lakhs tak\nAgent: Sure, let me check 1BHK options in College Road with Children Play Area.\nClient: Khup avadla mala, ekdum perfect ahe!",
     "city": "Nashik",
     "location": "College Road",
     "property_type": "1BHK",
@@ -3139,7 +3139,7 @@
   },
   {
     "id": 241,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Namaste, mujhe ek 2BHK chahiye Indira Nagar mein\nAgent: Sure, let me check 2BHK options in Indira Nagar with Children Play Area, Parking, Gym.\nClient: This has honestly made my day, thank you so much for finding it.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Namaste, mujhe ek 2BHK chahiye Indira Nagar mein\nAgent: Sure, let me check 2BHK options in Indira Nagar with Children Play Area, Parking, Gym.\nClient: Superb choice, let's finalize the details.",
     "city": "Nashik",
     "location": "Indira Nagar",
     "property_type": "2BHK",
@@ -3269,7 +3269,7 @@
   },
   {
     "id": 251,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Hi, I'm looking for a 1BHK in Panchavati\nAgent: Sure, let me check 1BHK options in Panchavati with Gym, Parking, Swimming Pool.\nClient: Superb choice, let's finalize the details. I couldn't be happier with this, when can we sign the papers?",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Hi, I'm looking for a 1BHK in Panchavati\nAgent: Sure, let me check 1BHK options in Panchavati with Gym, Parking, Swimming Pool.\nClient: Ekdum best ahe, yaha se aage badhte hain! Yeh toh bilkul sahi hai, aage badhte hain.",
     "city": "Nashik",
     "location": "Panchavati",
     "property_type": "1BHK",
@@ -3307,7 +3307,7 @@
   },
   {
     "id": 254,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Hi, I'm looking for a Row House in Wakad\nAgent: Sure, let me check Row House options in Wakad with Power Backup, Security.\nClient: Honestly, this is better than anything else I've seen so far.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Hi, I'm looking for a Row House in Wakad\nAgent: Sure, let me check Row House options in Wakad with Power Backup, Security.\nClient: This has honestly made my day, thank you so much for finding it.",
     "city": "Pune",
     "location": "Wakad",
     "property_type": "Row House",
@@ -3320,7 +3320,7 @@
   },
   {
     "id": 255,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I want to buy a Plot, budget around 45 lakhs\nAgent: Sure, let me check Plot options in Panchavati with Security, Children Play Area.\nClient: Sounds fantastic, please book a visit for me. Perfect, exactly what I was looking for!",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I want to buy a Plot, budget around 45 lakhs\nAgent: Sure, let me check Plot options in Panchavati with Security, Children Play Area.\nClient: Mala vatla hech aamhala pahije hota, chala pudhla step karuya. Perfect, exactly what I was looking for!",
     "city": "Nashik",
     "location": "Panchavati",
     "property_type": "Plot",
@@ -3345,7 +3345,7 @@
   },
   {
     "id": 257,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I'm searching for a 2BHK near Gangapur Road, budget is 1 crore.\nAgent: Sure, let me check 2BHK options in Gangapur Road with Gym, Swimming Pool.\nClient: I couldn't be happier with this, when can we sign the papers?",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I'm searching for a 2BHK near Gangapur Road, budget is 1 crore.\nAgent: Sure, let me check 2BHK options in Gangapur Road with Gym, Swimming Pool.\nClient: Yeh toh bilkul sahi hai, aage badhte hain.",
     "city": "Nashik",
     "location": "Gangapur Road",
     "property_type": "2BHK",
@@ -3423,7 +3423,7 @@
   },
   {
     "id": 263,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I want to buy a Bungalow, budget around 1 crore\nAgent: Sure, let me check Bungalow options in Kharadi with Parking, Gym, Children Play Area.\nClient: Amazing, when can I schedule a visit? I'm so pleased with this, it checks every single thing on our list.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I want to buy a Bungalow, budget around 1 crore\nAgent: Sure, let me check Bungalow options in Kharadi with Parking, Gym, Children Play Area.\nClient: Amazing, when can I schedule a visit? Everything about this feels right, I'm ready to commit.",
     "city": "Pune",
     "location": "Kharadi",
     "property_type": "Bungalow",
@@ -3437,7 +3437,7 @@
   },
   {
     "id": 264,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I want to buy a Studio Apartment, budget around 1 crore\nAgent: Sure, let me check Studio Apartment options in Cidco with Gym, Power Backup, CCTV.\nClient: Mala he perfect vatla, chala pudhe jauya.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I want to buy a Studio Apartment, budget around 1 crore\nAgent: Sure, let me check Studio Apartment options in Cidco with Gym, Power Backup, CCTV.\nClient: Khup avadla mala, ekdum perfect ahe!",
     "city": "Nashik",
     "location": "Cidco",
     "property_type": "Studio Apartment",
@@ -3451,7 +3451,7 @@
   },
   {
     "id": 265,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Mujhe Wakad ke aas paas Studio Apartment dhundh rahe hain, budget 30 lakhs.\nAgent: Sure, let me check Studio Apartment options in Wakad with Children Play Area.\nClient: Is it possible to visit this property as soon as possible? I really don't want to miss it.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Mujhe Wakad ke aas paas Studio Apartment dhundh rahe hain, budget 30 lakhs.\nAgent: Sure, let me check Studio Apartment options in Wakad with Children Play Area.\nClient: Mast ahe, mala khup avadla, chala baghuya.",
     "city": "Pune",
     "location": "Wakad",
     "property_type": "Studio Apartment",
@@ -3515,7 +3515,7 @@
   },
   {
     "id": 270,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Mala Gangapur Road madhe 3BHK baghaycha ahe\nAgent: Sure, let me check 3BHK options in Gangapur Road with Security, Clubhouse.\nClient: This is wonderful news, please share the next steps with me.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Mala Gangapur Road madhe 3BHK baghaycha ahe\nAgent: Sure, let me check 3BHK options in Gangapur Road with Security, Clubhouse.\nClient: Mala he perfect vatla, chala pudhe jauya.",
     "city": "Nashik",
     "location": "Gangapur Road",
     "property_type": "3BHK",
@@ -3617,7 +3617,7 @@
   },
   {
     "id": 278,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I'm searching for a 1RK near College Road, budget is 30 lakhs.\nAgent: Sure, let me check 1RK options in College Road with Children Play Area, Garden.\nClient: This is wonderful news, please share the next steps with me.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I'm searching for a 1RK near College Road, budget is 30 lakhs.\nAgent: Sure, let me check 1RK options in College Road with Children Play Area, Garden.\nClient: Mala he perfect vatla, chala pudhe jauya.",
     "city": "Nashik",
     "location": "College Road",
     "property_type": "1RK",
@@ -3630,7 +3630,7 @@
   },
   {
     "id": 279,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Hi, I'm looking for a Row House in College Road\nAgent: Sure, let me check Row House options in College Road with Parking, Clubhouse, Children Play Area.\nClient: Everything about this feels right, I'm ready to commit. My whole family will be delighted when they see this option.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Hi, I'm looking for a Row House in College Road\nAgent: Sure, let me check Row House options in College Road with Parking, Clubhouse, Children Play Area.\nClient: Sounds fantastic, please book a visit for me. This is wonderful news, please share the next steps with me.",
     "city": "Nashik",
     "location": "College Road",
     "property_type": "Row House",
@@ -3657,7 +3657,7 @@
   },
   {
     "id": 281,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Hello, Nashik Road mein koi acha Plot hai kya, budget 65 lakhs tak\nAgent: Sure, let me check Plot options in Nashik Road with Swimming Pool.\nClient: My whole family will be delighted when they see this option.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Hello, Nashik Road mein koi acha Plot hai kya, budget 65 lakhs tak\nAgent: Sure, let me check Plot options in Nashik Road with Swimming Pool.\nClient: This is wonderful news, please share the next steps with me.",
     "city": "Nashik",
     "location": "Nashik Road",
     "property_type": "Plot",
@@ -3681,7 +3681,7 @@
   },
   {
     "id": 283,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Mala Panchavati madhe Plot baghaycha ahe\nAgent: Sure, let me check Plot options in Panchavati with Gym.\nClient: Superb choice, let's finalize the details.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Mala Panchavati madhe Plot baghaycha ahe\nAgent: Sure, let me check Plot options in Panchavati with Gym.\nClient: Ekdum best ahe, yaha se aage badhte hain!",
     "city": "Nashik",
     "location": "Panchavati",
     "property_type": "Plot",
@@ -3733,7 +3733,7 @@
   },
   {
     "id": 287,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I'm searching for a Villa near College Road, budget is 1.2 crore.\nAgent: Sure, let me check Villa options in College Road with Swimming Pool, Lift, Clubhouse.\nClient: Great option, I'm ready to move ahead. This is exactly what my family has been hoping to find for months.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I'm searching for a Villa near College Road, budget is 1.2 crore.\nAgent: Sure, let me check Villa options in College Road with Swimming Pool, Lift, Clubhouse.\nClient: Great option, I'm ready to move ahead. I have a really good feeling about this one, let's proceed.",
     "city": "Nashik",
     "location": "College Road",
     "property_type": "Villa",
@@ -3747,7 +3747,7 @@
   },
   {
     "id": 288,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I want to buy a 1RK, budget around 65 lakhs\nAgent: Sure, let me check 1RK options in Hinjewadi with Garden.\nClient: My whole family will be delighted when they see this option.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I want to buy a 1RK, budget around 65 lakhs\nAgent: Sure, let me check 1RK options in Hinjewadi with Garden.\nClient: This is wonderful news, please share the next steps with me.",
     "city": "Pune",
     "location": "Hinjewadi",
     "property_type": "1RK",
@@ -3785,7 +3785,7 @@
   },
   {
     "id": 291,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Mujhe Hadapsar ke aas paas Villa dhundh rahe hain, budget 50 lakhs.\nAgent: Sure, let me check Villa options in Hadapsar with Children Play Area, CCTV.\nClient: Is it possible to visit this property as soon as possible? I really don't want to miss it. Wow, I love it, let's move forward!",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Mujhe Hadapsar ke aas paas Villa dhundh rahe hain, budget 50 lakhs.\nAgent: Sure, let me check Villa options in Hadapsar with Children Play Area, CCTV.\nClient: Mast ahe, mala khup avadla, chala baghuya. Wow, I love it, let's move forward!",
     "city": "Pune",
     "location": "Hadapsar",
     "property_type": "Villa",
@@ -3798,7 +3798,7 @@
   },
   {
     "id": 292,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Mala Satpur madhe 3BHK baghaycha ahe\nAgent: Sure, let me check 3BHK options in Satpur with Children Play Area, Power Backup, Security.\nClient: Mast ahe, mala khup avadla, chala baghuya. Ekdum zakas, mala khup avadla!",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Mala Satpur madhe 3BHK baghaycha ahe\nAgent: Sure, let me check 3BHK options in Satpur with Children Play Area, Power Backup, Security.\nClient: Mala ha ghar khup avadla, lagech pudhe jauya. Ekdum zakas, mala khup avadla!",
     "city": "Nashik",
     "location": "Satpur",
     "property_type": "3BHK",
@@ -3838,7 +3838,7 @@
   },
   {
     "id": 295,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I want to buy a 1RK, budget around 45 lakhs\nAgent: Sure, let me check 1RK options in Indira Nagar with Children Play Area.\nClient: Yeh toh bilkul sahi hai, aage badhte hain. Mala vatla hech aamhala pahije hota, chala pudhla step karuya.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I want to buy a 1RK, budget around 45 lakhs\nAgent: Sure, let me check 1RK options in Indira Nagar with Children Play Area.\nClient: Zakas ahe ekdum, chala confirm karuya! Yeh ghar bahut pasand aaya, hum turant aage badhenge.",
     "city": "Nashik",
     "location": "Indira Nagar",
     "property_type": "1RK",
@@ -3850,7 +3850,7 @@
   },
   {
     "id": 296,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I'm searching for a 1RK near College Road, budget is 45 lakhs.\nAgent: Sure, let me check 1RK options in College Road with Children Play Area, CCTV.\nClient: This is wonderful news, please share the next steps with me.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I'm searching for a 1RK near College Road, budget is 45 lakhs.\nAgent: Sure, let me check 1RK options in College Road with Children Play Area, CCTV.\nClient: Mala he perfect vatla, chala pudhe jauya.",
     "city": "Nashik",
     "location": "College Road",
     "property_type": "1RK",
@@ -3863,7 +3863,7 @@
   },
   {
     "id": 297,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Hello, Panchavati mein koi acha 1BHK hai kya, budget 50 lakhs tak\nAgent: Sure, let me check 1BHK options in Panchavati with Garden.\nClient: I'm so pleased with this, it checks every single thing on our list.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Hello, Panchavati mein koi acha 1BHK hai kya, budget 50 lakhs tak\nAgent: Sure, let me check 1BHK options in Panchavati with Garden.\nClient: Everything about this feels right, I'm ready to commit.",
     "city": "Nashik",
     "location": "Panchavati",
     "property_type": "1BHK",
@@ -3938,7 +3938,7 @@
   },
   {
     "id": 303,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Mujhe Hadapsar ke aas paas Bungalow dhundh rahe hain, budget 50 lakhs.\nAgent: Sure, let me check Bungalow options in Hadapsar with Lift.\nClient: My whole family will be delighted when they see this option. I'm thrilled, this fits everything we need.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Mujhe Hadapsar ke aas paas Bungalow dhundh rahe hain, budget 50 lakhs.\nAgent: Sure, let me check Bungalow options in Hadapsar with Lift.\nClient: This is wonderful news, please share the next steps with me. I'm thrilled, this fits everything we need.",
     "city": "Pune",
     "location": "Hadapsar",
     "property_type": "Bungalow",
@@ -3963,7 +3963,7 @@
   },
   {
     "id": 305,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I'm searching for a Row House near College Road, budget is 30 lakhs.\nAgent: Sure, let me check Row House options in College Road with CCTV, Gym, Children Play Area.\nClient: Sounds fantastic, please book a visit for me.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I'm searching for a Row House near College Road, budget is 30 lakhs.\nAgent: Sure, let me check Row House options in College Road with CCTV, Gym, Children Play Area.\nClient: Mala vatla hech aamhala pahije hota, chala pudhla step karuya.",
     "city": "Nashik",
     "location": "College Road",
     "property_type": "Row House",
@@ -3977,7 +3977,7 @@
   },
   {
     "id": 306,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Hello, Nashik Road mein koi acha 2BHK hai kya, budget 45 lakhs tak\nAgent: Sure, let me check 2BHK options in Nashik Road with Garden, Children Play Area.\nClient: Mast ahe, mala khup avadla, chala baghuya.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Hello, Nashik Road mein koi acha 2BHK hai kya, budget 45 lakhs tak\nAgent: Sure, let me check 2BHK options in Nashik Road with Garden, Children Play Area.\nClient: Mala ha ghar khup avadla, lagech pudhe jauya.",
     "city": "Nashik",
     "location": "Nashik Road",
     "property_type": "2BHK",
@@ -4027,7 +4027,7 @@
   },
   {
     "id": 310,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Mala College Road madhe Villa baghaycha ahe\nAgent: Sure, let me check Villa options in College Road with Power Backup, Clubhouse, Gym.\nClient: Yeh dekhkar bahut khushi hui, hum aage badhna chahte hain.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Mala College Road madhe Villa baghaycha ahe\nAgent: Sure, let me check Villa options in College Road with Power Backup, Clubhouse, Gym.\nClient: Sahi hai yaar, ekdum pasand aaya mujhe!",
     "city": "Nashik",
     "location": "College Road",
     "property_type": "Villa",
@@ -4065,7 +4065,7 @@
   },
   {
     "id": 313,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Hi, I'm looking for a Bungalow in Panchavati\nAgent: Sure, let me check Bungalow options in Panchavati with CCTV.\nClient: I can't wait to see it in person! Sounds fantastic, please book a visit for me.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Hi, I'm looking for a Bungalow in Panchavati\nAgent: Sure, let me check Bungalow options in Panchavati with CCTV.\nClient: I can't wait to see it in person! Mala vatla hech aamhala pahije hota, chala pudhla step karuya.",
     "city": "Nashik",
     "location": "Panchavati",
     "property_type": "Bungalow",
@@ -4140,7 +4140,7 @@
   },
   {
     "id": 319,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I want to buy a Studio Apartment, budget around 65 lakhs\nAgent: Sure, let me check Studio Apartment options in Hadapsar with Gym, CCTV, Swimming Pool.\nClient: Mala he perfect vatla, chala pudhe jauya. I have a really good feeling about this one, let's proceed.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I want to buy a Studio Apartment, budget around 65 lakhs\nAgent: Sure, let me check Studio Apartment options in Hadapsar with Gym, CCTV, Swimming Pool.\nClient: Khup avadla mala, ekdum perfect ahe! I couldn't be happier with this, when can we sign the papers?",
     "city": "Pune",
     "location": "Hadapsar",
     "property_type": "Studio Apartment",
@@ -4300,7 +4300,7 @@
   },
   {
     "id": 331,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Hi, I'm looking for a Row House in Kharadi\nAgent: Sure, let me check Row House options in Kharadi with Lift, Clubhouse, Children Play Area.\nClient: Bahut badhiya hai, main isko lena chahta hoon.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Hi, I'm looking for a Row House in Kharadi\nAgent: Sure, let me check Row House options in Kharadi with Lift, Clubhouse, Children Play Area.\nClient: Yeh dekhkar bahut khushi hui, hum aage badhna chahte hain.",
     "city": "Pune",
     "location": "Kharadi",
     "property_type": "Row House",
@@ -4314,7 +4314,7 @@
   },
   {
     "id": 332,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I want to buy a Bungalow, budget around 1.2 crore\nAgent: Sure, let me check Bungalow options in Kharadi with CCTV.\nClient: Everything about this feels right, I'm ready to commit. Mala vatla hech aamhala pahije hota, chala pudhla step karuya.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I want to buy a Bungalow, budget around 1.2 crore\nAgent: Sure, let me check Bungalow options in Kharadi with CCTV.\nClient: Sounds fantastic, please book a visit for me. Yeh ghar bahut pasand aaya, hum turant aage badhenge.",
     "city": "Pune",
     "location": "Kharadi",
     "property_type": "Bungalow",
@@ -4377,7 +4377,7 @@
   },
   {
     "id": 337,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Mujhe Hinjewadi ke aas paas 1RK dhundh rahe hain, budget 1 crore.\nAgent: Sure, let me check 1RK options in Hinjewadi with Parking, Lift.\nClient: I'm so pleased with this, it checks every single thing on our list. This has honestly made my day, thank you so much for finding it.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Mujhe Hinjewadi ke aas paas 1RK dhundh rahe hain, budget 1 crore.\nAgent: Sure, let me check 1RK options in Hinjewadi with Parking, Lift.\nClient: Everything about this feels right, I'm ready to commit. Superb choice, let's finalize the details.",
     "city": "Pune",
     "location": "Hinjewadi",
     "property_type": "1RK",
@@ -4445,7 +4445,7 @@
   },
   {
     "id": 342,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Hello, Nashik Road mein koi acha Bungalow hai kya, budget 30 lakhs tak\nAgent: Sure, let me check Bungalow options in Nashik Road with Clubhouse, Garden, Lift.\nClient: Really glad I found this, it's better than I imagined.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Hello, Nashik Road mein koi acha Bungalow hai kya, budget 30 lakhs tak\nAgent: Sure, let me check Bungalow options in Nashik Road with Clubhouse, Garden, Lift.\nClient: Bahut badhiya hai, main isko lena chahta hoon.",
     "city": "Nashik",
     "location": "Nashik Road",
     "property_type": "Bungalow",
@@ -4459,7 +4459,7 @@
   },
   {
     "id": 343,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I'm searching for a Plot near Indira Nagar, budget is 80 lakhs.\nAgent: Sure, let me check Plot options in Indira Nagar with Lift, Swimming Pool.\nClient: This genuinely exceeds what I expected, I'd love to move forward. Wow, I love it, let's move forward!",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I'm searching for a Plot near Indira Nagar, budget is 80 lakhs.\nAgent: Sure, let me check Plot options in Indira Nagar with Lift, Swimming Pool.\nClient: Really glad I found this, it's better than I imagined. Wow, I love it, let's move forward!",
     "city": "Nashik",
     "location": "Indira Nagar",
     "property_type": "Plot",
@@ -4509,7 +4509,7 @@
   },
   {
     "id": 347,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Mala Hinjewadi madhe 1RK baghaycha ahe\nAgent: Sure, let me check 1RK options in Hinjewadi with Security, Swimming Pool, Gym.\nClient: I'm so pleased with this, it checks every single thing on our list.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Mala Hinjewadi madhe 1RK baghaycha ahe\nAgent: Sure, let me check 1RK options in Hinjewadi with Security, Swimming Pool, Gym.\nClient: Everything about this feels right, I'm ready to commit.",
     "city": "Pune",
     "location": "Hinjewadi",
     "property_type": "1RK",
@@ -4588,7 +4588,7 @@
   },
   {
     "id": 353,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Mujhe Kharadi ke aas paas Bungalow dhundh rahe hain, budget 30 lakhs.\nAgent: Sure, let me check Bungalow options in Kharadi with Gym, Power Backup.\nClient: This is wonderful news, please share the next steps with me.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Mujhe Kharadi ke aas paas Bungalow dhundh rahe hain, budget 30 lakhs.\nAgent: Sure, let me check Bungalow options in Kharadi with Gym, Power Backup.\nClient: Mala he perfect vatla, chala pudhe jauya.",
     "city": "Pune",
     "location": "Kharadi",
     "property_type": "Bungalow",
@@ -4769,7 +4769,7 @@
   },
   {
     "id": 367,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Hello, Nashik Road mein koi acha 2BHK hai kya, budget 1 crore tak\nAgent: Sure, let me check 2BHK options in Nashik Road with Swimming Pool, Clubhouse, CCTV.\nClient: Is it possible to visit this property as soon as possible? I really don't want to miss it.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Hello, Nashik Road mein koi acha 2BHK hai kya, budget 1 crore tak\nAgent: Sure, let me check 2BHK options in Nashik Road with Swimming Pool, Clubhouse, CCTV.\nClient: Mast ahe, mala khup avadla, chala baghuya.",
     "city": "Nashik",
     "location": "Nashik Road",
     "property_type": "2BHK",
@@ -4809,7 +4809,7 @@
   },
   {
     "id": 370,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Hi, I'm looking for a Bungalow in Indira Nagar\nAgent: Sure, let me check Bungalow options in Indira Nagar with Garden, Clubhouse, Gym.\nClient: Mala vatla hech aamhala pahije hota, chala pudhla step karuya.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Hi, I'm looking for a Bungalow in Indira Nagar\nAgent: Sure, let me check Bungalow options in Indira Nagar with Garden, Clubhouse, Gym.\nClient: Yeh ghar bahut pasand aaya, hum turant aage badhenge.",
     "city": "Nashik",
     "location": "Indira Nagar",
     "property_type": "Bungalow",
@@ -4862,7 +4862,7 @@
   },
   {
     "id": 374,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Mala Cidco madhe 3BHK baghaycha ahe\nAgent: Sure, let me check 3BHK options in Cidco with Garden, Security.\nClient: Bahut badhiya hai, main isko lena chahta hoon. I couldn't be happier with this, when can we sign the papers?",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Mala Cidco madhe 3BHK baghaycha ahe\nAgent: Sure, let me check 3BHK options in Cidco with Garden, Security.\nClient: Yeh dekhkar bahut khushi hui, hum aage badhna chahte hain. Yeh toh bilkul sahi hai, aage badhte hain.",
     "city": "Nashik",
     "location": "Cidco",
     "property_type": "3BHK",
@@ -4917,7 +4917,7 @@
   },
   {
     "id": 378,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I'm searching for a Villa near Gangapur Road, budget is 65 lakhs.\nAgent: Sure, let me check Villa options in Gangapur Road with Lift, Power Backup, Swimming Pool.\nClient: Yeh dekhkar bahut khushi hui, hum aage badhna chahte hain. Honestly, this is better than anything else I've seen so far.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I'm searching for a Villa near Gangapur Road, budget is 65 lakhs.\nAgent: Sure, let me check Villa options in Gangapur Road with Lift, Power Backup, Swimming Pool.\nClient: Sahi hai yaar, ekdum pasand aaya mujhe! This has honestly made my day, thank you so much for finding it.",
     "city": "Nashik",
     "location": "Gangapur Road",
     "property_type": "Villa",
@@ -4945,7 +4945,7 @@
   },
   {
     "id": 380,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Hi, I'm looking for a Villa in Cidco\nAgent: Sure, let me check Villa options in Cidco with Lift.\nClient: Honestly, this is better than anything else I've seen so far.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Hi, I'm looking for a Villa in Cidco\nAgent: Sure, let me check Villa options in Cidco with Lift.\nClient: This has honestly made my day, thank you so much for finding it.",
     "city": "Nashik",
     "location": "Cidco",
     "property_type": "Villa",
@@ -4996,7 +4996,7 @@
   },
   {
     "id": 384,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Can you tell me about properties in Kothrud?\nAgent: Sure, let me check Studio Apartment options in Kothrud with Lift, CCTV.\nClient: Finally, something that ticks all the boxes! Is it possible to visit this property as soon as possible? I really don't want to miss it.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Can you tell me about properties in Kothrud?\nAgent: Sure, let me check Studio Apartment options in Kothrud with Lift, CCTV.\nClient: Finally, something that ticks all the boxes! Mast ahe, mala khup avadla, chala baghuya.",
     "city": "Pune",
     "location": "Kothrud",
     "property_type": "Studio Apartment",
@@ -5087,7 +5087,7 @@
   },
   {
     "id": 391,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I want to buy a Studio Apartment, budget around 50 lakhs\nAgent: Sure, let me check Studio Apartment options in Cidco with Power Backup, Children Play Area.\nClient: I have a really good feeling about this one, let's proceed.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I want to buy a Studio Apartment, budget around 50 lakhs\nAgent: Sure, let me check Studio Apartment options in Cidco with Power Backup, Children Play Area.\nClient: I couldn't be happier with this, when can we sign the papers?",
     "city": "Nashik",
     "location": "Cidco",
     "property_type": "Studio Apartment",
@@ -5178,7 +5178,7 @@
   },
   {
     "id": 398,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Namaste, mujhe ek Studio Apartment chahiye Deolali mein\nAgent: Sure, let me check Studio Apartment options in Deolali with Lift, Children Play Area, Garden.\nClient: This genuinely exceeds what I expected, I'd love to move forward. My whole family will be delighted when they see this option.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Namaste, mujhe ek Studio Apartment chahiye Deolali mein\nAgent: Sure, let me check Studio Apartment options in Deolali with Lift, Children Play Area, Garden.\nClient: Really glad I found this, it's better than I imagined. This is wonderful news, please share the next steps with me.",
     "city": "Nashik",
     "location": "Deolali",
     "property_type": "Studio Apartment",
@@ -5273,7 +5273,7 @@
   },
   {
     "id": 405,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I'm searching for a Villa near Indira Nagar, budget is 80 lakhs.\nAgent: Sure, let me check Villa options in Indira Nagar with Garden, Parking.\nClient: I'm so pleased with this, it checks every single thing on our list.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I'm searching for a Villa near Indira Nagar, budget is 80 lakhs.\nAgent: Sure, let me check Villa options in Indira Nagar with Garden, Parking.\nClient: Everything about this feels right, I'm ready to commit.",
     "city": "Nashik",
     "location": "Indira Nagar",
     "property_type": "Villa",
@@ -5300,7 +5300,7 @@
   },
   {
     "id": 407,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Namaste, mujhe ek 4BHK chahiye Kharadi mein\nAgent: Sure, let me check 4BHK options in Kharadi with Children Play Area, Parking, Security.\nClient: Ekdum zakas, mala khup avadla! Honestly, this is better than anything else I've seen so far.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Namaste, mujhe ek 4BHK chahiye Kharadi mein\nAgent: Sure, let me check 4BHK options in Kharadi with Children Play Area, Parking, Security.\nClient: Ekdum zakas, mala khup avadla! This has honestly made my day, thank you so much for finding it.",
     "city": "Pune",
     "location": "Kharadi",
     "property_type": "4BHK",
@@ -5314,7 +5314,7 @@
   },
   {
     "id": 408,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Can you tell me about properties in Deolali?\nAgent: Sure, let me check 1RK options in Deolali with Clubhouse.\nClient: Mast ahe, mala khup avadla, chala baghuya.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Can you tell me about properties in Deolali?\nAgent: Sure, let me check 1RK options in Deolali with Clubhouse.\nClient: Mala ha ghar khup avadla, lagech pudhe jauya.",
     "city": "Nashik",
     "location": "Deolali",
     "property_type": "1RK",
@@ -5326,7 +5326,7 @@
   },
   {
     "id": 409,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Mujhe Kharadi ke aas paas 1RK dhundh rahe hain, budget 50 lakhs.\nAgent: Sure, let me check 1RK options in Kharadi with Clubhouse.\nClient: Superb choice, let's finalize the details. I'm thrilled, this fits everything we need.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Mujhe Kharadi ke aas paas 1RK dhundh rahe hain, budget 50 lakhs.\nAgent: Sure, let me check 1RK options in Kharadi with Clubhouse.\nClient: Ekdum best ahe, yaha se aage badhte hain! I'm thrilled, this fits everything we need.",
     "city": "Pune",
     "location": "Kharadi",
     "property_type": "1RK",
@@ -5374,7 +5374,7 @@
   },
   {
     "id": 413,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Hi, I'm looking for a 1BHK in Kothrud\nAgent: Sure, let me check 1BHK options in Kothrud with Garden, Security, Swimming Pool.\nClient: This genuinely exceeds what I expected, I'd love to move forward.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Hi, I'm looking for a 1BHK in Kothrud\nAgent: Sure, let me check 1BHK options in Kothrud with Garden, Security, Swimming Pool.\nClient: Really glad I found this, it's better than I imagined.",
     "city": "Pune",
     "location": "Kothrud",
     "property_type": "1BHK",
@@ -5388,7 +5388,7 @@
   },
   {
     "id": 414,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Mujhe Gangapur Road ke aas paas Plot dhundh rahe hain, budget 1.2 crore.\nAgent: Sure, let me check Plot options in Gangapur Road with Children Play Area, Clubhouse, Security.\nClient: Really glad I found this, it's better than I imagined. Amazing, when can I schedule a visit?",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Mujhe Gangapur Road ke aas paas Plot dhundh rahe hain, budget 1.2 crore.\nAgent: Sure, let me check Plot options in Gangapur Road with Children Play Area, Clubhouse, Security.\nClient: Bahut badhiya hai, main isko lena chahta hoon. Amazing, when can I schedule a visit?",
     "city": "Nashik",
     "location": "Gangapur Road",
     "property_type": "Plot",
@@ -5479,7 +5479,7 @@
   },
   {
     "id": 421,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I'm searching for a 3BHK near Gangapur Road, budget is 30 lakhs.\nAgent: Sure, let me check 3BHK options in Gangapur Road with Parking, Gym.\nClient: Yeh dekhkar bahut khushi hui, hum aage badhna chahte hain.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I'm searching for a 3BHK near Gangapur Road, budget is 30 lakhs.\nAgent: Sure, let me check 3BHK options in Gangapur Road with Parking, Gym.\nClient: Sahi hai yaar, ekdum pasand aaya mujhe!",
     "city": "Nashik",
     "location": "Gangapur Road",
     "property_type": "3BHK",
@@ -5620,7 +5620,7 @@
   },
   {
     "id": 432,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Hi, I'm looking for a Studio Apartment in Gangapur Road\nAgent: Sure, let me check Studio Apartment options in Gangapur Road with Garden, Gym.\nClient: This has honestly made my day, thank you so much for finding it.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Hi, I'm looking for a Studio Apartment in Gangapur Road\nAgent: Sure, let me check Studio Apartment options in Gangapur Road with Garden, Gym.\nClient: Superb choice, let's finalize the details.",
     "city": "Nashik",
     "location": "Gangapur Road",
     "property_type": "Studio Apartment",
@@ -5633,7 +5633,7 @@
   },
   {
     "id": 433,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Mujhe Gangapur Road ke aas paas Studio Apartment dhundh rahe hain, budget 80 lakhs.\nAgent: Sure, let me check Studio Apartment options in Gangapur Road with Clubhouse, Security, Parking.\nClient: Mala vatla hech aamhala pahije hota, chala pudhla step karuya.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Mujhe Gangapur Road ke aas paas Studio Apartment dhundh rahe hain, budget 80 lakhs.\nAgent: Sure, let me check Studio Apartment options in Gangapur Road with Clubhouse, Security, Parking.\nClient: Yeh ghar bahut pasand aaya, hum turant aage badhenge.",
     "city": "Nashik",
     "location": "Gangapur Road",
     "property_type": "Studio Apartment",
@@ -5832,7 +5832,7 @@
   },
   {
     "id": 448,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Hello, Wagholi mein koi acha Villa hai kya, budget 50 lakhs tak\nAgent: Sure, let me check Villa options in Wagholi with Power Backup, Clubhouse.\nClient: I have a really good feeling about this one, let's proceed. I'm so pleased with this, it checks every single thing on our list.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Hello, Wagholi mein koi acha Villa hai kya, budget 50 lakhs tak\nAgent: Sure, let me check Villa options in Wagholi with Power Backup, Clubhouse.\nClient: I couldn't be happier with this, when can we sign the papers? Everything about this feels right, I'm ready to commit.",
     "city": "Pune",
     "location": "Wagholi",
     "property_type": "Villa",
@@ -5845,7 +5845,7 @@
   },
   {
     "id": 449,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I'm searching for a 1RK near Indira Nagar, budget is 50 lakhs.\nAgent: Sure, let me check 1RK options in Indira Nagar with Children Play Area.\nClient: I couldn't be happier with this, when can we sign the papers?",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I'm searching for a 1RK near Indira Nagar, budget is 50 lakhs.\nAgent: Sure, let me check 1RK options in Indira Nagar with Children Play Area.\nClient: Yeh toh bilkul sahi hai, aage badhte hain.",
     "city": "Nashik",
     "location": "Indira Nagar",
     "property_type": "1RK",
@@ -5869,7 +5869,7 @@
   },
   {
     "id": 451,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I'm searching for a 3BHK near Wagholi, budget is 1 crore.\nAgent: Sure, let me check 3BHK options in Wagholi with Parking, CCTV, Gym.\nClient: Mast ahe, mala khup avadla, chala baghuya.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I'm searching for a 3BHK near Wagholi, budget is 1 crore.\nAgent: Sure, let me check 3BHK options in Wagholi with Parking, CCTV, Gym.\nClient: Mala ha ghar khup avadla, lagech pudhe jauya.",
     "city": "Pune",
     "location": "Wagholi",
     "property_type": "3BHK",
@@ -5977,7 +5977,7 @@
   },
   {
     "id": 459,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I'm searching for a 1RK near Viman Nagar, budget is 65 lakhs.\nAgent: Sure, let me check 1RK options in Viman Nagar with Children Play Area, Lift.\nClient: Superb choice, let's finalize the details. Yeh toh bilkul sahi hai, aage badhte hain.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I'm searching for a 1RK near Viman Nagar, budget is 65 lakhs.\nAgent: Sure, let me check 1RK options in Viman Nagar with Children Play Area, Lift.\nClient: Ekdum best ahe, yaha se aage badhte hain! Zakas ahe ekdum, chala confirm karuya!",
     "city": "Pune",
     "location": "Viman Nagar",
     "property_type": "1RK",
@@ -6066,7 +6066,7 @@
   },
   {
     "id": 466,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Hi, I'm looking for a 4BHK in Kothrud\nAgent: Sure, let me check 4BHK options in Kothrud with Gym.\nClient: This is exactly what my family has been hoping to find for months.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Hi, I'm looking for a 4BHK in Kothrud\nAgent: Sure, let me check 4BHK options in Kothrud with Gym.\nClient: I have a really good feeling about this one, let's proceed.",
     "city": "Pune",
     "location": "Kothrud",
     "property_type": "4BHK",
@@ -6105,7 +6105,7 @@
   },
   {
     "id": 469,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I'm searching for a Studio Apartment near Kothrud, budget is 1.2 crore.\nAgent: Sure, let me check Studio Apartment options in Kothrud with Children Play Area, CCTV.\nClient: Yeh toh bilkul sahi hai, aage badhte hain. Really glad I found this, it's better than I imagined.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I'm searching for a Studio Apartment near Kothrud, budget is 1.2 crore.\nAgent: Sure, let me check Studio Apartment options in Kothrud with Children Play Area, CCTV.\nClient: Zakas ahe ekdum, chala confirm karuya! Bahut badhiya hai, main isko lena chahta hoon.",
     "city": "Pune",
     "location": "Kothrud",
     "property_type": "Studio Apartment",
@@ -6118,7 +6118,7 @@
   },
   {
     "id": 470,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Can you tell me about properties in Cidco?\nAgent: Sure, let me check 1RK options in Cidco with Power Backup, Security, Swimming Pool.\nClient: This is wonderful news, please share the next steps with me.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Can you tell me about properties in Cidco?\nAgent: Sure, let me check 1RK options in Cidco with Power Backup, Security, Swimming Pool.\nClient: Mala he perfect vatla, chala pudhe jauya.",
     "city": "Nashik",
     "location": "Cidco",
     "property_type": "1RK",
@@ -6157,7 +6157,7 @@
   },
   {
     "id": 473,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Hi, I'm looking for a 2BHK in Panchavati\nAgent: Sure, let me check 2BHK options in Panchavati with Swimming Pool, Parking.\nClient: Mala vatla hech aamhala pahije hota, chala pudhla step karuya.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Hi, I'm looking for a 2BHK in Panchavati\nAgent: Sure, let me check 2BHK options in Panchavati with Swimming Pool, Parking.\nClient: Yeh ghar bahut pasand aaya, hum turant aage badhenge.",
     "city": "Nashik",
     "location": "Panchavati",
     "property_type": "2BHK",
@@ -6170,7 +6170,7 @@
   },
   {
     "id": 474,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I want to buy a Row House, budget around 1 crore\nAgent: Sure, let me check Row House options in Satpur with Power Backup, Security, Clubhouse.\nClient: Wow, I love it, let's move forward! Yeh toh bilkul sahi hai, aage badhte hain.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I want to buy a Row House, budget around 1 crore\nAgent: Sure, let me check Row House options in Satpur with Power Backup, Security, Clubhouse.\nClient: Wow, I love it, let's move forward! Zakas ahe ekdum, chala confirm karuya!",
     "city": "Nashik",
     "location": "Satpur",
     "property_type": "Row House",
@@ -6184,7 +6184,7 @@
   },
   {
     "id": 475,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Namaste, mujhe ek 1RK chahiye College Road mein\nAgent: Sure, let me check 1RK options in College Road with CCTV.\nClient: I'm delighted with how well this matches what we were hoping for. Perfect, exactly what I was looking for!",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Namaste, mujhe ek 1RK chahiye College Road mein\nAgent: Sure, let me check 1RK options in College Road with CCTV.\nClient: Is it possible to visit this property as soon as possible? I really don't want to miss it. Perfect, exactly what I was looking for!",
     "city": "Nashik",
     "location": "College Road",
     "property_type": "1RK",
@@ -6245,7 +6245,7 @@
   },
   {
     "id": 480,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I'm searching for a Bungalow near Indira Nagar, budget is 30 lakhs.\nAgent: Sure, let me check Bungalow options in Indira Nagar with CCTV, Clubhouse.\nClient: I'm delighted with how well this matches what we were hoping for. Yeh toh bilkul sahi hai, aage badhte hain.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I'm searching for a Bungalow near Indira Nagar, budget is 30 lakhs.\nAgent: Sure, let me check Bungalow options in Indira Nagar with CCTV, Clubhouse.\nClient: Is it possible to visit this property as soon as possible? I really don't want to miss it. Zakas ahe ekdum, chala confirm karuya!",
     "city": "Nashik",
     "location": "Indira Nagar",
     "property_type": "Bungalow",
@@ -6258,7 +6258,7 @@
   },
   {
     "id": 481,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Can you tell me about properties in Indira Nagar?\nAgent: Sure, let me check 2BHK options in Indira Nagar with Power Backup, Security, Garden.\nClient: Everything about this feels right, I'm ready to commit.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Can you tell me about properties in Indira Nagar?\nAgent: Sure, let me check 2BHK options in Indira Nagar with Power Backup, Security, Garden.\nClient: Sounds fantastic, please book a visit for me.",
     "city": "Nashik",
     "location": "Indira Nagar",
     "property_type": "2BHK",
@@ -6336,7 +6336,7 @@
   },
   {
     "id": 487,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Mala Hinjewadi madhe Row House baghaycha ahe\nAgent: Sure, let me check Row House options in Hinjewadi with Garden, Children Play Area.\nClient: I'm delighted with how well this matches what we were hoping for. Bahut badhiya hai, main isko lena chahta hoon.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Mala Hinjewadi madhe Row House baghaycha ahe\nAgent: Sure, let me check Row House options in Hinjewadi with Garden, Children Play Area.\nClient: Is it possible to visit this property as soon as possible? I really don't want to miss it. Yeh dekhkar bahut khushi hui, hum aage badhna chahte hain.",
     "city": "Pune",
     "location": "Hinjewadi",
     "property_type": "Row House",
@@ -6361,7 +6361,7 @@
   },
   {
     "id": 489,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Mujhe Gangapur Road ke aas paas 1RK dhundh rahe hain, budget 1 crore.\nAgent: Sure, let me check 1RK options in Gangapur Road with Security, Gym, Power Backup.\nClient: This has honestly made my day, thank you so much for finding it.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Mujhe Gangapur Road ke aas paas 1RK dhundh rahe hain, budget 1 crore.\nAgent: Sure, let me check 1RK options in Gangapur Road with Security, Gym, Power Backup.\nClient: Superb choice, let's finalize the details.",
     "city": "Nashik",
     "location": "Gangapur Road",
     "property_type": "1RK",
@@ -6467,7 +6467,7 @@
   },
   {
     "id": 497,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Can you tell me about properties in Panchavati?\nAgent: Sure, let me check Plot options in Panchavati with Children Play Area, Gym.\nClient: I have a really good feeling about this one, let's proceed. My whole family will be delighted when they see this option.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Can you tell me about properties in Panchavati?\nAgent: Sure, let me check Plot options in Panchavati with Children Play Area, Gym.\nClient: I couldn't be happier with this, when can we sign the papers? This is wonderful news, please share the next steps with me.",
     "city": "Nashik",
     "location": "Panchavati",
     "property_type": "Plot",
@@ -6480,7 +6480,7 @@
   },
   {
     "id": 498,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Hello, College Road mein koi acha Plot hai kya, budget 45 lakhs tak\nAgent: Sure, let me check Plot options in College Road with Clubhouse, Children Play Area, Security.\nClient: Yeh dekhkar bahut khushi hui, hum aage badhna chahte hain.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Hello, College Road mein koi acha Plot hai kya, budget 45 lakhs tak\nAgent: Sure, let me check Plot options in College Road with Clubhouse, Children Play Area, Security.\nClient: Sahi hai yaar, ekdum pasand aaya mujhe!",
     "city": "Nashik",
     "location": "College Road",
     "property_type": "Plot",
@@ -6508,7 +6508,7 @@
   },
   {
     "id": 500,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I'm searching for a 1RK near Satpur, budget is 1 crore.\nAgent: Sure, let me check 1RK options in Satpur with Gym, Swimming Pool.\nClient: I'm so pleased with this, it checks every single thing on our list. This has honestly made my day, thank you so much for finding it.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I'm searching for a 1RK near Satpur, budget is 1 crore.\nAgent: Sure, let me check 1RK options in Satpur with Gym, Swimming Pool.\nClient: Everything about this feels right, I'm ready to commit. Superb choice, let's finalize the details.",
     "city": "Nashik",
     "location": "Satpur",
     "property_type": "1RK",
@@ -6804,7 +6804,7 @@
   },
   {
     "id": 523,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Namaste, mujhe ek Studio Apartment chahiye Viman Nagar mein\nAgent: Sure, let me check Studio Apartment options in Viman Nagar with Lift.\nClient: Mala vatla hech aamhala pahije hota, chala pudhla step karuya.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Namaste, mujhe ek Studio Apartment chahiye Viman Nagar mein\nAgent: Sure, let me check Studio Apartment options in Viman Nagar with Lift.\nClient: Yeh ghar bahut pasand aaya, hum turant aage badhenge.",
     "city": "Pune",
     "location": "Viman Nagar",
     "property_type": "Studio Apartment",
@@ -6841,7 +6841,7 @@
   },
   {
     "id": 526,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Can you tell me about properties in Gangapur Road?\nAgent: Sure, let me check Row House options in Gangapur Road with Gym.\nClient: Everything about this feels right, I'm ready to commit.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Can you tell me about properties in Gangapur Road?\nAgent: Sure, let me check Row House options in Gangapur Road with Gym.\nClient: Sounds fantastic, please book a visit for me.",
     "city": "Nashik",
     "location": "Gangapur Road",
     "property_type": "Row House",
@@ -6890,7 +6890,7 @@
   },
   {
     "id": 530,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I'm searching for a 3BHK near Satpur, budget is 50 lakhs.\nAgent: Sure, let me check 3BHK options in Satpur with Clubhouse, CCTV, Parking.\nClient: This is exactly what my family has been hoping to find for months.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I'm searching for a 3BHK near Satpur, budget is 50 lakhs.\nAgent: Sure, let me check 3BHK options in Satpur with Clubhouse, CCTV, Parking.\nClient: I have a really good feeling about this one, let's proceed.",
     "city": "Nashik",
     "location": "Satpur",
     "property_type": "3BHK",
@@ -7007,7 +7007,7 @@
   },
   {
     "id": 539,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Mujhe Panchavati ke aas paas Bungalow dhundh rahe hain, budget 1 crore.\nAgent: Sure, let me check Bungalow options in Panchavati with Power Backup, Swimming Pool.\nClient: Yeh dekhkar bahut khushi hui, hum aage badhna chahte hain.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Mujhe Panchavati ke aas paas Bungalow dhundh rahe hain, budget 1 crore.\nAgent: Sure, let me check Bungalow options in Panchavati with Power Backup, Swimming Pool.\nClient: Sahi hai yaar, ekdum pasand aaya mujhe!",
     "city": "Nashik",
     "location": "Panchavati",
     "property_type": "Bungalow",
@@ -7164,7 +7164,7 @@
   },
   {
     "id": 551,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Can you tell me about properties in Wagholi?\nAgent: Sure, let me check 3BHK options in Wagholi with CCTV, Lift.\nClient: Bahut badhiya hai, main isko lena chahta hoon.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Can you tell me about properties in Wagholi?\nAgent: Sure, let me check 3BHK options in Wagholi with CCTV, Lift.\nClient: Yeh dekhkar bahut khushi hui, hum aage badhna chahte hain.",
     "city": "Pune",
     "location": "Wagholi",
     "property_type": "3BHK",
@@ -7255,7 +7255,7 @@
   },
   {
     "id": 558,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I want to buy a 1BHK, budget around 50 lakhs\nAgent: Sure, let me check 1BHK options in Kharadi with CCTV, Swimming Pool, Power Backup.\nClient: Yes, this works perfectly for my family. This is wonderful news, please share the next steps with me.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I want to buy a 1BHK, budget around 50 lakhs\nAgent: Sure, let me check 1BHK options in Kharadi with CCTV, Swimming Pool, Power Backup.\nClient: Yes, this works perfectly for my family. Mala he perfect vatla, chala pudhe jauya.",
     "city": "Pune",
     "location": "Kharadi",
     "property_type": "1BHK",
@@ -7309,7 +7309,7 @@
   },
   {
     "id": 562,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I'm searching for a Villa near Wakad, budget is 65 lakhs.\nAgent: Sure, let me check Villa options in Wakad with Gym.\nClient: I couldn't be happier with this, when can we sign the papers? Yes, this works perfectly for my family.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I'm searching for a Villa near Wakad, budget is 65 lakhs.\nAgent: Sure, let me check Villa options in Wakad with Gym.\nClient: Yeh toh bilkul sahi hai, aage badhte hain. Yes, this works perfectly for my family.",
     "city": "Pune",
     "location": "Wakad",
     "property_type": "Villa",
@@ -7321,7 +7321,7 @@
   },
   {
     "id": 563,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Hello, Hadapsar mein koi acha 2BHK hai kya, budget 1 crore tak\nAgent: Sure, let me check 2BHK options in Hadapsar with Swimming Pool, Gym.\nClient: I'm delighted with how well this matches what we were hoping for.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Hello, Hadapsar mein koi acha 2BHK hai kya, budget 1 crore tak\nAgent: Sure, let me check 2BHK options in Hadapsar with Swimming Pool, Gym.\nClient: Is it possible to visit this property as soon as possible? I really don't want to miss it.",
     "city": "Pune",
     "location": "Hadapsar",
     "property_type": "2BHK",
@@ -7360,7 +7360,7 @@
   },
   {
     "id": 566,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Can you tell me about properties in Indira Nagar?\nAgent: Sure, let me check 2BHK options in Indira Nagar with Swimming Pool, Gym.\nClient: This is wonderful news, please share the next steps with me.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Can you tell me about properties in Indira Nagar?\nAgent: Sure, let me check 2BHK options in Indira Nagar with Swimming Pool, Gym.\nClient: Mala he perfect vatla, chala pudhe jauya.",
     "city": "Nashik",
     "location": "Indira Nagar",
     "property_type": "2BHK",
@@ -7399,7 +7399,7 @@
   },
   {
     "id": 569,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I'm searching for a Villa near Indira Nagar, budget is 30 lakhs.\nAgent: Sure, let me check Villa options in Indira Nagar with Gym, Children Play Area.\nClient: Honestly, this is better than anything else I've seen so far.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I'm searching for a Villa near Indira Nagar, budget is 30 lakhs.\nAgent: Sure, let me check Villa options in Indira Nagar with Gym, Children Play Area.\nClient: This has honestly made my day, thank you so much for finding it.",
     "city": "Nashik",
     "location": "Indira Nagar",
     "property_type": "Villa",
@@ -7686,7 +7686,7 @@
   },
   {
     "id": 591,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Hi, I'm looking for a 2BHK in Panchavati\nAgent: Sure, let me check 2BHK options in Panchavati with Power Backup, Lift.\nClient: Mast ahe, mala khup avadla, chala baghuya.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Hi, I'm looking for a 2BHK in Panchavati\nAgent: Sure, let me check 2BHK options in Panchavati with Power Backup, Lift.\nClient: Mala ha ghar khup avadla, lagech pudhe jauya.",
     "city": "Nashik",
     "location": "Panchavati",
     "property_type": "2BHK",
@@ -7713,7 +7713,7 @@
   },
   {
     "id": 593,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Namaste, mujhe ek Bungalow chahiye College Road mein\nAgent: Sure, let me check Bungalow options in College Road with Lift, Power Backup, Children Play Area.\nClient: Everything about this feels right, I'm ready to commit.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Namaste, mujhe ek Bungalow chahiye College Road mein\nAgent: Sure, let me check Bungalow options in College Road with Lift, Power Backup, Children Play Area.\nClient: Sounds fantastic, please book a visit for me.",
     "city": "Nashik",
     "location": "College Road",
     "property_type": "Bungalow",
@@ -7727,7 +7727,7 @@
   },
   {
     "id": 594,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Mala Cidco madhe 3BHK baghaycha ahe\nAgent: Sure, let me check 3BHK options in Cidco with Clubhouse.\nClient: My whole family will be delighted when they see this option.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Mala Cidco madhe 3BHK baghaycha ahe\nAgent: Sure, let me check 3BHK options in Cidco with Clubhouse.\nClient: This is wonderful news, please share the next steps with me.",
     "city": "Nashik",
     "location": "Cidco",
     "property_type": "3BHK",
@@ -7790,7 +7790,7 @@
   },
   {
     "id": 599,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Can you tell me about properties in Kharadi?\nAgent: Sure, let me check Row House options in Kharadi with Security, Garden.\nClient: This is wonderful news, please share the next steps with me.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Can you tell me about properties in Kharadi?\nAgent: Sure, let me check Row House options in Kharadi with Security, Garden.\nClient: Mala he perfect vatla, chala pudhe jauya.",
     "city": "Pune",
     "location": "Kharadi",
     "property_type": "Row House",
@@ -7815,7 +7815,7 @@
   },
   {
     "id": 601,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I want to buy a 4BHK, budget around 50 lakhs\nAgent: Sure, let me check 4BHK options in Indira Nagar with Gym, CCTV, Clubhouse.\nClient: Sounds fantastic, please book a visit for me.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I want to buy a 4BHK, budget around 50 lakhs\nAgent: Sure, let me check 4BHK options in Indira Nagar with Gym, CCTV, Clubhouse.\nClient: Mala vatla hech aamhala pahije hota, chala pudhla step karuya.",
     "city": "Nashik",
     "location": "Indira Nagar",
     "property_type": "4BHK",
@@ -7843,7 +7843,7 @@
   },
   {
     "id": 603,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I want to buy a 2BHK, budget around 65 lakhs\nAgent: Sure, let me check 2BHK options in Satpur with CCTV, Parking.\nClient: Yeh toh bilkul sahi hai, aage badhte hain.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I want to buy a 2BHK, budget around 65 lakhs\nAgent: Sure, let me check 2BHK options in Satpur with CCTV, Parking.\nClient: Zakas ahe ekdum, chala confirm karuya!",
     "city": "Nashik",
     "location": "Satpur",
     "property_type": "2BHK",
@@ -7884,7 +7884,7 @@
   },
   {
     "id": 606,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I want to buy a Plot, budget around 45 lakhs\nAgent: Sure, let me check Plot options in Indira Nagar with Parking, Garden.\nClient: My whole family will be delighted when they see this option. This genuinely exceeds what I expected, I'd love to move forward.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I want to buy a Plot, budget around 45 lakhs\nAgent: Sure, let me check Plot options in Indira Nagar with Parking, Garden.\nClient: This is wonderful news, please share the next steps with me. Really glad I found this, it's better than I imagined.",
     "city": "Nashik",
     "location": "Indira Nagar",
     "property_type": "Plot",
@@ -7939,7 +7939,7 @@
   },
   {
     "id": 610,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Mujhe Panchavati ke aas paas 2BHK dhundh rahe hain, budget 80 lakhs.\nAgent: Sure, let me check 2BHK options in Panchavati with Security, Children Play Area.\nClient: I can't wait to see it in person! Everything about this feels right, I'm ready to commit.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Mujhe Panchavati ke aas paas 2BHK dhundh rahe hain, budget 80 lakhs.\nAgent: Sure, let me check 2BHK options in Panchavati with Security, Children Play Area.\nClient: I can't wait to see it in person! Sounds fantastic, please book a visit for me.",
     "city": "Nashik",
     "location": "Panchavati",
     "property_type": "2BHK",
@@ -7965,7 +7965,7 @@
   },
   {
     "id": 612,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Namaste, mujhe ek 2BHK chahiye Cidco mein\nAgent: Sure, let me check 2BHK options in Cidco with Children Play Area, Clubhouse, CCTV.\nClient: Wow, I love it, let's move forward! Superb choice, let's finalize the details.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Namaste, mujhe ek 2BHK chahiye Cidco mein\nAgent: Sure, let me check 2BHK options in Cidco with Children Play Area, Clubhouse, CCTV.\nClient: Wow, I love it, let's move forward! Ekdum best ahe, yaha se aage badhte hain!",
     "city": "Nashik",
     "location": "Cidco",
     "property_type": "2BHK",
@@ -8004,7 +8004,7 @@
   },
   {
     "id": 615,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Mujhe Indira Nagar ke aas paas Plot dhundh rahe hain, budget 30 lakhs.\nAgent: Sure, let me check Plot options in Indira Nagar with CCTV, Clubhouse, Garden.\nClient: Really glad I found this, it's better than I imagined.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Mujhe Indira Nagar ke aas paas Plot dhundh rahe hain, budget 30 lakhs.\nAgent: Sure, let me check Plot options in Indira Nagar with CCTV, Clubhouse, Garden.\nClient: Bahut badhiya hai, main isko lena chahta hoon.",
     "city": "Nashik",
     "location": "Indira Nagar",
     "property_type": "Plot",
@@ -8018,7 +8018,7 @@
   },
   {
     "id": 616,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Mujhe College Road ke aas paas Villa dhundh rahe hain, budget 50 lakhs.\nAgent: Sure, let me check Villa options in College Road with Gym, Security, Clubhouse.\nClient: I have a really good feeling about this one, let's proceed.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Mujhe College Road ke aas paas Villa dhundh rahe hain, budget 50 lakhs.\nAgent: Sure, let me check Villa options in College Road with Gym, Security, Clubhouse.\nClient: I couldn't be happier with this, when can we sign the papers?",
     "city": "Nashik",
     "location": "College Road",
     "property_type": "Villa",
@@ -8112,7 +8112,7 @@
   },
   {
     "id": 623,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Hi, I'm looking for a 4BHK in Wagholi\nAgent: Sure, let me check 4BHK options in Wagholi with Lift.\nClient: Sounds fantastic, please book a visit for me.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Hi, I'm looking for a 4BHK in Wagholi\nAgent: Sure, let me check 4BHK options in Wagholi with Lift.\nClient: Mala vatla hech aamhala pahije hota, chala pudhla step karuya.",
     "city": "Pune",
     "location": "Wagholi",
     "property_type": "4BHK",
@@ -8124,7 +8124,7 @@
   },
   {
     "id": 624,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I'm searching for a Studio Apartment near Panchavati, budget is 50 lakhs.\nAgent: Sure, let me check Studio Apartment options in Panchavati with Gym, Lift, Swimming Pool.\nClient: I'm thrilled, this fits everything we need. Is it possible to visit this property as soon as possible? I really don't want to miss it.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I'm searching for a Studio Apartment near Panchavati, budget is 50 lakhs.\nAgent: Sure, let me check Studio Apartment options in Panchavati with Gym, Lift, Swimming Pool.\nClient: I'm thrilled, this fits everything we need. Mast ahe, mala khup avadla, chala baghuya.",
     "city": "Nashik",
     "location": "Panchavati",
     "property_type": "Studio Apartment",
@@ -8227,7 +8227,7 @@
   },
   {
     "id": 632,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Can you tell me about properties in Satpur?\nAgent: Sure, let me check Bungalow options in Satpur with Garden, Children Play Area.\nClient: Bahut badhiya hai, main isko lena chahta hoon.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Can you tell me about properties in Satpur?\nAgent: Sure, let me check Bungalow options in Satpur with Garden, Children Play Area.\nClient: Yeh dekhkar bahut khushi hui, hum aage badhna chahte hain.",
     "city": "Nashik",
     "location": "Satpur",
     "property_type": "Bungalow",
@@ -8317,7 +8317,7 @@
   },
   {
     "id": 639,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I'm searching for a 1BHK near Nashik Road, budget is 1.2 crore.\nAgent: Sure, let me check 1BHK options in Nashik Road with Security.\nClient: Mast ahe, mala khup avadla, chala baghuya.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I'm searching for a 1BHK near Nashik Road, budget is 1.2 crore.\nAgent: Sure, let me check 1BHK options in Nashik Road with Security.\nClient: Mala ha ghar khup avadla, lagech pudhe jauya.",
     "city": "Nashik",
     "location": "Nashik Road",
     "property_type": "1BHK",
@@ -8463,7 +8463,7 @@
   },
   {
     "id": 650,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I want to buy a Villa, budget around 1.2 crore\nAgent: Sure, let me check Villa options in Nashik Road with Gym, CCTV.\nClient: Mala he perfect vatla, chala pudhe jauya.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I want to buy a Villa, budget around 1.2 crore\nAgent: Sure, let me check Villa options in Nashik Road with Gym, CCTV.\nClient: Khup avadla mala, ekdum perfect ahe!",
     "city": "Nashik",
     "location": "Nashik Road",
     "property_type": "Villa",
@@ -8490,7 +8490,7 @@
   },
   {
     "id": 652,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Hi, I'm looking for a 2BHK in Wagholi\nAgent: Sure, let me check 2BHK options in Wagholi with Clubhouse, Children Play Area, Lift.\nClient: Yeh toh bilkul sahi hai, aage badhte hain.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Hi, I'm looking for a 2BHK in Wagholi\nAgent: Sure, let me check 2BHK options in Wagholi with Clubhouse, Children Play Area, Lift.\nClient: Zakas ahe ekdum, chala confirm karuya!",
     "city": "Pune",
     "location": "Wagholi",
     "property_type": "2BHK",
@@ -8529,7 +8529,7 @@
   },
   {
     "id": 655,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Mala Viman Nagar madhe 4BHK baghaycha ahe\nAgent: Sure, let me check 4BHK options in Viman Nagar with Children Play Area.\nClient: Wow, I love it, let's move forward! Sounds fantastic, please book a visit for me.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Mala Viman Nagar madhe 4BHK baghaycha ahe\nAgent: Sure, let me check 4BHK options in Viman Nagar with Children Play Area.\nClient: Wow, I love it, let's move forward! Mala vatla hech aamhala pahije hota, chala pudhla step karuya.",
     "city": "Pune",
     "location": "Viman Nagar",
     "property_type": "4BHK",
@@ -8633,7 +8633,7 @@
   },
   {
     "id": 663,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Mujhe Satpur ke aas paas 2BHK dhundh rahe hain, budget 30 lakhs.\nAgent: Sure, let me check 2BHK options in Satpur with Swimming Pool, Power Backup, Garden.\nClient: My whole family will be delighted when they see this option.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Mujhe Satpur ke aas paas 2BHK dhundh rahe hain, budget 30 lakhs.\nAgent: Sure, let me check 2BHK options in Satpur with Swimming Pool, Power Backup, Garden.\nClient: This is wonderful news, please share the next steps with me.",
     "city": "Nashik",
     "location": "Satpur",
     "property_type": "2BHK",
@@ -8685,7 +8685,7 @@
   },
   {
     "id": 667,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Mujhe Nashik Road ke aas paas 3BHK dhundh rahe hain, budget 80 lakhs.\nAgent: Sure, let me check 3BHK options in Nashik Road with Lift, Children Play Area.\nClient: Honestly, this is better than anything else I've seen so far.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Mujhe Nashik Road ke aas paas 3BHK dhundh rahe hain, budget 80 lakhs.\nAgent: Sure, let me check 3BHK options in Nashik Road with Lift, Children Play Area.\nClient: This has honestly made my day, thank you so much for finding it.",
     "city": "Nashik",
     "location": "Nashik Road",
     "property_type": "3BHK",
@@ -8711,7 +8711,7 @@
   },
   {
     "id": 669,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Namaste, mujhe ek 1RK chahiye Panchavati mein\nAgent: Sure, let me check 1RK options in Panchavati with Lift, Gym, Power Backup.\nClient: I have a really good feeling about this one, let's proceed.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Namaste, mujhe ek 1RK chahiye Panchavati mein\nAgent: Sure, let me check 1RK options in Panchavati with Lift, Gym, Power Backup.\nClient: I couldn't be happier with this, when can we sign the papers?",
     "city": "Nashik",
     "location": "Panchavati",
     "property_type": "1RK",
@@ -8762,7 +8762,7 @@
   },
   {
     "id": 673,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I want to buy a Plot, budget around 50 lakhs\nAgent: Sure, let me check Plot options in Wagholi with Clubhouse, Swimming Pool.\nClient: I'm so pleased with this, it checks every single thing on our list.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: I want to buy a Plot, budget around 50 lakhs\nAgent: Sure, let me check Plot options in Wagholi with Clubhouse, Swimming Pool.\nClient: Everything about this feels right, I'm ready to commit.",
     "city": "Pune",
     "location": "Wagholi",
     "property_type": "Plot",
@@ -8865,7 +8865,7 @@
   },
   {
     "id": 681,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Hi, I'm looking for a 4BHK in Satpur\nAgent: Sure, let me check 4BHK options in Satpur with Children Play Area.\nClient: Yeh dekhkar bahut khushi hui, hum aage badhna chahte hain.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Hi, I'm looking for a 4BHK in Satpur\nAgent: Sure, let me check 4BHK options in Satpur with Children Play Area.\nClient: Sahi hai yaar, ekdum pasand aaya mujhe!",
     "city": "Nashik",
     "location": "Satpur",
     "property_type": "4BHK",
@@ -8942,7 +8942,7 @@
   },
   {
     "id": 687,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Mala Cidco madhe Bungalow baghaycha ahe\nAgent: Sure, let me check Bungalow options in Cidco with Power Backup, Lift.\nClient: Honestly, this is better than anything else I've seen so far.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Mala Cidco madhe Bungalow baghaycha ahe\nAgent: Sure, let me check Bungalow options in Cidco with Power Backup, Lift.\nClient: This has honestly made my day, thank you so much for finding it.",
     "city": "Nashik",
     "location": "Cidco",
     "property_type": "Bungalow",
@@ -9055,7 +9055,7 @@
   },
   {
     "id": 696,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Can you tell me about properties in Wakad?\nAgent: Sure, let me check 1BHK options in Wakad with Parking.\nClient: Bahut badhiya hai, main isko lena chahta hoon. This genuinely exceeds what I expected, I'd love to move forward.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Can you tell me about properties in Wakad?\nAgent: Sure, let me check 1BHK options in Wakad with Parking.\nClient: Yeh dekhkar bahut khushi hui, hum aage badhna chahte hain. Really glad I found this, it's better than I imagined.",
     "city": "Pune",
     "location": "Wakad",
     "property_type": "1BHK",
@@ -9067,7 +9067,7 @@
   },
   {
     "id": 697,
-    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Mala Kothrud madhe Bungalow baghaycha ahe\nAgent: Sure, let me check Bungalow options in Kothrud with Security.\nClient: Mala vatla hech aamhala pahije hota, chala pudhla step karuya.",
+    "transcript": "Agent: Hello, welcome to our real estate assistant. How can I help you today?\nClient: Mala Kothrud madhe Bungalow baghaycha ahe\nAgent: Sure, let me check Bungalow options in Kothrud with Security.\nClient: Yeh ghar bahut pasand aaya, hum turant aage badhenge.",
     "city": "Pune",
     "location": "Kothrud",
     "property_type": "Bungalow",

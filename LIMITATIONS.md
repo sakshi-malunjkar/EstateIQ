@@ -39,6 +39,48 @@ than guessed at.
 customers who express interest in a measured, understated way (as
 opposed to exclamation-heavy phrasing) — it may read as hesitation.
 
+### Second, separate, unresolved issue: code-mixed enthusiastic sentiment
+
+**Enthusiastic sentiment expressed in romanized Hindi/Marathi (code-mixed)
+is unreliable — best verified result is 1 correct out of 3 test
+sentences, at 0.38 confidence, barely above the 33% random baseline for
+3 classes.** Code-mixed frustrated and hesitant sentences work fine;
+this is specific to code-mixed enthusiasm.
+
+Test sentences (never used in training):
+- `"Ekdum zakas ahe he, amhala khup avadla, lawkar visit karuya"` → hesitant (wrong)
+- `"Mala ha flat khup avadla, lagech decide karto"` → hesitant (wrong)
+- `"Yeh property bahut acchi lagi, hum jaldi decide karenge"` → enthusiastic (correct, 0.38 confidence)
+
+**⚠️ A note on why this matters, for anyone reading old commits:** an
+earlier attempt (referred to as "v5" in commit history) appeared to
+fix all 3 of these sentences. It didn't, genuinely — two of the three
+"fixes" turned out to be **test-set contamination**: the training data
+written for that attempt included those two exact sentences verbatim,
+so the model had memorized the literal test input rather than learned
+to generalize. Once caught and corrected (paraphrasing those training
+examples so they no longer match the test sentences), the real fix
+recovered to 1/3. Do not treat v5's reported numbers as a real result —
+they're preserved in git history for transparency, not as a target to
+match.
+
+Also, v5 (in the process of adding a lot of code-mixed volume to fix
+this) introduced a general bias toward predicting `enthusiastic` on
+unfamiliar-looking text, breaking 3 previously-correct code-mixed
+frustrated/hesitant sentences. The current model ("v6") reverts that
+regression — those 3 sentences are correct again — at the cost of
+un-fixing 2 of the 3 targeted code-mixed enthusiastic sentences. This
+was a deliberate, considered tradeoff (net positive on raw accuracy,
+3 fixes vs. 2 regressions across the full 17-sentence check), not an
+oversight — see commit history for the full before/after comparison.
+
+**Status: open.** Not yet resolved. Worth investigating: whether
+code-mixed enthusiasm needs meaningfully more real (not synthetic)
+examples, whether the base multilingual model's Hindi/Marathi
+representations are just weaker for positive sentiment specifically, or
+whether a different phrasing strategy entirely is needed rather than
+more of the same template style.
+
 **Iteration history**, for context on what was already tried:
 - v1 (original data): 3 fixed phrasings per class. Perfect test F1,
   but the model had just memorized 3 exact strings — freeform test
@@ -52,12 +94,25 @@ opposed to exclamation-heavy phrasing) — it may read as hesitation.
   longer/more complex than the other two (still 19 phrasings each), so
   sentence length itself became a shortcut. 3/4 freeform sentences got
   pulled toward `enthusiastic` regardless of content.
-- v4 (current): symmetrically expanded `frustrated` and `hesitant` to
-  34 phrasings each too, matched in word-count distribution
-  (avg 8.3-9.0 words across all three classes). Test F1 dropped to a
-  more honest 0.984 (from a suspicious flat 1.0), and freeform
-  confidence on correct predictions rose to 0.77-0.81 (from 0.35-0.56).
-  The remaining issue above is what's left after this fix.
+- v4: symmetrically expanded `frustrated` and `hesitant` to 34
+  phrasings each too, matched in word-count distribution (avg 8.3-9.0
+  words across all three classes). Test F1 dropped to a more honest
+  0.984 (from a suspicious flat 1.0), and freeform confidence on
+  correct predictions rose to 0.77-0.81 (from 0.35-0.56). This is where
+  the calm/comma-joined-vs-hesitant issue above was first isolated.
+- v5: expanded `enthusiastic` specifically to 53 phrasings (19 new
+  code-mixed ones) to target the code-mixed-enthusiastic gap.
+  Apparently fixed 3/3 targeted sentences, but 2 of those were test-set
+  contamination (see above) and the volume increase caused a new
+  general bias toward predicting `enthusiastic`, breaking 3 previously
+  working code-mixed sentences.
+- v6 (current baseline): trimmed `enthusiastic` back to 34 phrasings
+  (matching the other two classes), keeping vocabulary diversity but
+  cutting raw volume, and paraphrased the two contaminated training
+  examples. Test F1 back to a clean 1.0. Net effect vs. the pre-v5
+  baseline: 11/15 gradable freeform sentences correct (up from 10/15),
+  3 fixes vs. 2 regressions relative to v5 -- but the code-mixed
+  enthusiastic issue above remains genuinely open.
 
 ## NER model (`models_artifacts/muril_ner`)
 
