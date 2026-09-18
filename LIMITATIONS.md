@@ -192,7 +192,7 @@ these metrics should be expected to *degrade* from this baseline —
 that's a sign retraining moved from memorizing a formula to learning
 real, noisier human behavior, not a regression.
 
-SHAP feature importance on the test set (mean |SHAP value|):
+SHAP feature importance on the test set (mean |SHAP value|), v1 weights:
 `entity_completeness` (13.04) and `sentiment` (12.20) dominate,
 `amenities_count` (1.30) and `message_length` (0.38) contribute
 modestly, `sentiment_confidence` (0.16) and `budget_amount` (0.03)
@@ -201,3 +201,67 @@ confirmation that the model correctly learned to ignore a feature that
 never varies in this dataset, consistent with the zero-variance
 finding above. This is a good sign the explainability tooling is
 honest, not evidence the model understands real lead behavior.
+
+### v2 heuristic reweight (2026-09-18): reducing sentiment's influence
+
+**Motivation:** testing surfaced a frustrated lead ("I have called three
+times already ... this is a waste of my time") and a genuinely hesitant
+lead ("I am not sure yet, need to discuss with my wife") scoring nearly
+identically (39.23 vs 39.22, v1 weights) because the sentiment classifier
+misread *both* as `hesitant` at low confidence (0.50 and 0.46) — a
+concrete instance of the sentiment-reliability issues documented above
+capping the score's ability to distinguish qualitatively different
+leads.
+
+**Change:** `heuristic.py` `WEIGHTS` changed from
+`sentiment=0.35, entities=0.20, budget=0.25, engagement=0.20` to
+`sentiment=0.25, entities=0.30, budget=0.25, engagement=0.20`.
+`entity_completeness` was chosen to absorb the redistributed weight
+(over `budget`) because it's a richer, continuous, 4-slot NER-derived
+signal (location/property_type/amenities/budget presence, plus amenity
+count) versus budget's single binary flag — more room to discriminate
+between leads. `HEURISTIC_VERSION` bumped to `"v2"`; `bootstrap_labels.py`
+now clears stale `heuristic_bootstrap` rows before regenerating, so
+re-running it after a formula change replaces labels cleanly instead of
+mixing v1/v2 rows in the training data.
+
+**Result on the full test set (aggregate, expected direction):** SHAP
+mean |value| shifted as intended — `entity_completeness` 13.04→13.84,
+`sentiment` 12.20→8.64 — confirming the reweight took effect across the
+dataset. Tier classification stayed 100% self-consistent (tier is
+always derived from the predicted score).
+
+**Result on the specific frustrated/hesitant pair that motivated this
+(honest, not fixed):** the two leads are *still* only ~0.01 apart
+(40.33 vs 40.32) after the reweight. Their sentiment output didn't
+change (still both `hesitant`, still low-confidence) — reweighting only
+changes how much *other* features can compensate, and for this specific
+pair, those other features happen to cancel out: the frustrated lead's
+missing budget (`budget_amount=None`, bad) is almost exactly offset by
+its longer client message (`message_length=131`, good), while the
+hesitant lead's present budget (`5.5M`, good) is offset by its shorter
+message (`99`, bad). This is a coincidental cancellation between these
+two particular leads' non-sentiment features, not evidence the reweight
+failed in general (the HOT and FAMILY test leads did move as expected:
+87.15→86.37 and 70.21→74.12). **Status: the underlying problem — the
+sentiment model, not the heuristic weights — is what actually needs
+fixing to reliably separate cases like these; reweighting reduces how
+much a wrong sentiment call can dominate a score, but can't manufacture
+separation the other features don't happen to provide.**
+
+### Sentiment-confidence flag on model-predicted output (2026-09-18)
+
+`predict_lead_score.py`'s output now includes `sentiment_reliability`:
+`"low"` when `sentiment_confidence < 0.5` (barely above the 33% random
+baseline for 3 classes), `"ok"` otherwise. This does **not** change the
+score or tier — it's a signal for a human reviewing the lead to weigh
+the score with more caution when the sentiment input was uncertain.
+
+**Important caveat, observed directly in testing:** the flag tracks
+*confidence*, not *correctness*. The "family" test lead ("...exactly
+what my family was hoping to find, I can't wait to see it in person")
+has sentiment misclassified as `hesitant` (should be `enthusiastic`,
+per the calm/comma-joined-register issue documented above) at 0.69
+confidence — high enough to be flagged `"ok"` despite being wrong. The
+flag only catches the low-confidence failure mode, not this specific
+confident-but-wrong one.

@@ -71,11 +71,19 @@ def predict_lead_score(text, model_dir=DEFAULT_MODEL_DIR):
     shap_values = explainer.shap_values(df)[0]
     shap_dict = {col: float(shap_values[i]) for i, col in enumerate(FEATURE_COLUMNS)}
 
+    # Below 0.5 is barely better than random for this 3-class classifier
+    # (see LIMITATIONS.md's sentiment-reliability issues) -- surfaced so
+    # a human reviewing the lead knows to weigh the score with more
+    # caution, without changing the score itself.
+    sentiment_confidence = row.get("sentiment_confidence")
+    sentiment_reliability = "low" if (sentiment_confidence is None or sentiment_confidence < 0.5) else "ok"
+
     return {
         "score": round(score, 2),
         "tier": tier,
         "features": row,
         "shap_values": shap_dict,
+        "sentiment_reliability": sentiment_reliability,
         "label_source": "model_predicted",
     }
 

@@ -1,27 +1,27 @@
 {
   "regression": {
-    "mae": 0.07924876839774002,
-    "rmse": 0.13710512895000965,
-    "r2": 0.999957415274804
+    "mae": 0.09324679892403702,
+    "rmse": 0.14942421208644271,
+    "r2": 0.9999395791605887
   },
   "tier_classification_report": {
     "cold": {
       "precision": 1.0,
       "recall": 1.0,
       "f1-score": 1.0,
-      "support": 26.0
+      "support": 23.0
     },
     "hot": {
       "precision": 1.0,
       "recall": 1.0,
       "f1-score": 1.0,
-      "support": 14.0
+      "support": 15.0
     },
     "warm": {
       "precision": 1.0,
       "recall": 1.0,
       "f1-score": 1.0,
-      "support": 30.0
+      "support": 32.0
     },
     "accuracy": 1.0,
     "macro avg": {
@@ -38,12 +38,12 @@
     }
   },
   "shap_mean_abs": {
-    "entity_completeness": 13.03953742980957,
-    "sentiment": 12.202156066894531,
-    "amenities_count": 1.2981643676757812,
-    "message_length": 0.3800339698791504,
-    "sentiment_confidence": 0.1641816943883896,
-    "budget_amount": 0.02912566065788269,
+    "entity_completeness": 13.837753295898438,
+    "sentiment": 8.643811225891113,
+    "amenities_count": 1.9663654565811157,
+    "message_length": 0.3767811059951782,
+    "sentiment_confidence": 0.17946788668632507,
+    "budget_amount": 0.024129291996359825,
     "turn_count": 0.0
   },
   "num_examples": 70

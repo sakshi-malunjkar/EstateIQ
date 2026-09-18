@@ -1,5 +1,5 @@
 """
-Heuristic lead-scoring formula. HEURISTIC_VERSION = "v1"
+Heuristic lead-scoring formula. HEURISTIC_VERSION = "v2"
 
 This is a standalone, documented formula used ONLY to bootstrap initial
 training labels (lead_scores.label_source = "heuristic_bootstrap") for
@@ -12,18 +12,29 @@ Deliberately kept as plain, dependency-free functions (no DB/ORM
 imports) so it's easy to unit test and to read in isolation.
 
 score_0_100 = 100 * (
-    0.35 * sentiment_component
-  + 0.20 * entity_component
+    0.25 * sentiment_component
+  + 0.30 * entity_component
   + 0.25 * budget_component
   + 0.20 * engagement_component
 )
+
+v2 reweight (sentiment 35%->25%, entities 20%->30%, budget/engagement
+unchanged): a real test case showed a frustrated lead and a genuinely
+hesitant lead score nearly identically (39.23 vs 39.22) because the
+sentiment classifier misread both as "hesitant" -- see LIMITATIONS.md's
+open sentiment-reliability issues. entity_completeness got the
+redistributed weight rather than budget because it's a richer,
+continuous NER-derived signal (4-slot completeness + amenity coverage)
+vs. budget's single binary flag, so it has more room to discriminate
+between leads. This does not fix the sentiment model itself -- it just
+reduces how much a known-unreliable input can dominate the score.
 """
 
-HEURISTIC_VERSION = "v1"
+HEURISTIC_VERSION = "v2"
 
 WEIGHTS = {
-    "sentiment": 0.35,
-    "entities": 0.20,
+    "sentiment": 0.25,
+    "entities": 0.30,
     "budget": 0.25,
     "engagement": 0.20,
 }
