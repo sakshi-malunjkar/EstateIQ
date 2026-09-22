@@ -220,24 +220,66 @@ async def analyze(payload: AnalyzeRequest) -> AnalyzeResponse:
 # 3. POST /webhook/vapi
 # ---------------------------------------------------------------------------
 
+VAPI_ROLE_TO_TURN_PREFIX = {"assistant": "Agent", "bot": "Agent", "user": "Client", "customer": "Client"}
+
+
+def _vapi_messages_to_transcript(messages: list[dict]) -> str | None:
+    """Rebuilds an Agent:/Client:-prefixed transcript from Vapi's
+    structured `artifact.messages` array ([{role, message}, ...]).
+    Preferred over Vapi's own flattened `artifact.transcript` string,
+    whose role labels are "AI:"/"User:" (confirmed via Vapi's docs and
+    community examples, e.g. docs.vapi.ai/server-url/events), not our
+    pipeline's "Agent:"/"Client:" convention -- extract_lead_features.
+    client_only_text() specifically looks for "Client:"-prefixed lines
+    to compute turn_count/message_length, so an unrecognized prefix
+    would silently collapse the whole call into one fallback turn.
+    `system`/`tool` role messages (assistant configuration, function
+    calls) are dropped -- they're not something a client said."""
+    lines = []
+    for m in messages:
+        prefix = VAPI_ROLE_TO_TURN_PREFIX.get(m.get("role"))
+        text = m.get("message") or m.get("content")
+        if prefix and text:
+            lines.append(f"{prefix}: {text}")
+    return "\n".join(lines) if lines else None
+
+
 def extract_vapi_transcript(payload: dict) -> str | None:
-    """Best-effort extraction of the call transcript from a Vapi
-    end-of-call-report webhook payload. Vapi nests the report under
-    `message` and (depending on account/version) the transcript can
-    appear as `message.transcript` or `message.artifact.transcript` --
-    tries both, plus a couple of flatter fallbacks, since the exact
-    payload shape isn't pinned down without a live Vapi account to
-    verify against."""
+    """Extracts the call transcript from a Vapi end-of-call-report
+    webhook payload (`message.type == "end-of-call-report"`). Per
+    Vapi's docs (docs.vapi.ai/server-url/events), the report is nested
+    under `message`, with the transcript under `message.artifact` as
+    either a flattened string (`artifact.transcript`) or a structured
+    array (`artifact.messages`, each `{"role": ..., "message": ...}`).
+    Prefers rebuilding from `artifact.messages` (see
+    _vapi_messages_to_transcript) since its role labels are reliable;
+    falls back to the flattened string, then a couple of looser paths,
+    only if no structured messages are present."""
     message = payload.get("message") or {}
+    artifact = message.get("artifact") or {}
+
+    normalized = _vapi_messages_to_transcript(artifact.get("messages") or [])
+    if normalized:
+        return normalized
+
     for candidate in (
+        artifact.get("transcript"),
         message.get("transcript"),
-        (message.get("artifact") or {}).get("transcript"),
         payload.get("transcript"),
-        (payload.get("call") or {}).get("transcript"),
     ):
         if candidate:
             return candidate
     return None
+
+
+def extract_vapi_customer_phone(payload: dict) -> str | None:
+    """Vapi's call object carries the customer's number at
+    `message.call.customer.number` (E.164 format), per
+    docs.vapi.ai/quickstart/web and Vapi support examples."""
+    message = payload.get("message") or {}
+    call = message.get("call") or {}
+    customer = call.get("customer") or {}
+    return customer.get("number")
 
 
 @app.post("/webhook/vapi", response_model=VapiWebhookResponse)
@@ -262,9 +304,13 @@ async def vapi_webhook(request: Request, db: AsyncSession = Depends(get_db)) -> 
         logger.warning("Vapi webhook: no transcript found in payload, skipping.")
         return VapiWebhookResponse(status="received")
 
+    contact_phone = extract_vapi_customer_phone(payload)
+
     try:
         combined, scored = run_analysis(transcript)
-        await crud.persist_analysis(db, raw_text=transcript, city=None, source="vapi", combined=combined, scored=scored)
+        await crud.persist_analysis(
+            db, raw_text=transcript, city=None, source="vapi", contact_phone=contact_phone, combined=combined, scored=scored
+        )
     except Exception:
         logger.exception("Vapi webhook: failed to analyze/persist transcript.")
 

@@ -43,14 +43,18 @@ async def persist_analysis(
     source: str,
     combined: dict,
     scored: dict,
+    contact_phone: str | None = None,
 ) -> Lead:
     """Persist one full analysis run (NER + sentiment + intent + lead
     score) as a new Lead + Transcript + LeadFeatures + LeadScore, with an
     initial "New" LeadStatusEvent. `combined` is predict_combined()'s
     output, `scored` is predict_lead_score()'s output -- see
     api/main.py's run_analysis() for how they're produced together.
+    `contact_phone` is optional caller-identifying info a webhook
+    source (e.g. Vapi's call.customer.number) may provide; /analyze has
+    none, since it isn't tied to a real call.
     """
-    lead = Lead(current_status=LeadStatus.NEW)
+    lead = Lead(current_status=LeadStatus.NEW, contact_phone=contact_phone)
     db.add(lead)
     await db.flush()
 
