@@ -10,6 +10,13 @@ logging, and error handling.
 
 Run with:
     uvicorn api.main:app --reload
+
+On Windows, `uvicorn api.main:app` directly can fail DB calls with
+"Psycopg cannot use the 'ProactorEventLoop'" -- use the Windows-safe
+entry point instead, which sets the correct event loop policy before
+uvicorn starts (see api/run.py for why this can't be done from inside
+api/database.py):
+    python -m api.run
 """
 
 import logging

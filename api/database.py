@@ -25,8 +25,10 @@ development convenience only -- set DATABASE_URL to a real Postgres
 instance before relying on persistence (see .env.example).
 """
 
+import asyncio
 import logging
 import os
+import sys
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -35,6 +37,13 @@ from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_asyn
 from app.lead_scoring.models import Base
 
 load_dotenv()
+
+if sys.platform == "win32":
+    # psycopg's async mode requires SelectorEventLoop -- Windows'
+    # default ProactorEventLoop raises psycopg.InterfaceError on
+    # connect. Must be set before any event loop is created (i.e.
+    # before uvicorn starts running), so this runs at import time.
+    asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
 logger = logging.getLogger("estateiq.api.database")
 
