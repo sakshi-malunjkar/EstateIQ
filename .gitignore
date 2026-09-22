@@ -49,6 +49,7 @@ huggingface/
 # --- Env / secrets ---
 .env
 .env.*
+!.env.example
 *.local
 
 # --- Node (in case any subproject uses it) ---

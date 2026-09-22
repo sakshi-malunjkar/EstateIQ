@@ -1,0 +1,15 @@
+# FastAPI-specific dependencies for api/. Install alongside the
+# existing project requirements (requirements.txt) -- this file does
+# not repeat the ML dependencies (torch, transformers, xgboost, shap,
+# etc.), which are already required by app/.
+fastapi>=0.115,<1.0
+uvicorn[standard]>=0.30,<1.0
+SQLAlchemy>=2.0,<3.0
+psycopg[binary]>=3.1,<4.0
+python-dotenv>=1.0,<2.0
+
+# Local-development-only fallback: lets api/database.py fall back to a
+# SQLite file when DATABASE_URL isn't set, so /health and /analyze can
+# be smoke-tested without a Postgres instance. Not needed once
+# DATABASE_URL points at real Postgres.
+aiosqlite>=0.20,<1.0

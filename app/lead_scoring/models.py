@@ -141,12 +141,22 @@ class LeadFeatures(Base):
     sentiment: Mapped[str | None] = mapped_column(Enum(Sentiment), nullable=True)
     sentiment_confidence: Mapped[float | None] = mapped_column(Float, nullable=True)
 
+    # Added for the FastAPI layer (api/): intent classification didn't
+    # exist yet when this schema was first authored. Plain string, not
+    # an Enum(Intent), so a future intent class can be added without a
+    # migration -- unlike Sentiment/Tier, intent's label set isn't
+    # baked into the trained lead-scoring model's feature encoding, so
+    # there's no matching correctness reason to constrain it here.
+    intent: Mapped[str | None] = mapped_column(String(30), nullable=True)
+    intent_confidence: Mapped[float | None] = mapped_column(Float, nullable=True)
+
     entity_completeness: Mapped[float] = mapped_column(Float, default=0.0)
     turn_count: Mapped[int] = mapped_column(Integer, default=0)
     message_length: Mapped[int] = mapped_column(Integer, default=0)
 
     ner_model_version: Mapped[str | None] = mapped_column(String(100), nullable=True)
     sentiment_model_version: Mapped[str | None] = mapped_column(String(100), nullable=True)
+    intent_model_version: Mapped[str | None] = mapped_column(String(100), nullable=True)
     extracted_at: Mapped[datetime] = mapped_column(default=_utcnow)
 
     transcript: Mapped["Transcript"] = relationship(back_populates="features")
