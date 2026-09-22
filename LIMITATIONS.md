@@ -114,6 +114,52 @@ more of the same template style.
   3 fixes vs. 2 regressions relative to v5 -- but the code-mixed
   enthusiastic issue above remains genuinely open.
 
+## Intent model (`models_artifacts/intent`) (2026-09-22)
+
+Six-class intent classifier (Buy / Rent / Inquiry / Schedule Visit /
+Investment / Request Callback), a separate `distilbert-base-multilingual-
+cased` fine-tune from the sentiment model — independent weights, not a
+shared or combined model. Trained on 700 synthetic transcripts (16-17
+phrasings per class, English + romanized Hindi/Marathi code-mixed) via
+`generate_intent_transcripts.py` / `prepare_intent_data.py` /
+`train_intent.py`. Val macro F1 = 0.985, held-out test-set accuracy =
+68/70 (0.971).
+
+**On 6 hand-written freeform test sentences (never used in training),
+6/6 predicted the correct intent, but 2 of those 6 were low-confidence
+(`intent_reliability: "low"`, i.e. top score < 0.50):**
+- `"I want to purchase a 2BHK in Baner, budget 60 lakhs"` → Buy (0.80, ok)
+- `"Looking for a flat on rent in Wakad"` → Rent (0.50, **low**) — the
+  second-place class was Investment (0.15), not a near-miss confusion
+  with a semantically close intent, more a generally flatter
+  distribution on this shorter sentence
+- `"Can we schedule a site visit this Saturday?"` → Schedule Visit (0.79, ok)
+- `"Just checking what options are available in Nashik"` → Inquiry
+  (0.29, **low**) — correct class but barely ahead of Rent (0.25),
+  the weakest result of the six
+- `"I want to invest in a commercial property in Pune"` → Investment (0.55, ok)
+- `"Please have your agent call me back tomorrow"` → Request Callback (0.90, ok)
+
+**Why the lower-confidence cases likely happen:** `Inquiry` and `Rent`
+are the two classes whose phrase banks lean most on short, generic
+phrasing ("just checking...", "looking for a flat...") rather than
+class-distinctive vocabulary the way `Request Callback` ("call me
+back") or `Schedule Visit` ("site visit") have a near-unique keyword —
+see the shortcut-word check printed by `generate_intent_transcripts.py`,
+which flags `rent`, `visit`, `investment`, and `call` as
+class-dominant words (expected and fine here, unlike the sentiment
+model's shortcut-word problem, since these words are genuinely what
+defines the intent) but flags nothing distinctive for `Inquiry` or
+`Buy`. A freeform sentence that doesn't happen to use the bank's exact
+register can land closer to the decision boundary for those two
+classes specifically.
+
+**Status:** not deeply stress-tested beyond these 6 sentences and the
+synthetic held-out test set — same caveat as the sentiment and NER
+models: real-world, non-templated phrasing should be spot-checked,
+particularly for `Inquiry` and `Rent`, before trusting a single
+high-stakes routing decision on a low-confidence intent call alone.
+
 ## NER model (`models_artifacts/muril_ner`)
 
 Test-set metrics are a perfect P=R=F1=1.0 on every trained entity type

@@ -1,0 +1,16 @@
+{
+  "eval_loss": 0.12882888317108154,
+  "eval_precision": 0.986111111111111,
+  "eval_recall": 0.9848484848484849,
+  "eval_f1": 0.9848171152518979,
+  "eval_f1_Buy": 1.0,
+  "eval_f1_Inquiry": 1.0,
+  "eval_f1_Investment": 0.9523809523809523,
+  "eval_f1_Rent": 0.9565217391304348,
+  "eval_f1_Request Callback": 1.0,
+  "eval_f1_Schedule Visit": 1.0,
+  "eval_runtime": 2.532,
+  "eval_samples_per_second": 27.646,
+  "eval_steps_per_second": 1.975,
+  "epoch": 6.0
+}
