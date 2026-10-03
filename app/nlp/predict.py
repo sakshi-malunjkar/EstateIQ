@@ -17,6 +17,7 @@ Usage:
 
 import argparse
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -30,6 +31,42 @@ DEFAULT_MODEL_DIR = Path(__file__).parent.parent.parent / "models_artifacts" / "
 
 _tokenizer = None
 _model = None
+
+# Speech-to-text (e.g. Vapi) spells out "2BHK" as "2 B H K" / "2 b h k", and
+# sometimes mishears the K as G ("2 BHG"). The NER model only ever saw the
+# compact "2BHK" form in training, so collapse these before it runs.
+_BHK_SPACED = re.compile(r"\b(\d)\s*B\s*\.?\s*H\s*\.?\s*[KG]\b", re.IGNORECASE)
+
+# Trailing city names the model tends to glue onto a locality span
+# ("College Road Nashik"); stripped so only the locality remains.
+_CITY_SUFFIXES = ("Nashik", "Pune")
+
+
+def normalize_transcript(text):
+    """Collapse spelled-out BHK variants ("2 B H K", "2 b h k", "2 BHG",
+    "2 BHK") to "2BHK". Entity offsets from predict_raw_entities() refer
+    to this normalized text, not the caller's original string."""
+    return _BHK_SPACED.sub(lambda m: f"{m.group(1)}BHK", text)
+
+
+def _dedupe(items):
+    """Order-preserving, case-insensitive de-duplication."""
+    seen = set()
+    out = []
+    for item in items:
+        key = item.strip().lower()
+        if key and key not in seen:
+            seen.add(key)
+            out.append(item)
+    return out
+
+
+def _strip_city_suffix(location):
+    for city in _CITY_SUFFIXES:
+        m = re.fullmatch(rf"(.+?)\s+{city}", location, re.IGNORECASE)
+        if m:
+            return m.group(1)
+    return location
 
 
 def _load(model_dir=DEFAULT_MODEL_DIR):
@@ -56,6 +93,7 @@ def predict_raw_entities(text, model_dir=DEFAULT_MODEL_DIR, max_length=192):
     tokenizer, model = _load(model_dir)
     id2label = model.config.id2label
 
+    text = normalize_transcript(text)
     words, word_offsets = tokenize_with_offsets(text)
     if not words:
         return []
@@ -110,9 +148,12 @@ def extract_all(text, model_dir=DEFAULT_MODEL_DIR):
     """
     entities = predict_raw_entities(text, model_dir=model_dir)
 
-    location = [e["text"] for e in entities if e["label"] == "LOCATION"]
-    property_type = [e["text"] for e in entities if e["label"] in ("PROPERTY_TYPE", "BHK")]
-    amenities = [e["text"] for e in entities if e["label"] == "AMENITY"]
+    locations = [_strip_city_suffix(e["text"]) for e in entities if e["label"] == "LOCATION"]
+    # Several areas usually means the agent listed examples; the client's
+    # actual preference is most likely the last one mentioned.
+    location = locations[-1:]
+    property_type = _dedupe(e["text"] for e in entities if e["label"] in ("PROPERTY_TYPE", "BHK"))
+    amenities = _dedupe(e["text"] for e in entities if e["label"] == "AMENITY")
     budgets = [e["text"] for e in entities if e["label"] == "BUDGET"]
 
     return {
