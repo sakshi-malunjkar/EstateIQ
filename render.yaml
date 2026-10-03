@@ -4,7 +4,10 @@ services:
     runtime: python
     # NOTE: the three transformer models need several GB of RAM once loaded;
     # set the instance plan in the Render dashboard (see deployment notes).
-    buildCommand: pip install -r requirements_api.txt
+    # Model weights come from the private Hugging Face repo (HF_TOKEN / HF_REPO_ID).
+    # Downloading at build time keeps the first start fast; the app also
+    # downloads anything missing on startup.
+    buildCommand: pip install -r requirements_api.txt && python -m api.download_models
     startCommand: python -m api.run
     healthCheckPath: /health
     envVars:
@@ -13,6 +16,10 @@ services:
       - key: SUPABASE_URL
         sync: false
       - key: SUPABASE_ANON_KEY
+        sync: false
+      - key: HF_TOKEN
+        sync: false
+      - key: HF_REPO_ID
         sync: false
       - key: ENVIRONMENT
         value: production

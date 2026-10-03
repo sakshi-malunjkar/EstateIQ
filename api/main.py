@@ -19,6 +19,7 @@ api/database.py):
     python -m api.run
 """
 
+import asyncio
 import logging
 import sys
 import time
@@ -45,6 +46,7 @@ from app.lead_scoring.predict_lead_score import predict_lead_score  # noqa: E402
 
 from api import crud  # noqa: E402
 from api.auth import get_current_user  # noqa: E402
+from api.download_models import download_models  # noqa: E402
 from api.database import get_db, init_db  # noqa: E402
 from api.models import (  # noqa: E402
     AnalyticsResponse,
@@ -87,6 +89,11 @@ async def lifespan(app: FastAPI):
     just forces that load-in eagerly instead of on the first real
     request) and creates DB tables if they don't exist yet."""
     models_loaded = {"ner": False, "sentiment": False, "intent": False, "lead_scoring": False}
+
+    # The weights are too big for git; fetch any missing model folder from
+    # Hugging Face first. Deliberately not caught: without models the API is
+    # useless, so a failed download should fail the start loudly.
+    await asyncio.to_thread(download_models)
 
     try:
         await init_db()
