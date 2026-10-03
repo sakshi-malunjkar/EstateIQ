@@ -49,6 +49,34 @@ def normalize_transcript(text):
     return _BHK_SPACED.sub(lambda m: f"{m.group(1)}BHK", text)
 
 
+_TURN_PREFIX = re.compile(r"^\s*(agent|client)\s*:\s*", re.IGNORECASE)
+
+
+def client_only_text(text):
+    """Keep only what the client said. Agents list example areas and
+    amenities that the client never asked for, so those must not be
+    extracted as the client's requirements.
+
+    A line starting "Client:" opens a client turn and "Agent:" closes it;
+    unprefixed lines continue whichever turn is open. Text with no
+    Agent:/Client: markers (a bare freeform string) is returned unchanged,
+    as is a transcript with no Client: turns at all."""
+    kept = []
+    speaker = None
+    saw_marker = False
+    for line in text.splitlines():
+        m = _TURN_PREFIX.match(line)
+        if m:
+            saw_marker = True
+            speaker = m.group(1).lower()
+            line = line[m.end():]
+        if speaker == "client" or speaker is None:
+            kept.append(line)
+    if not saw_marker or not any(l.strip() for l in kept):
+        return text
+    return " ".join(kept)
+
+
 def _dedupe(items):
     """Order-preserving, case-insensitive de-duplication."""
     seen = set()
@@ -146,7 +174,7 @@ def extract_all(text, model_dir=DEFAULT_MODEL_DIR):
     """Same shape as rule_extractor.extract_all():
     {"location": [...], "property_type": [...], "amenities": [...], "budget": str|None}
     """
-    entities = predict_raw_entities(text, model_dir=model_dir)
+    entities = predict_raw_entities(client_only_text(text), model_dir=model_dir)
 
     locations = [_strip_city_suffix(e["text"]) for e in entities if e["label"] == "LOCATION"]
     # Several areas usually means the agent listed examples; the client's
