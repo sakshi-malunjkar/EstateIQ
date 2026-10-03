@@ -1,12 +1,12 @@
 """
 Entry point for running the API on both Windows (local dev) and Linux
-(Render).
+(Docker / Hugging Face Spaces).
 
 Usage:
     python -m api.run
 
-Binds to 0.0.0.0 on $PORT (Render assigns its own port; defaults to 8000
-locally).
+Binds to 0.0.0.0 on $PORT (the Docker image sets 7860 for Spaces; defaults
+to 8000 locally).
 
 Windows only: psycopg's async driver requires asyncio's
 SelectorEventLoop, but uvicorn's Server.run() hardcodes

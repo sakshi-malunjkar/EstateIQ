@@ -13,11 +13,12 @@ key file is already present is left alone, so local development (where
 models_artifacts/ is populated) never touches the network.
 
 Environment:
-    HF_TOKEN    Hugging Face access token with read access to the repo
-    HF_REPO_ID  e.g. "EstateIQ/estateiq-models"
+    HF_REPO_ID  model repo to download from (default: EstateIQ/estateiq-models)
+    HF_TOKEN    optional while the repo is public; required if it is made
+                private again (read access is enough)
 
-Can also be run on its own, e.g. as a Render build step so the first
-start is fast:
+Can also be run on its own, e.g. as a build step so the first start is
+fast:
     python -m api.download_models
 """
 
@@ -34,6 +35,8 @@ logger = logging.getLogger("estateiq.api.download_models")
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 MODELS_DIR = PROJECT_ROOT / "models_artifacts"
+
+DEFAULT_REPO_ID = "EstateIQ/estateiq-models"
 
 # folder -> the file whose presence means the folder is complete
 REQUIRED_MODELS = {
@@ -57,13 +60,8 @@ def download_models() -> None:
         logger.info("All model artifacts already present in %s.", MODELS_DIR)
         return
 
-    token = os.environ.get("HF_TOKEN")
-    repo_id = os.environ.get("HF_REPO_ID")
-    if not token or not repo_id:
-        raise RuntimeError(
-            f"Model artifacts missing locally ({', '.join(missing)}) and HF_TOKEN / HF_REPO_ID are not set, "
-            "so they cannot be downloaded. Set both, or place the folders in models_artifacts/."
-        )
+    token = os.environ.get("HF_TOKEN") or None  # a public repo needs no token
+    repo_id = os.environ.get("HF_REPO_ID") or DEFAULT_REPO_ID
 
     # Imported here so a machine that already has the models never needs the package.
     from huggingface_hub import snapshot_download
