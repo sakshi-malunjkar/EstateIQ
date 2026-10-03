@@ -1,39 +1,38 @@
 import { motion } from 'framer-motion'
-import { Lock, Mail, Shield, UserRound } from 'lucide-react'
+import { Lock, Mail } from 'lucide-react'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
-import { useNavigate } from 'react-router-dom'
+import { Navigate, useNavigate } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { login } from '@/lib/auth'
-import { cn } from '@/lib/utils'
+import { login, useAuth } from '@/lib/auth'
+import { isSupabaseConfigured } from '@/lib/supabase'
 
 export default function Login() {
   const navigate = useNavigate()
-  const [role, setRole] = useState('admin')
-  const [email, setEmail] = useState('admin@estateiq.com')
+  const { loading, session } = useAuth()
+  const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [submitting, setSubmitting] = useState(false)
 
-  function handleRoleToggle(nextRole) {
-    setRole(nextRole)
-    setEmail(nextRole === 'admin' ? 'admin@estateiq.com' : 'sales@estateiq.com')
-  }
+  // Already signed in (e.g. returning to /login): go straight to the app.
+  if (!loading && session) return <Navigate to="/dashboard" replace />
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault()
-    setSubmitting(true)
-    // Deliberately no artificial delay -- login is a synchronous
-    // localStorage check (see lib/auth.js), no network call yet.
-    const result = login(email, password)
-    setSubmitting(false)
-
-    if (!result.ok) {
-      toast.error(result.error)
+    if (!isSupabaseConfigured) {
+      toast.error('Authentication is not configured (missing VITE_SUPABASE_* values).')
       return
     }
-    toast.success(`Welcome back, ${result.session.role === 'admin' ? 'Admin' : 'Sales Agent'}!`)
-    navigate('/dashboard')
+    setSubmitting(true)
+    try {
+      await login(email, password)
+      navigate('/dashboard')
+    } catch {
+      toast.error('Invalid email or password')
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   return (
@@ -66,29 +65,6 @@ export default function Login() {
           <span className="text-4xl mb-2">🏠</span>
           <h1 className="text-2xl font-semibold tracking-tight text-gradient">EstateIQ</h1>
           <p className="mt-1 text-sm text-muted-foreground">AI-Powered Real Estate Intelligence</p>
-        </div>
-
-        {/* Role selector */}
-        <div className="mb-6 flex rounded-full border border-gray-200 bg-gray-100 p-1">
-          {[
-            { value: 'admin', label: 'Admin', icon: Shield },
-            { value: 'sales', label: 'Sales Agent', icon: UserRound },
-          ].map((opt) => (
-            <button
-              key={opt.value}
-              type="button"
-              onClick={() => handleRoleToggle(opt.value)}
-              className={cn(
-                'flex-1 flex items-center justify-center gap-1.5 rounded-full px-3 py-2 text-sm font-medium transition-all duration-200',
-                role === opt.value
-                  ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md'
-                  : 'text-muted-foreground hover:text-foreground'
-              )}
-            >
-              <opt.icon className="size-4" />
-              {opt.label}
-            </button>
-          ))}
         </div>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
@@ -124,10 +100,6 @@ export default function Login() {
           </Button>
         </form>
 
-        <p className="mt-6 text-center text-xs text-muted-foreground">
-          Demo credentials -- Admin: <code className="text-foreground/80">admin123</code> · Sales:{' '}
-          <code className="text-foreground/80">sales123</code>
-        </p>
       </motion.div>
     </div>
   )

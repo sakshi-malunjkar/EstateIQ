@@ -44,6 +44,7 @@ from combined_predict import predict_combined  # noqa: E402
 from app.lead_scoring.predict_lead_score import predict_lead_score  # noqa: E402
 
 from api import crud  # noqa: E402
+from api.auth import get_current_user  # noqa: E402
 from api.database import get_db, init_db  # noqa: E402
 from api.models import (  # noqa: E402
     AnalyticsResponse,
@@ -343,7 +344,7 @@ async def vapi_webhook(request: Request, db: AsyncSession = Depends(get_db)) -> 
 # 4. GET /leads
 # ---------------------------------------------------------------------------
 
-@app.get("/leads", response_model=LeadListResponse)
+@app.get("/leads", response_model=LeadListResponse, dependencies=[Depends(get_current_user)])
 async def get_leads(
     tier: str | None = Query(None, description="Filter by tier: hot, warm, cold"),
     sentiment: str | None = Query(None, description="Filter by sentiment: enthusiastic, frustrated, hesitant"),
@@ -382,7 +383,7 @@ async def get_leads(
 # 5. GET /leads/{lead_id}
 # ---------------------------------------------------------------------------
 
-@app.get("/leads/{lead_id}", response_model=LeadDetail)
+@app.get("/leads/{lead_id}", response_model=LeadDetail, dependencies=[Depends(get_current_user)])
 async def get_lead(lead_id: int, db: AsyncSession = Depends(get_db)) -> LeadDetail:
     """Returns full details for a single lead: transcript, NER output,
     sentiment, intent, lead score + SHAP values, status, and the full
@@ -461,7 +462,7 @@ async def get_lead(lead_id: int, db: AsyncSession = Depends(get_db)) -> LeadDeta
 # 6. PATCH /leads/{lead_id}/status
 # ---------------------------------------------------------------------------
 
-@app.patch("/leads/{lead_id}/status", response_model=LeadStatusUpdateResponse)
+@app.patch("/leads/{lead_id}/status", response_model=LeadStatusUpdateResponse, dependencies=[Depends(get_current_user)])
 async def update_lead_status(
     lead_id: int, payload: LeadStatusUpdateRequest, db: AsyncSession = Depends(get_db)
 ) -> LeadStatusUpdateResponse:
@@ -499,7 +500,7 @@ async def update_lead_status(
 # 7. GET /analytics
 # ---------------------------------------------------------------------------
 
-@app.get("/analytics", response_model=AnalyticsResponse)
+@app.get("/analytics", response_model=AnalyticsResponse, dependencies=[Depends(get_current_user)])
 async def analytics(db: AsyncSession = Depends(get_db)) -> AnalyticsResponse:
     """Returns portfolio-level aggregates: lead/tier counts, sentiment
     and intent distributions, average score, and conversion rate

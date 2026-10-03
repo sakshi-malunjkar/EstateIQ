@@ -1,6 +1,6 @@
 import { BarChart3, Home, LayoutDashboard, LogOut, Sparkles } from 'lucide-react'
-import { NavLink, useNavigate } from 'react-router-dom'
-import { getSession, logout } from '@/lib/auth'
+import { NavLink } from 'react-router-dom'
+import { logout, useAuth } from '@/lib/auth'
 import { cn } from '@/lib/utils'
 
 const NAV_ITEMS = [
@@ -10,12 +10,10 @@ const NAV_ITEMS = [
 ]
 
 export default function Sidebar() {
-  const navigate = useNavigate()
-  const session = getSession()
+  const { email, role } = useAuth()
 
   function handleLogout() {
     logout()
-    navigate('/')
   }
 
   return (
@@ -62,19 +60,19 @@ export default function Sidebar() {
         <Separator />
 
         <div className="p-3 flex flex-col gap-2">
-          {session && (
+          {email && (
             <div className="hidden lg:flex items-center justify-between rounded-lg bg-white/5 px-3 py-2">
               <div className="min-w-0">
-                <p className="truncate text-xs font-medium text-white">{session.email}</p>
+                <p className="truncate text-xs font-medium text-white">{email}</p>
                 <span
                   className={cn(
                     'inline-block mt-0.5 rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide',
-                    session.role === 'admin'
+                    role === 'admin'
                       ? 'bg-yellow-400/20 text-yellow-300'
                       : 'bg-blue-400/20 text-blue-200'
                   )}
                 >
-                  {session.role === 'admin' ? 'Admin' : 'Sales Agent'}
+                  {role === 'admin' ? 'Admin' : 'Sales Agent'}
                 </span>
               </div>
             </div>

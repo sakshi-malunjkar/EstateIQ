@@ -1,36 +1,67 @@
-// Hardcoded demo credentials -- there is no auth backend yet, this is
-// a client-side-only gate so the app has role-aware UI (admin vs sales
-// agent) to build against. Swap for real auth against the API later.
-const USERS = {
-  'admin@estateiq.com': { password: 'admin123', role: 'admin' },
-  'sales@estateiq.com': { password: 'sales123', role: 'sales' },
+import { useEffect, useState } from 'react'
+import { isSupabaseConfigured, supabase } from './supabase'
+
+export async function login(email, password) {
+  const { data, error } = await supabase.auth.signInWithPassword({ email: email.trim(), password })
+  if (error) throw error
+  return data
 }
 
-const STORAGE_KEY = 'estateiq_auth'
+export async function logout() {
+  await supabase.auth.signOut()
+  window.location.href = '/login'
+}
 
-export function login(email, password) {
-  const user = USERS[email.trim().toLowerCase()]
-  if (!user || user.password !== password) {
-    return { ok: false, error: 'Invalid email or password.' }
+export async function getSession() {
+  const { data } = await supabase.auth.getSession()
+  return data.session
+}
+
+export async function isAuthenticated() {
+  return Boolean(await getSession())
+}
+
+// Roles live in the `profiles` table (id = auth user id, role = 'admin' | 'sales');
+// a signed-in user can read only their own row. Missing row => least privilege.
+async function fetchRole(userId) {
+  const { data, error } = await supabase.from('profiles').select('role').eq('id', userId).maybeSingle()
+  if (error) {
+    console.error('Could not load profile role:', error.message)
+    return 'sales'
   }
-  const session = { email: email.trim().toLowerCase(), role: user.role }
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(session))
-  return { ok: true, session }
+  return data?.role === 'admin' ? 'admin' : 'sales'
 }
 
-export function logout() {
-  localStorage.removeItem(STORAGE_KEY)
-}
+/**
+ * React hook: { loading, session, email, role }. Re-renders on sign-in /
+ * sign-out / token refresh.
+ */
+export function useAuth() {
+  const [state, setState] = useState({ loading: isSupabaseConfigured, session: null, role: null })
 
-export function getSession() {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY)
-    return raw ? JSON.parse(raw) : null
-  } catch {
-    return null
-  }
-}
+  useEffect(() => {
+    if (!isSupabaseConfigured) return undefined
+    let cancelled = false
 
-export function isAuthenticated() {
-  return getSession() !== null
+    async function apply(session) {
+      if (!session) {
+        if (!cancelled) setState({ loading: false, session: null, role: null })
+        return
+      }
+      const role = await fetchRole(session.user.id)
+      if (!cancelled) setState({ loading: false, session, role })
+    }
+
+    getSession().then(apply)
+    const { data } = supabase.auth.onAuthStateChange((_event, session) => {
+      // Deferred: supabase-js warns against awaiting other supabase calls inside this callback.
+      setTimeout(() => apply(session), 0)
+    })
+    return () => {
+      cancelled = true
+      data.subscription.unsubscribe()
+    }
+  }, [])
+
+  return { ...state, email: state.session?.user?.email ?? null }
 }
