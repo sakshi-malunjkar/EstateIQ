@@ -96,7 +96,7 @@ export default function Analytics() {
         {statCards.map((s) => (
           <div
             key={s.label}
-            className="rounded-xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent p-5"
+            className="rounded-2xl border border-gray-200 bg-white shadow-sm p-5"
           >
             <div className="flex items-center justify-between">
               <span className="text-xs font-medium uppercase tracking-wide text-muted-foreground">{s.label}</span>
@@ -133,7 +133,7 @@ export default function Analytics() {
                       ))}
                     </Pie>
                     <Tooltip
-                      contentStyle={{ background: '#16181f', border: '1px solid #ffffff1a', borderRadius: 8 }}
+                      contentStyle={{ background: '#ffffff', border: '1px solid #e5e7eb', borderRadius: 8, color: '#111827' }}
                     />
                   </PieChart>
                 </ResponsiveContainer>
@@ -161,10 +161,10 @@ export default function Analytics() {
             ) : (
               <ResponsiveContainer width="100%" height={220}>
                 <BarChart data={sentimentData} layout="vertical" margin={{ left: 8, right: 24 }}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#ffffff10" horizontal={false} />
-                  <XAxis type="number" stroke="#475569" tick={{ fontSize: 11, fill: '#94a3b8' }} allowDecimals={false} />
-                  <YAxis type="category" dataKey="name" width={90} stroke="#475569" tick={{ fontSize: 12, fill: '#94a3b8' }} />
-                  <Tooltip contentStyle={{ background: '#16181f', border: '1px solid #ffffff1a', borderRadius: 8 }} />
+                  <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" horizontal={false} />
+                  <XAxis type="number" stroke="#d1d5db" tick={{ fontSize: 11, fill: '#6b7280' }} allowDecimals={false} />
+                  <YAxis type="category" dataKey="name" width={90} stroke="#d1d5db" tick={{ fontSize: 12, fill: '#6b7280' }} />
+                  <Tooltip contentStyle={{ background: '#ffffff', border: '1px solid #e5e7eb', borderRadius: 8, color: '#111827' }} />
                   <Bar dataKey="value" radius={[0, 4, 4, 0]}>
                     {sentimentData.map((entry) => (
                       <Cell key={entry.name} fill={entry.color} />
@@ -186,10 +186,10 @@ export default function Analytics() {
             ) : (
               <ResponsiveContainer width="100%" height={260}>
                 <BarChart data={intentData} layout="vertical" margin={{ left: 8, right: 24 }}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#ffffff10" horizontal={false} />
-                  <XAxis type="number" stroke="#475569" tick={{ fontSize: 11, fill: '#94a3b8' }} allowDecimals={false} />
-                  <YAxis type="category" dataKey="name" width={130} stroke="#475569" tick={{ fontSize: 12, fill: '#94a3b8' }} />
-                  <Tooltip contentStyle={{ background: '#16181f', border: '1px solid #ffffff1a', borderRadius: 8 }} />
+                  <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" horizontal={false} />
+                  <XAxis type="number" stroke="#d1d5db" tick={{ fontSize: 11, fill: '#6b7280' }} allowDecimals={false} />
+                  <YAxis type="category" dataKey="name" width={130} stroke="#d1d5db" tick={{ fontSize: 12, fill: '#6b7280' }} />
+                  <Tooltip contentStyle={{ background: '#ffffff', border: '1px solid #e5e7eb', borderRadius: 8, color: '#111827' }} />
                   <Bar dataKey="value" radius={[0, 4, 4, 0]}>
                     {intentData.map((entry) => (
                       <Cell key={entry.name} fill={entry.color} />
@@ -212,15 +212,15 @@ function NoData() {
 function AnalyticsSkeleton() {
   return (
     <div className="flex flex-col gap-8 animate-fade-in">
-      <Skeleton className="h-10 w-64 rounded-lg bg-white/5" />
+      <Skeleton className="h-10 w-64 rounded-lg bg-gray-100" />
       <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
         {Array.from({ length: 6 }).map((_, i) => (
-          <Skeleton key={i} className="h-24 rounded-xl bg-white/5" />
+          <Skeleton key={i} className="h-24 rounded-xl bg-gray-100" />
         ))}
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {Array.from({ length: 3 }).map((_, i) => (
-          <Skeleton key={i} className="h-64 rounded-xl bg-white/5" />
+          <Skeleton key={i} className="h-64 rounded-xl bg-gray-100" />
         ))}
       </div>
     </div>

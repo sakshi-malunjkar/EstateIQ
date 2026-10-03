@@ -1,269 +1,90 @@
 import { motion } from 'framer-motion'
-import { Loader2, Mic, PhoneOff, Sparkles } from 'lucide-react'
-import { useEffect, useRef, useState } from 'react'
-import toast from 'react-hot-toast'
+import { BarChart3 } from 'lucide-react'
+import { useEffect, useState } from 'react'
 import { Bar, BarChart, CartesianGrid, Cell, ResponsiveContainer, XAxis, YAxis } from 'recharts'
+import { useNavigate, useParams } from 'react-router-dom'
 import AnimatedNumber from '@/components/AnimatedNumber'
+import { ErrorState } from '@/components/StateViews'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
-import { Textarea } from '@/components/ui/textarea'
 import api from '@/lib/api'
-import vapi from '@/lib/vapi'
 import { INTENT_META, NER_ICONS, SENTIMENT_META, SHAP_LABELS, TIER_COLORS, TIER_LABELS } from '@/lib/constants'
 import { cn } from '@/lib/utils'
 
-const SAMPLE_TRANSCRIPT =
-  "Agent: Hello, welcome to our real estate assistant. How can I help you today?\n" +
-  'Client: I want a 2BHK in Baner, budget 60 lakhs, swimming pool chahiye, this is amazing!'
-
+// Leads are created automatically by the Vapi webhook, so this page no
+// longer takes manual input. /analyze shows an empty state;
+// /analyze/:id loads that lead and shows its NER / sentiment / intent /
+// score analysis (same fields GET /leads/:id returns).
 export default function Analyze() {
-  const [transcript, setTranscript] = useState('')
-  const [loading, setLoading] = useState(false)
-  const [result, setResult] = useState(null)
-  const [error, setError] = useState(null)
+  const { id } = useParams()
+  const navigate = useNavigate()
+  const [loadedLead, setLead] = useState(null)
+  const [isLoading, setLoading] = useState(Boolean(id))
+  const [loadError, setError] = useState(null)
 
-  const [callActive, setCallActive] = useState(false)
-  const [callLines, setCallLines] = useState([])
-  // Mirrors callLines so the long-lived Vapi 'call-end' handler reads the
-  // final transcript instead of a stale closure value.
-  const callLinesRef = useRef([])
-
-  async function runAnalysis(text) {
+  useEffect(() => {
+    if (!id) return undefined
+    let cancelled = false
     setLoading(true)
     setError(null)
-    setResult(null)
-    try {
-      const { data } = await api.post('/analyze', { transcript: text })
-      setResult(data)
-      toast.success('Analysis complete.')
-    } catch (err) {
-      setError(err.message)
-      toast.error(err.message)
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  function handleAnalyze() {
-    if (!transcript.trim()) {
-      toast.error('Paste a transcript first.')
-      return
-    }
-    runAnalysis(transcript)
-  }
-
-  const runAnalysisRef = useRef(runAnalysis)
-  useEffect(() => {
-    runAnalysisRef.current = runAnalysis
-  })
-
-  useEffect(() => {
-    const onCallStart = () => {
-      callLinesRef.current = []
-      setCallLines([])
-      setResult(null)
-      setError(null)
-      setCallActive(true)
-    }
-    const onCallEnd = () => {
-      setCallActive(false)
-      const lines = callLinesRef.current
-      if (lines.length === 0) {
-        toast.error('No speech was captured during the call.')
-        return
-      }
-      // Same "Agent:/Client:" format the backend pipeline expects.
-      runAnalysisRef.current(lines.map((l) => `${l.role === 'assistant' ? 'Agent' : 'Client'}: ${l.text}`).join('\n'))
-    }
-    const onMessage = (message) => {
-      // Skip partial results so each utterance is added once, when final.
-      if (message.type !== 'transcript' || message.transcriptType !== 'final') return
-      const line = { role: message.role, text: message.transcript }
-      callLinesRef.current = [...callLinesRef.current, line]
-      setCallLines(callLinesRef.current)
-    }
-    const onError = (err) => {
-      console.error('Vapi error:', err)
-      setCallActive(false)
-      toast.error('Call error: ' + (err?.message ?? err?.error?.message ?? 'unknown error'))
-    }
-
-    vapi.on('call-start', onCallStart)
-    vapi.on('call-end', onCallEnd)
-    vapi.on('message', onMessage)
-    vapi.on('error', onError)
+    api
+      .get(`/leads/${id}`)
+      .then(({ data }) => !cancelled && setLead(data))
+      .catch((err) => !cancelled && setError(err.status === 404 ? `Lead ${id} not found.` : err.message))
+      .finally(() => !cancelled && setLoading(false))
     return () => {
-      vapi.removeListener('call-start', onCallStart)
-      vapi.removeListener('call-end', onCallEnd)
-      vapi.removeListener('message', onMessage)
-      vapi.removeListener('error', onError)
-      vapi.stop()
+      cancelled = true
     }
-  }, [])
+  }, [id])
 
-  function startCall() {
-    const assistantId = import.meta.env.VITE_VAPI_ASSISTANT_ID
-    if (!import.meta.env.VITE_VAPI_PUBLIC_KEY || !assistantId) {
-      toast.error('Set VITE_VAPI_PUBLIC_KEY and VITE_VAPI_ASSISTANT_ID in client/.env')
-      return
-    }
-    vapi.start(assistantId)
-  }
-
-  function endCall() {
-    vapi.stop()
-  }
+  // Without an :id there is nothing to show, whatever a previous lead left in state.
+  const lead = id ? loadedLead : null
+  const loading = Boolean(id) && isLoading
+  const error = id ? loadError : null
 
   return (
     <div className="flex flex-col gap-8">
       <div className="animate-fade-in">
-        <h1 className="text-3xl font-semibold tracking-tight text-gradient">Analyze Lead</h1>
-        <p className="mt-1 text-muted-foreground">Talk to our agent or paste a call transcript to extract insights</p>
+        <h1 className="text-3xl font-semibold tracking-tight text-gradient">Lead Analysis</h1>
+        <p className="mt-1 text-muted-foreground">View Lead Analysis</p>
       </div>
-
-      <VoiceCard
-        callActive={callActive}
-        analyzing={loading}
-        lines={callLines}
-        onStart={startCall}
-        onEnd={endCall}
-      />
-
-      <div className="flex items-center gap-4 text-xs uppercase tracking-wide text-muted-foreground">
-        <div className="h-px flex-1 bg-white/10" />
-        <span>or paste transcript manually</span>
-        <div className="h-px flex-1 bg-white/10" />
-      </div>
-
-      <Card className="glass-card animate-fade-in">
-        <CardContent className="flex flex-col gap-4">
-          <Textarea
-            value={transcript}
-            onChange={(e) => setTranscript(e.target.value)}
-            placeholder="Paste a call transcript here... e.g. Agent: Hello! Client: I'm looking for a 2BHK in Baner, budget 60 lakhs."
-            rows={6}
-            className="rounded-xl border-white/10 bg-white/5 text-base focus-visible:ring-indigo-500/50 focus-visible:border-indigo-500 resize-none"
-          />
-          <div className="flex flex-wrap items-center gap-3">
-            <button
-              type="button"
-              onClick={() => setTranscript(SAMPLE_TRANSCRIPT)}
-              className="text-xs text-muted-foreground underline underline-offset-2 hover:text-foreground transition-colors"
-            >
-              Use sample transcript
-            </button>
-            <button
-              onClick={handleAnalyze}
-              disabled={loading}
-              className={cn(
-                'ml-auto inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 px-5 py-2.5 text-sm font-medium text-white shadow-md transition-all duration-200',
-                'hover:brightness-110 hover:-translate-y-0.5 disabled:opacity-60 disabled:translate-y-0'
-              )}
-            >
-              {loading ? (
-                <Loader2 className="size-4 animate-spin" />
-              ) : (
-                <Sparkles className="size-4" />
-              )}
-              {loading ? 'Analyzing...' : 'Analyze'}
-            </button>
-          </div>
-        </CardContent>
-      </Card>
 
       {loading && <AnalyzeSkeleton />}
 
-      {error && !loading && (
-        <Card className="border-red-500/30 bg-red-500/5 animate-fade-in">
-          <CardContent className="text-sm text-red-300">{error}</CardContent>
+      {error && !loading && <ErrorState message={error} />}
+
+      {!loading && !error && !lead && (
+        <Card className="glass-card animate-fade-in">
+          <CardContent className="flex flex-col items-center gap-3 py-12 text-center">
+            <span className="text-5xl">📊</span>
+            <h2 className="text-xl font-semibold">No Lead Selected</h2>
+            <p className="max-w-md text-sm text-muted-foreground">
+              Leads are analyzed automatically when clients call via the AI Voice Agent on the website. View all
+              leads in the Dashboard and click any lead to see its full analysis.
+            </p>
+            <button
+              onClick={() => navigate('/dashboard')}
+              className="mt-2 inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-5 py-2.5 text-sm font-medium text-white shadow-md transition-all duration-200 hover:-translate-y-0.5 hover:brightness-110"
+            >
+              <BarChart3 className="size-4" />
+              Go to Dashboard
+            </button>
+          </CardContent>
         </Card>
       )}
 
-      {result && !loading && (
+      {lead && !loading && (
         <div className="flex flex-col gap-6">
-          <NERSection ner={result.ner} />
+          {lead.ner && <NERSection ner={lead.ner} />}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <SignalCard title="Sentiment" kind="sentiment" data={result.sentiment} />
-            <SignalCard title="Intent" kind="intent" data={result.intent} />
+            {lead.sentiment && <SignalCard title="Sentiment" kind="sentiment" data={lead.sentiment} />}
+            {lead.intent && <SignalCard title="Intent" kind="intent" data={lead.intent} />}
           </div>
-          <LeadScoreCard leadScore={result.lead_score} />
+          {lead.lead_score && <LeadScoreCard leadScore={lead.lead_score} />}
         </div>
       )}
     </div>
-  )
-}
-
-function VoiceCard({ callActive, analyzing, lines, onStart, onEnd }) {
-  const scrollRef = useRef(null)
-
-  useEffect(() => {
-    const el = scrollRef.current
-    if (el) el.scrollTop = el.scrollHeight
-  }, [lines])
-
-  return (
-    <Card className="glass-card animate-fade-in">
-      <CardContent className="flex flex-col items-center gap-5">
-        <div className="text-center">
-          <h2 className="text-lg font-semibold">Live Voice Analysis</h2>
-          <p className="text-sm text-muted-foreground">Talk to our AI agent and get instant lead scoring</p>
-        </div>
-
-        <div className="flex flex-col items-center gap-3">
-          <button
-            type="button"
-            onClick={callActive ? undefined : onStart}
-            disabled={analyzing}
-            aria-label={callActive ? 'Recording' : 'Start Call'}
-            className={cn(
-              'relative flex size-24 items-center justify-center rounded-full text-white shadow-lg transition-all duration-200 disabled:opacity-60',
-              callActive ? 'bg-red-500 cursor-default' : 'bg-indigo-500 hover:bg-indigo-400 hover:-translate-y-0.5'
-            )}
-          >
-            {callActive && <span className="absolute inset-0 animate-ping rounded-full bg-red-500/60" />}
-            <Mic className="relative size-10" />
-          </button>
-          <span className={cn('text-sm font-medium', callActive ? 'text-red-400' : 'text-indigo-300')}>
-            {analyzing ? 'Analyzing...' : callActive ? 'Recording...' : 'Start Call'}
-          </span>
-          {callActive && (
-            <button
-              type="button"
-              onClick={onEnd}
-              className="inline-flex items-center gap-2 rounded-xl bg-red-500/15 px-4 py-2 text-sm font-medium text-red-300 transition-colors hover:bg-red-500/25"
-            >
-              <PhoneOff className="size-4" />
-              End Call
-            </button>
-          )}
-        </div>
-
-        {(callActive || lines.length > 0) && (
-          <div
-            ref={scrollRef}
-            className="flex h-56 w-full flex-col gap-2 overflow-y-auto rounded-xl border border-white/10 bg-white/5 p-4"
-          >
-            {lines.length === 0 && <p className="text-sm text-muted-foreground">Listening... start speaking.</p>}
-            {lines.map((line, i) => {
-              const isAgent = line.role === 'assistant'
-              return (
-                <div key={i} className={cn('flex', isAgent ? 'justify-start' : 'justify-end')}>
-                  <span
-                    className={cn(
-                      'max-w-[80%] rounded-2xl px-3 py-2 text-sm',
-                      isAgent ? 'bg-white/10 text-gray-300' : 'bg-indigo-500/20 text-indigo-300'
-                    )}
-                  >
-                    {line.text}
-                  </span>
-                </div>
-              )
-            })}
-          </div>
-        )}
-      </CardContent>
-    </Card>
   )
 }
 
@@ -294,7 +115,7 @@ function NERSection({ ner }) {
                   item.value.length > 0 ? (
                     <div className="flex flex-wrap gap-1.5">
                       {item.value.map((v) => (
-                        <Badge key={v} variant="outline" className="border-white/15">
+                        <Badge key={v} variant="outline" className="border-gray-200">
                           {v}
                         </Badge>
                       ))}
@@ -328,7 +149,7 @@ function SignalCard({ title, kind, data }) {
           <Badge
             className={cn(
               'rounded-full',
-              reliable ? 'bg-green-500/15 text-green-400 border-green-500/30' : 'bg-red-500/15 text-red-400 border-red-500/30'
+              reliable ? 'bg-green-50 text-green-700 border-green-500/30' : 'bg-red-50 text-red-700 border-red-500/30'
             )}
             variant="outline"
           >
@@ -348,7 +169,7 @@ function SignalCard({ title, kind, data }) {
             </div>
           )}
           <div>
-            <p className="text-xl font-semibold" style={{ color: meta?.color ?? '#f8fafc' }}>
+            <p className="text-xl font-semibold" style={{ color: meta?.color ?? '#111827' }}>
               {data.label ?? 'Unknown'}
             </p>
             <p className="text-xs text-muted-foreground font-mono">{confidencePct}% confidence</p>
@@ -371,7 +192,7 @@ function SignalCard({ title, kind, data }) {
 
 function ProgressBar({ value, color }) {
   return (
-    <div className="h-2 w-full overflow-hidden rounded-full bg-white/10">
+    <div className="h-2 w-full overflow-hidden rounded-full bg-gray-200">
       <motion.div
         className="h-full rounded-full"
         style={{ backgroundColor: color }}
@@ -388,7 +209,7 @@ function MiniBar({ label, value, color }) {
   return (
     <div className="flex items-center gap-2 text-xs">
       <span className="w-24 shrink-0 capitalize text-muted-foreground">{label}</span>
-      <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-white/10">
+      <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-gray-200">
         <motion.div
           className="h-full rounded-full"
           style={{ backgroundColor: color }}
@@ -419,7 +240,7 @@ function LeadScoreCard({ leadScore }) {
         <div className="flex flex-col md:flex-row items-center gap-8">
           <div className="relative flex size-40 shrink-0 items-center justify-center">
             <svg viewBox="0 0 120 120" className="size-40 -rotate-90">
-              <circle cx="60" cy="60" r={radius} fill="none" stroke="#ffffff15" strokeWidth="10" />
+              <circle cx="60" cy="60" r={radius} fill="none" stroke="#e5e7eb" strokeWidth="10" />
               <motion.circle
                 cx="60"
                 cy="60"
@@ -474,14 +295,14 @@ function LeadScoreCard({ leadScore }) {
           </h3>
           <ResponsiveContainer width="100%" height={260}>
             <BarChart data={shapData} layout="vertical" margin={{ left: 8, right: 24 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#ffffff10" horizontal={false} />
-              <XAxis type="number" stroke="#475569" tick={{ fontSize: 11, fill: '#94a3b8' }} />
+              <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" horizontal={false} />
+              <XAxis type="number" stroke="#d1d5db" tick={{ fontSize: 11, fill: '#6b7280' }} />
               <YAxis
                 type="category"
                 dataKey="name"
                 width={140}
-                stroke="#475569"
-                tick={{ fontSize: 12, fill: '#94a3b8' }}
+                stroke="#d1d5db"
+                tick={{ fontSize: 12, fill: '#6b7280' }}
               />
               <Bar dataKey="value" radius={[4, 4, 4, 4]}>
                 {shapData.map((entry) => (
@@ -501,14 +322,14 @@ function AnalyzeSkeleton() {
     <div className="flex flex-col gap-6 animate-fade-in">
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {Array.from({ length: 4 }).map((_, i) => (
-          <Skeleton key={i} className="h-24 rounded-xl bg-white/5" />
+          <Skeleton key={i} className="h-24 rounded-xl bg-gray-100" />
         ))}
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <Skeleton className="h-48 rounded-xl bg-white/5" />
-        <Skeleton className="h-48 rounded-xl bg-white/5" />
+        <Skeleton className="h-48 rounded-xl bg-gray-100" />
+        <Skeleton className="h-48 rounded-xl bg-gray-100" />
       </div>
-      <Skeleton className="h-80 rounded-xl bg-white/5" />
+      <Skeleton className="h-80 rounded-xl bg-gray-100" />
     </div>
   )
 }

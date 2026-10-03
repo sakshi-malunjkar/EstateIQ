@@ -1,10 +1,10 @@
-import { BarChart3, LayoutDashboard, LogOut, Sparkles } from 'lucide-react'
+import { BarChart3, Home, LayoutDashboard, LogOut, Sparkles } from 'lucide-react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { getSession, logout } from '@/lib/auth'
 import { cn } from '@/lib/utils'
 
 const NAV_ITEMS = [
-  { to: '/analyze', label: 'Analyze Lead', icon: Sparkles },
+  { to: '/analyze', label: 'Lead Analysis', icon: Sparkles },
   { to: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
   { to: '/analytics', label: 'Analytics', icon: BarChart3 },
 ]
@@ -23,14 +23,16 @@ export default function Sidebar() {
       {/* Desktop / tablet sidebar */}
       <aside
         className={cn(
-          'hidden md:flex flex-col shrink-0 h-screen sticky top-0 border-r border-white/10 bg-sidebar',
+          'hidden md:flex flex-col shrink-0 h-screen sticky top-0 border-r border-white/10 bg-sidebar text-white shadow-lg',
           'w-16 lg:w-64 transition-all duration-200'
         )}
       >
         <div className="flex items-center gap-2 px-4 h-16 shrink-0">
-          <span className="text-2xl">🏠</span>
-          <span className="hidden lg:inline text-lg font-semibold tracking-tight text-gradient">
-            EstateIQ
+          <span className="rounded bg-yellow-400 p-1.5 text-[#131836]">
+            <Home className="size-5 stroke-[2.5]" />
+          </span>
+          <span className="hidden lg:inline text-xl font-extrabold tracking-tight text-white">
+            Estate<span className="font-black text-yellow-400">IQ</span>
           </span>
         </div>
 
@@ -46,8 +48,8 @@ export default function Sidebar() {
                   'flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200',
                   'hover:bg-white/5',
                   isActive
-                    ? 'bg-gradient-to-r from-indigo-500/20 to-purple-600/20 text-white border border-indigo-500/30'
-                    : 'text-muted-foreground'
+                    ? 'bg-white/10 text-white border border-white/10 shadow-sm [&>svg]:text-yellow-400'
+                    : 'text-gray-300 hover:text-white'
                 )
               }
             >
@@ -63,13 +65,13 @@ export default function Sidebar() {
           {session && (
             <div className="hidden lg:flex items-center justify-between rounded-lg bg-white/5 px-3 py-2">
               <div className="min-w-0">
-                <p className="truncate text-xs font-medium text-foreground">{session.email}</p>
+                <p className="truncate text-xs font-medium text-white">{session.email}</p>
                 <span
                   className={cn(
                     'inline-block mt-0.5 rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide',
                     session.role === 'admin'
-                      ? 'bg-indigo-500/20 text-indigo-300'
-                      : 'bg-purple-500/20 text-purple-300'
+                      ? 'bg-yellow-400/20 text-yellow-300'
+                      : 'bg-blue-400/20 text-blue-200'
                   )}
                 >
                   {session.role === 'admin' ? 'Admin' : 'Sales Agent'}
@@ -79,7 +81,7 @@ export default function Sidebar() {
           )}
           <button
             onClick={handleLogout}
-            className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-muted-foreground hover:bg-white/5 hover:text-red-400 transition-all duration-200"
+            className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-gray-300 hover:bg-white/5 hover:text-red-400 transition-all duration-200"
           >
             <LogOut className="size-5 shrink-0" />
             <span className="hidden lg:inline">Logout</span>
@@ -96,7 +98,7 @@ export default function Sidebar() {
             className={({ isActive }) =>
               cn(
                 'flex flex-col items-center justify-center gap-0.5 rounded-lg px-3 py-1.5 text-[10px] font-medium transition-all duration-200 flex-1',
-                isActive ? 'text-indigo-400' : 'text-muted-foreground'
+                isActive ? 'text-indigo-400' : 'text-gray-300 hover:text-white'
               )
             }
           >
@@ -106,7 +108,7 @@ export default function Sidebar() {
         ))}
         <button
           onClick={handleLogout}
-          className="flex flex-col items-center justify-center gap-0.5 rounded-lg px-3 py-1.5 text-[10px] font-medium text-muted-foreground hover:text-red-400 flex-1"
+          className="flex flex-col items-center justify-center gap-0.5 rounded-lg px-3 py-1.5 text-[10px] font-medium text-gray-300 hover:text-red-400 flex-1"
         >
           <LogOut className="size-5" />
           Logout

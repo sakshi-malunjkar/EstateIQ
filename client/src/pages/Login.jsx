@@ -40,9 +40,9 @@ export default function Login() {
     <div className="relative min-h-screen overflow-hidden bg-background flex items-center justify-center px-4">
       {/* Animated gradient background */}
       <div className="pointer-events-none absolute inset-0">
-        <div className="absolute -top-1/3 -left-1/4 size-[600px] rounded-full bg-indigo-600/20 blur-[120px] animate-pulse" />
+        <div className="absolute -top-1/3 -left-1/4 size-[600px] rounded-full bg-indigo-300/40 blur-[120px] animate-pulse" />
         <div
-          className="absolute -bottom-1/3 -right-1/4 size-[600px] rounded-full bg-purple-600/20 blur-[120px] animate-pulse"
+          className="absolute -bottom-1/3 -right-1/4 size-[600px] rounded-full bg-blue-300/40 blur-[120px] animate-pulse"
           style={{ animationDelay: '1s' }}
         />
         {/* Subtle grid pattern */}
@@ -50,7 +50,7 @@ export default function Login() {
           className="absolute inset-0 opacity-[0.03]"
           style={{
             backgroundImage:
-              'linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)',
+              'linear-gradient(#131836 1px, transparent 1px), linear-gradient(90deg, #131836 1px, transparent 1px)',
             backgroundSize: '48px 48px',
           }}
         />
@@ -60,7 +60,7 @@ export default function Login() {
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, ease: 'easeOut' }}
-        className="relative w-full max-w-md rounded-2xl border border-white/10 bg-card/60 backdrop-blur-xl p-8 shadow-2xl shadow-black/40"
+        className="relative w-full max-w-md rounded-2xl border border-gray-200 bg-white shadow-sm p-8 shadow-xl shadow-indigo-900/10"
       >
         <div className="flex flex-col items-center text-center mb-8">
           <span className="text-4xl mb-2">🏠</span>
@@ -69,7 +69,7 @@ export default function Login() {
         </div>
 
         {/* Role selector */}
-        <div className="mb-6 flex rounded-full border border-white/10 bg-white/5 p-1">
+        <div className="mb-6 flex rounded-full border border-gray-200 bg-gray-100 p-1">
           {[
             { value: 'admin', label: 'Admin', icon: Shield },
             { value: 'sales', label: 'Sales Agent', icon: UserRound },
@@ -81,7 +81,7 @@ export default function Login() {
               className={cn(
                 'flex-1 flex items-center justify-center gap-1.5 rounded-full px-3 py-2 text-sm font-medium transition-all duration-200',
                 role === opt.value
-                  ? 'bg-gradient-to-r from-indigo-500 to-purple-600 text-white shadow-md'
+                  ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md'
                   : 'text-muted-foreground hover:text-foreground'
               )}
             >
@@ -99,7 +99,7 @@ export default function Login() {
               placeholder="Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="pl-9 h-11 rounded-xl bg-white/5 border-white/10 focus-visible:ring-indigo-500/50 focus-visible:border-indigo-500"
+              className="pl-9 h-11 rounded-xl bg-white border-gray-300 focus-visible:ring-indigo-500/50 focus-visible:border-indigo-500"
               required
             />
           </div>
@@ -110,7 +110,7 @@ export default function Login() {
               placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="pl-9 h-11 rounded-xl bg-white/5 border-white/10 focus-visible:ring-indigo-500/50 focus-visible:border-indigo-500"
+              className="pl-9 h-11 rounded-xl bg-white border-gray-300 focus-visible:ring-indigo-500/50 focus-visible:border-indigo-500"
               required
             />
           </div>
@@ -118,7 +118,7 @@ export default function Login() {
           <Button
             type="submit"
             disabled={submitting}
-            className="mt-2 h-11 w-full rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-medium hover:brightness-110 hover:-translate-y-0.5 transition-all duration-200 disabled:opacity-60 disabled:translate-y-0"
+            className="mt-2 h-11 w-full rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-medium hover:brightness-110 hover:-translate-y-0.5 transition-all duration-200 disabled:opacity-60 disabled:translate-y-0"
           >
             {submitting ? 'Signing in...' : 'Sign In'}
           </Button>

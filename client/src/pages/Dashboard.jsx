@@ -99,7 +99,7 @@ export default function Dashboard() {
         {stats.map((s) => (
           <div
             key={s.label}
-            className="rounded-xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent p-4"
+            className="rounded-2xl border border-gray-200 bg-white shadow-sm p-4"
           >
             <div className="flex items-center justify-between">
               <span className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
@@ -115,7 +115,7 @@ export default function Dashboard() {
       </div>
 
       <div className="flex flex-col sm:flex-row sm:items-center gap-3 animate-fade-in">
-        <div className="flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 p-1">
+        <div className="flex items-center gap-1.5 rounded-full border border-gray-200 bg-gray-100 p-1">
           {TIER_FILTERS.map((f) => (
             <button
               key={f.label}
@@ -123,7 +123,7 @@ export default function Dashboard() {
               className={cn(
                 'rounded-full px-3.5 py-1.5 text-xs font-medium transition-all duration-200',
                 tier === f.value
-                  ? 'bg-gradient-to-r from-indigo-500 to-purple-600 text-white shadow'
+                  ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow'
                   : 'text-muted-foreground hover:text-foreground'
               )}
             >
@@ -137,7 +137,7 @@ export default function Dashboard() {
             placeholder="Search this page (id, name, phone)"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="pl-9 rounded-xl border-white/10 bg-white/5"
+            className="pl-9 rounded-xl border-gray-300 bg-white"
           />
         </div>
       </div>
@@ -147,16 +147,16 @@ export default function Dashboard() {
       ) : error ? (
         <ErrorState message={error} onRetry={fetchLeads} />
       ) : visibleLeads.length === 0 ? (
-        <EmptyState title="No leads found" message="Try a different filter, or analyze a new transcript." />
+        <EmptyState title="No leads found" message="Try a different filter. Leads appear here automatically after clients call the AI Voice Agent." />
       ) : (
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="overflow-hidden rounded-xl border border-white/10 bg-card/60 backdrop-blur-xl"
+          className="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm"
         >
           <Table>
             <TableHeader>
-              <TableRow className="border-white/10 hover:bg-transparent">
+              <TableRow className="border-gray-200 hover:bg-transparent">
                 <TableHead>Lead</TableHead>
                 <TableHead>Sentiment</TableHead>
                 <TableHead>Intent</TableHead>
@@ -177,8 +177,8 @@ export default function Dashboard() {
                   <TableRow
                     key={lead.id}
                     className={cn(
-                      'border-white/5 cursor-pointer transition-colors duration-150 hover:bg-indigo-500/5',
-                      i % 2 === 1 && 'bg-white/[0.02]'
+                      'border-gray-200 cursor-pointer transition-colors duration-150 hover:bg-indigo-50',
+                      i % 2 === 1 && 'bg-gray-50/70'
                     )}
                     onClick={() => navigate(`/leads/${lead.id}`)}
                   >
@@ -210,7 +210,7 @@ export default function Dashboard() {
                     <TableCell className="w-32">
                       {lead.score != null ? (
                         <div className="flex items-center gap-2">
-                          <div className="h-1.5 w-14 overflow-hidden rounded-full bg-white/10">
+                          <div className="h-1.5 w-14 overflow-hidden rounded-full bg-gray-200">
                             <div
                               className="h-full rounded-full"
                               style={{ width: `${lead.score}%`, backgroundColor: tierColor }}
@@ -238,7 +238,7 @@ export default function Dashboard() {
                     <TableCell>
                       <Badge
                         variant="outline"
-                        className="rounded-full gap-1 capitalize border-white/15"
+                        className="rounded-full gap-1 capitalize border-gray-200"
                         style={{ color: statusColor }}
                       >
                         <span className="size-1.5 rounded-full" style={{ backgroundColor: statusColor }} />
@@ -254,7 +254,7 @@ export default function Dashboard() {
                           e.stopPropagation()
                           navigate(`/leads/${lead.id}`)
                         }}
-                        className="group inline-flex items-center gap-1 rounded-lg px-2.5 py-1 text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-white/5 transition-all duration-200"
+                        className="group inline-flex items-center gap-1 rounded-lg px-2.5 py-1 text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-gray-100 transition-all duration-200"
                       >
                         View
                         <ChevronRight className="size-3.5 transition-transform group-hover:translate-x-0.5" />
@@ -277,7 +277,7 @@ export default function Dashboard() {
             <button
               disabled={skip === 0}
               onClick={() => setSkip(Math.max(0, skip - PAGE_SIZE))}
-              className="inline-flex items-center gap-1 rounded-lg border border-white/10 px-3 py-1.5 text-xs font-medium hover:bg-white/5 disabled:opacity-40 disabled:pointer-events-none transition-all duration-200"
+              className="inline-flex items-center gap-1 rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-medium hover:bg-gray-100 disabled:opacity-40 disabled:pointer-events-none transition-all duration-200"
             >
               <ChevronLeft className="size-3.5" />
               Prev
@@ -285,7 +285,7 @@ export default function Dashboard() {
             <button
               disabled={skip + PAGE_SIZE >= total}
               onClick={() => setSkip(skip + PAGE_SIZE)}
-              className="inline-flex items-center gap-1 rounded-lg border border-white/10 px-3 py-1.5 text-xs font-medium hover:bg-white/5 disabled:opacity-40 disabled:pointer-events-none transition-all duration-200"
+              className="inline-flex items-center gap-1 rounded-lg border border-gray-200 px-3 py-1.5 text-xs font-medium hover:bg-gray-100 disabled:opacity-40 disabled:pointer-events-none transition-all duration-200"
             >
               Next
               <ChevronRight className="size-3.5" />
@@ -301,7 +301,7 @@ function DashboardSkeleton() {
   return (
     <div className="flex flex-col gap-2 animate-fade-in">
       {Array.from({ length: 6 }).map((_, i) => (
-        <Skeleton key={i} className="h-12 w-full rounded-lg bg-white/5" />
+        <Skeleton key={i} className="h-12 w-full rounded-lg bg-gray-100" />
       ))}
     </div>
   )

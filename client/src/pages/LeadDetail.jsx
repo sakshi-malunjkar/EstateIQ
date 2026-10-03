@@ -98,11 +98,11 @@ function TranscriptCard({ lead }) {
       <CardContent className="flex flex-col gap-3">
         <div className="flex items-center justify-between">
           <h2 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">Transcript</h2>
-          <Badge variant="outline" className="border-white/15 text-xs">
+          <Badge variant="outline" className="border-gray-200 text-xs">
             Lead #{lead.id}
           </Badge>
         </div>
-        <div className="max-h-[200px] overflow-y-auto rounded-lg border border-white/10 bg-black/30 p-3 font-mono text-xs leading-relaxed">
+        <div className="max-h-[200px] overflow-y-auto rounded-lg border border-gray-200 bg-gray-50 p-3 font-mono text-xs leading-relaxed">
           {lines.map((line, i) => (
             <div key={i} className="flex gap-3">
               <span className="w-6 shrink-0 select-none text-right text-muted-foreground/50">{i + 1}</span>
@@ -135,7 +135,7 @@ function RequirementsCard({ ner }) {
             {ner.amenities?.length ? (
               <div className="flex flex-wrap gap-1.5">
                 {ner.amenities.map((a) => (
-                  <Badge key={a} variant="outline" className="border-white/15">
+                  <Badge key={a} variant="outline" className="border-gray-200">
                     {a}
                   </Badge>
                 ))}
@@ -187,7 +187,7 @@ function MiniSignalCard({ title, kind, data }) {
             variant="outline"
             className={cn(
               'text-[10px]',
-              reliable ? 'border-green-500/30 text-green-400' : 'border-red-500/30 text-red-400'
+              reliable ? 'border-green-500/30 text-green-600' : 'border-red-500/30 text-red-600'
             )}
           >
             {reliable ? 'Reliable' : 'Low Confidence'}
@@ -224,9 +224,9 @@ function ScoreCard({ leadScore }) {
         </div>
         <ResponsiveContainer width="100%" height={220}>
           <BarChart data={shapData} layout="vertical" margin={{ left: 8, right: 24 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#ffffff10" horizontal={false} />
-            <XAxis type="number" stroke="#475569" tick={{ fontSize: 11, fill: '#94a3b8' }} />
-            <YAxis type="category" dataKey="name" width={130} stroke="#475569" tick={{ fontSize: 11, fill: '#94a3b8' }} />
+            <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" horizontal={false} />
+            <XAxis type="number" stroke="#d1d5db" tick={{ fontSize: 11, fill: '#6b7280' }} />
+            <YAxis type="category" dataKey="name" width={130} stroke="#d1d5db" tick={{ fontSize: 11, fill: '#6b7280' }} />
             <Bar dataKey="value" radius={[4, 4, 4, 4]}>
               {shapData.map((entry) => (
                 <Cell key={entry.name} fill={entry.value >= 0 ? '#22c55e' : '#ef4444'} />
@@ -274,7 +274,7 @@ function StatusCard({ lead, onUpdated }) {
         <h2 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">Update Status</h2>
 
         <Select value={status} onValueChange={setStatus}>
-          <SelectTrigger className="w-full rounded-xl border-white/10 bg-white/5">
+          <SelectTrigger className="w-full rounded-xl border-gray-300 bg-white">
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
@@ -296,7 +296,7 @@ function StatusCard({ lead, onUpdated }) {
               className="overflow-hidden"
             >
               <Select value={lostReason} onValueChange={setLostReason}>
-                <SelectTrigger className="w-full rounded-xl border-white/10 bg-white/5">
+                <SelectTrigger className="w-full rounded-xl border-gray-300 bg-white">
                   <SelectValue placeholder="Reason for loss" />
                 </SelectTrigger>
                 <SelectContent>
@@ -316,7 +316,7 @@ function StatusCard({ lead, onUpdated }) {
           value={notes}
           onChange={(e) => setNotes(e.target.value)}
           rows={3}
-          className="rounded-xl border-white/10 bg-white/5 resize-none"
+          className="rounded-xl border-gray-300 bg-white resize-none"
         />
 
         <button
@@ -324,7 +324,7 @@ function StatusCard({ lead, onUpdated }) {
           disabled={saving}
           className={cn(
             'inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-medium text-white shadow-md transition-all duration-200',
-            saved ? 'bg-green-600' : 'bg-gradient-to-r from-indigo-500 to-purple-600 hover:brightness-110',
+            saved ? 'bg-green-600' : 'bg-gradient-to-r from-blue-600 to-indigo-600 hover:brightness-110',
             'disabled:opacity-60'
           )}
         >
@@ -337,7 +337,7 @@ function StatusCard({ lead, onUpdated }) {
         </button>
 
         {lead.status_history?.length > 0 && (
-          <div className="pt-2 border-t border-white/10">
+          <div className="pt-2 border-t border-gray-200">
             <p className="mb-2 text-xs font-medium uppercase tracking-wide text-muted-foreground">History</p>
             <div className="flex flex-col gap-2 max-h-40 overflow-y-auto">
               {[...lead.status_history].reverse().map((event, i) => (
@@ -345,7 +345,7 @@ function StatusCard({ lead, onUpdated }) {
                   <span className="text-muted-foreground">
                     {event.status_from ? `${event.status_from} → ` : ''}
                     <span className="text-foreground capitalize">{event.status_to}</span>
-                    {event.lost_reason && <span className="text-red-400"> ({event.lost_reason})</span>}
+                    {event.lost_reason && <span className="text-red-600"> ({event.lost_reason})</span>}
                   </span>
                   <span className="text-muted-foreground/70">
                     {new Date(event.changed_at).toLocaleDateString()}
@@ -364,12 +364,12 @@ function DetailSkeleton() {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 animate-fade-in">
       <div className="flex flex-col gap-6">
-        <Skeleton className="h-56 rounded-xl bg-white/5" />
-        <Skeleton className="h-32 rounded-xl bg-white/5" />
+        <Skeleton className="h-56 rounded-xl bg-gray-100" />
+        <Skeleton className="h-32 rounded-xl bg-gray-100" />
       </div>
       <div className="flex flex-col gap-6">
-        <Skeleton className="h-72 rounded-xl bg-white/5" />
-        <Skeleton className="h-48 rounded-xl bg-white/5" />
+        <Skeleton className="h-72 rounded-xl bg-gray-100" />
+        <Skeleton className="h-48 rounded-xl bg-gray-100" />
       </div>
     </div>
   )

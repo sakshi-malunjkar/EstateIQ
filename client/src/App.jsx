@@ -15,6 +15,7 @@ export default function App() {
       <Route element={<ProtectedRoute />}>
         <Route element={<Layout />}>
           <Route path="/analyze" element={<Analyze />} />
+          <Route path="/analyze/:id" element={<Analyze />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/leads/:id" element={<LeadDetail />} />
           <Route path="/analytics" element={<Analytics />} />
