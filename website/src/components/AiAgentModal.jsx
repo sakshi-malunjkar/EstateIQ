@@ -1,17 +1,55 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Mic, X, Sparkles, CheckCircle, AlertTriangle } from 'lucide-react';
+import { Mic, X, Sparkles, CheckCircle, AlertTriangle, Loader2 } from 'lucide-react';
 import vapi from '../lib/vapi';
 
 const ASSISTANT_ID = import.meta.env.VITE_VAPI_ASSISTANT_ID;
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
 
-export default function AiAgentModal({ isOpen, onClose }) {
+// Sends the finished call to the same webhook Vapi itself posts to, in
+// Vapi's end-of-call-report shape, so the backend saves it as a lead.
+async function saveLead(lines, info) {
+  const res = await fetch(`${API_URL}/webhook/vapi`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      message: {
+        type: 'end-of-call-report',
+        artifact: {
+          messages: lines.map((t) => ({
+            role: t.role === 'assistant' ? 'assistant' : 'user',
+            message: t.text,
+          })),
+        },
+        call: {
+          id: 'web-' + Date.now(),
+          customer: {
+            number: info.phone,
+            name: info.name,
+            email: info.email || '',
+            city: info.city || '',
+          },
+        },
+      },
+    }),
+  });
+  if (!res.ok) throw new Error(`Backend responded ${res.status}`);
+}
+
+export default function AiAgentModal({ isOpen, onClose, clientInfo }) {
   const [callActive, setCallActive] = useState(false);
   const [transcript, setTranscript] = useState([]);
   const [showThankYou, setShowThankYou] = useState(false);
   const [error, setError] = useState(false);
+  const [saveStatus, setSaveStatus] = useState('idle'); // idle | saving | saved | failed | empty
   const transcriptRef = useRef([]);
   const errorRef = useRef(false);
+  const clientInfoRef = useRef(clientInfo);
+  const savedRef = useRef(false);
   const scrollRef = useRef(null);
+
+  useEffect(() => {
+    clientInfoRef.current = clientInfo;
+  }, [clientInfo]);
 
   // Vapi listeners live for the lifetime of the component, not per call.
   useEffect(() => {
@@ -19,11 +57,28 @@ export default function AiAgentModal({ isOpen, onClose }) {
       setCallActive(true);
       setTranscript([]);
       transcriptRef.current = [];
+      savedRef.current = false;
     };
     const onCallEnd = () => {
       setCallActive(false);
       // A failed call also emits call-end; don't thank the user for it.
-      if (!errorRef.current) setShowThankYou(true);
+      if (errorRef.current || savedRef.current) return;
+      savedRef.current = true;
+      setShowThankYou(true);
+
+      const lines = transcriptRef.current;
+      const info = clientInfoRef.current;
+      if (lines.length === 0 || !info) {
+        setSaveStatus('empty');
+        return;
+      }
+      setSaveStatus('saving');
+      saveLead(lines, info)
+        .then(() => setSaveStatus('saved'))
+        .catch((err) => {
+          console.error('Failed to save lead:', err);
+          setSaveStatus('failed');
+        });
     };
     const onMessage = (msg) => {
       // Final results only, so each utterance is added once.
@@ -63,6 +118,7 @@ export default function AiAgentModal({ isOpen, onClose }) {
     setCallActive(false);
     setShowThankYou(false);
     setError(false);
+    setSaveStatus('idle');
 
     if (!import.meta.env.VITE_VAPI_PUBLIC_KEY || !ASSISTANT_ID) {
       console.error('Vapi is not configured: set VITE_VAPI_PUBLIC_KEY and VITE_VAPI_ASSISTANT_ID in website/.env');
@@ -123,16 +179,36 @@ export default function AiAgentModal({ isOpen, onClose }) {
           </div>
         ) : showThankYou ? (
           <div className="relative flex flex-col items-center py-6">
-            <CheckCircle className="w-14 h-14 text-green-400 mb-4" />
-            <h3 className="text-xl sm:text-2xl font-black text-white tracking-tight">
-              Thank you for contacting EstateIQ!
-            </h3>
-            <p className="text-sm text-gray-300 mt-3 max-w-xs leading-relaxed">
-              Our team will reach out to you within 24 hours with the best property options matching your requirements.
-            </p>
+            {saveStatus === 'saving' || saveStatus === 'idle' ? (
+              <>
+                <Loader2 className="w-14 h-14 text-blue-400 mb-4 animate-spin" />
+                <h3 className="text-xl font-black text-white tracking-tight">Saving your details...</h3>
+              </>
+            ) : saveStatus === 'saved' ? (
+              <>
+                <CheckCircle className="w-14 h-14 text-green-400 mb-4" />
+                <h3 className="text-xl sm:text-2xl font-black text-white tracking-tight">
+                  Thank you {clientInfo?.name}! 🎉
+                </h3>
+                <p className="text-sm text-gray-300 mt-3 max-w-xs leading-relaxed">
+                  Our team will contact you at {clientInfo?.phone} within 24 hours with the best property options in{' '}
+                  {clientInfo?.city}.
+                </p>
+              </>
+            ) : (
+              <>
+                <AlertTriangle className="w-14 h-14 text-amber-400 mb-4" />
+                <p className="text-sm text-gray-200 max-w-xs leading-relaxed">
+                  {saveStatus === 'empty'
+                    ? "We didn't catch anything during the call, so nothing was saved. Please try again or call us at +91 98765 43210"
+                    : "We couldn't save your conversation. Please try again or call us at +91 98765 43210"}
+                </p>
+              </>
+            )}
             <button
               onClick={onClose}
-              className="mt-6 w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-xs py-3 rounded-xl transition"
+              disabled={saveStatus === 'saving'}
+              className="mt-6 w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 disabled:opacity-50 text-white font-bold text-xs py-3 rounded-xl transition"
             >
               Close
             </button>

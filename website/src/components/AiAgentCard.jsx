@@ -1,9 +1,19 @@
 import React, { useState } from 'react';
 import { Mic, CheckCircle, Sparkles } from 'lucide-react';
 import AiAgentModal from './AiAgentModal';
+import ClientInfoForm from './ClientInfoForm';
 
 export default function AiAgentCard() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showForm, setShowForm] = useState(false);
+  const [showCall, setShowCall] = useState(false);
+  const [clientInfo, setClientInfo] = useState(null);
+
+  // Form submit: close the form, open the call modal (which starts the Vapi call).
+  const handleFormSubmit = (info) => {
+    setClientInfo(info);
+    setShowForm(false);
+    setShowCall(true);
+  };
 
   return (
     <>
@@ -60,7 +70,7 @@ export default function AiAgentCard() {
             {/* Action Button & Note */}
             <div className="flex flex-col sm:flex-row items-center gap-4">
               <button
-                onClick={() => setIsModalOpen(true)}
+                onClick={() => setShowForm(true)}
                 className="w-full sm:w-auto bg-gradient-to-r from-blue-500 via-indigo-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white font-extrabold text-base px-8 py-4 rounded-2xl shadow-xl hover:shadow-cyan-500/25 transition-all duration-200 transform hover:-translate-y-0.5 flex items-center justify-center space-x-2 border border-cyan-300/30"
               >
                 <span className="text-xl">🎤</span>
@@ -91,7 +101,8 @@ export default function AiAgentCard() {
       </div>
 
       {/* Modal trigger */}
-      <AiAgentModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+      <ClientInfoForm isOpen={showForm} onClose={() => setShowForm(false)} onSubmit={handleFormSubmit} />
+      <AiAgentModal isOpen={showCall} clientInfo={clientInfo} onClose={() => setShowCall(false)} />
     </>
   );
 }

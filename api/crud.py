@@ -44,6 +44,8 @@ async def persist_analysis(
     combined: dict,
     scored: dict,
     contact_phone: str | None = None,
+    contact_name: str | None = None,
+    contact_email: str | None = None,
 ) -> Lead:
     """Persist one full analysis run (NER + sentiment + intent + lead
     score) as a new Lead + Transcript + LeadFeatures + LeadScore, with an
@@ -52,9 +54,16 @@ async def persist_analysis(
     api/main.py's run_analysis() for how they're produced together.
     `contact_phone` is optional caller-identifying info a webhook
     source (e.g. Vapi's call.customer.number) may provide; /analyze has
-    none, since it isn't tied to a real call.
+    none, since it isn't tied to a real call. `contact_name` and
+    `contact_email` come from the same source (the website's
+    pre-call form); the city goes on the Transcript via `city`.
     """
-    lead = Lead(current_status=LeadStatus.NEW, contact_phone=contact_phone)
+    lead = Lead(
+        current_status=LeadStatus.NEW,
+        name=contact_name,
+        contact_phone=contact_phone,
+        contact_email=contact_email,
+    )
     db.add(lead)
     await db.flush()
 

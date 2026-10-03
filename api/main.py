@@ -282,6 +282,20 @@ def extract_vapi_customer_phone(payload: dict) -> str | None:
     return customer.get("number")
 
 
+def extract_vapi_customer(payload: dict) -> dict:
+    """Customer details from `message.call.customer`: the phone number
+    Vapi itself reports for phone calls, plus the name / email / city
+    the website's pre-call form sends along for web calls. Missing or
+    blank values come back as None."""
+    customer = ((payload.get("message") or {}).get("call") or {}).get("customer") or {}
+
+    def clean(key: str) -> str | None:
+        value = customer.get(key)
+        return value.strip() or None if isinstance(value, str) else None
+
+    return {"phone": clean("number"), "name": clean("name"), "email": clean("email"), "city": clean("city")}
+
+
 @app.post("/webhook/vapi", response_model=VapiWebhookResponse)
 async def vapi_webhook(request: Request, db: AsyncSession = Depends(get_db)) -> VapiWebhookResponse:
     """Receives a Vapi end-of-call webhook, extracts the transcript,
@@ -304,12 +318,20 @@ async def vapi_webhook(request: Request, db: AsyncSession = Depends(get_db)) -> 
         logger.warning("Vapi webhook: no transcript found in payload, skipping.")
         return VapiWebhookResponse(status="received")
 
-    contact_phone = extract_vapi_customer_phone(payload)
+    customer = extract_vapi_customer(payload)
 
     try:
         combined, scored = run_analysis(transcript)
         await crud.persist_analysis(
-            db, raw_text=transcript, city=None, source="vapi", contact_phone=contact_phone, combined=combined, scored=scored
+            db,
+            raw_text=transcript,
+            city=customer["city"],
+            source="vapi",
+            contact_phone=customer["phone"],
+            contact_name=customer["name"],
+            contact_email=customer["email"],
+            combined=combined,
+            scored=scored,
         )
     except Exception:
         logger.exception("Vapi webhook: failed to analyze/persist transcript.")
