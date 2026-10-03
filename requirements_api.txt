@@ -1,15 +1,31 @@
-# FastAPI-specific dependencies for api/. Install alongside the
-# existing project requirements (requirements.txt) -- this file does
-# not repeat the ML dependencies (torch, transformers, xgboost, shap,
-# etc.), which are already required by app/.
+# Everything the API needs to run (api/ + the inference path in app/nlp and
+# app/lead_scoring). Used by render.yaml; for local development you can
+# also keep using requirements.txt, which adds the training/eval and
+# dashboard dependencies.
+#
+# Deliberately NOT here (only training/eval scripts import them, never the
+# API): datasets, seqeval, accelerate, spacy, streamlit, flask.
+
+# CPU-only PyTorch wheels (the default Linux wheel pulls ~2 GB of CUDA
+# libraries the server cannot use).
+--extra-index-url https://download.pytorch.org/whl/cpu
+
 fastapi>=0.115,<1.0
 uvicorn[standard]>=0.30,<1.0
+pydantic>=2.0,<3.0
 SQLAlchemy>=2.0,<3.0
 psycopg[binary]>=3.1,<4.0
 python-dotenv>=1.0,<2.0
+httpx>=0.27,<1.0
+
+torch>=2.2
+transformers>=4.40
+xgboost>=2.0
+shap>=0.45
+scikit-learn>=1.4
+pandas>=2.0
+numpy>=1.26
 
 # Local-development-only fallback: lets api/database.py fall back to a
-# SQLite file when DATABASE_URL isn't set, so /health and /analyze can
-# be smoke-tested without a Postgres instance. Not needed once
-# DATABASE_URL points at real Postgres.
+# SQLite file when DATABASE_URL isn't set. Harmless in production.
 aiosqlite>=0.20,<1.0

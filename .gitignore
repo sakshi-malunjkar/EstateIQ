@@ -61,3 +61,12 @@ Thumbs.db
 .vscode/
 .idea/
 *.log
+
+# --- Deployment / project extras ---
+models_artifacts/**/__pycache__/
+models_artifacts/sentiment_voice/
+data/api_dev.db
+client/node_modules/
+website/node_modules/
+client/.env
+website/.env

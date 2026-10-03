@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: estateiq-api
+    runtime: python
+    # NOTE: the three transformer models need several GB of RAM once loaded;
+    # set the instance plan in the Render dashboard (see deployment notes).
+    buildCommand: pip install -r requirements_api.txt
+    startCommand: python -m api.run
+    healthCheckPath: /health
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: ENVIRONMENT
+        value: production
+      - key: PYTHON_VERSION
+        value: "3.11.0"
