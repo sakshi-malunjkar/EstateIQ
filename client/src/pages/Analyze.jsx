@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
-import { Loader2, Sparkles } from 'lucide-react'
-import { useState } from 'react'
+import { Loader2, Mic, PhoneOff, Sparkles } from 'lucide-react'
+import { useEffect, useRef, useState } from 'react'
 import toast from 'react-hot-toast'
 import { Bar, BarChart, CartesianGrid, Cell, ResponsiveContainer, XAxis, YAxis } from 'recharts'
 import AnimatedNumber from '@/components/AnimatedNumber'
@@ -9,6 +9,7 @@ import { Card, CardContent } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Textarea } from '@/components/ui/textarea'
 import api from '@/lib/api'
+import vapi from '@/lib/vapi'
 import { INTENT_META, NER_ICONS, SENTIMENT_META, SHAP_LABELS, TIER_COLORS, TIER_LABELS } from '@/lib/constants'
 import { cn } from '@/lib/utils'
 
@@ -22,16 +23,18 @@ export default function Analyze() {
   const [result, setResult] = useState(null)
   const [error, setError] = useState(null)
 
-  async function handleAnalyze() {
-    if (!transcript.trim()) {
-      toast.error('Paste a transcript first.')
-      return
-    }
+  const [callActive, setCallActive] = useState(false)
+  const [callLines, setCallLines] = useState([])
+  // Mirrors callLines so the long-lived Vapi 'call-end' handler reads the
+  // final transcript instead of a stale closure value.
+  const callLinesRef = useRef([])
+
+  async function runAnalysis(text) {
     setLoading(true)
     setError(null)
     setResult(null)
     try {
-      const { data } = await api.post('/analyze', { transcript })
+      const { data } = await api.post('/analyze', { transcript: text })
       setResult(data)
       toast.success('Analysis complete.')
     } catch (err) {
@@ -42,11 +45,95 @@ export default function Analyze() {
     }
   }
 
+  function handleAnalyze() {
+    if (!transcript.trim()) {
+      toast.error('Paste a transcript first.')
+      return
+    }
+    runAnalysis(transcript)
+  }
+
+  const runAnalysisRef = useRef(runAnalysis)
+  useEffect(() => {
+    runAnalysisRef.current = runAnalysis
+  })
+
+  useEffect(() => {
+    const onCallStart = () => {
+      callLinesRef.current = []
+      setCallLines([])
+      setResult(null)
+      setError(null)
+      setCallActive(true)
+    }
+    const onCallEnd = () => {
+      setCallActive(false)
+      const lines = callLinesRef.current
+      if (lines.length === 0) {
+        toast.error('No speech was captured during the call.')
+        return
+      }
+      // Same "Agent:/Client:" format the backend pipeline expects.
+      runAnalysisRef.current(lines.map((l) => `${l.role === 'assistant' ? 'Agent' : 'Client'}: ${l.text}`).join('\n'))
+    }
+    const onMessage = (message) => {
+      // Skip partial results so each utterance is added once, when final.
+      if (message.type !== 'transcript' || message.transcriptType !== 'final') return
+      const line = { role: message.role, text: message.transcript }
+      callLinesRef.current = [...callLinesRef.current, line]
+      setCallLines(callLinesRef.current)
+    }
+    const onError = (err) => {
+      console.error('Vapi error:', err)
+      setCallActive(false)
+      toast.error('Call error: ' + (err?.message ?? err?.error?.message ?? 'unknown error'))
+    }
+
+    vapi.on('call-start', onCallStart)
+    vapi.on('call-end', onCallEnd)
+    vapi.on('message', onMessage)
+    vapi.on('error', onError)
+    return () => {
+      vapi.removeListener('call-start', onCallStart)
+      vapi.removeListener('call-end', onCallEnd)
+      vapi.removeListener('message', onMessage)
+      vapi.removeListener('error', onError)
+      vapi.stop()
+    }
+  }, [])
+
+  function startCall() {
+    const assistantId = import.meta.env.VITE_VAPI_ASSISTANT_ID
+    if (!import.meta.env.VITE_VAPI_PUBLIC_KEY || !assistantId) {
+      toast.error('Set VITE_VAPI_PUBLIC_KEY and VITE_VAPI_ASSISTANT_ID in client/.env')
+      return
+    }
+    vapi.start(assistantId)
+  }
+
+  function endCall() {
+    vapi.stop()
+  }
+
   return (
     <div className="flex flex-col gap-8">
       <div className="animate-fade-in">
         <h1 className="text-3xl font-semibold tracking-tight text-gradient">Analyze Lead</h1>
-        <p className="mt-1 text-muted-foreground">Paste a call transcript to extract insights</p>
+        <p className="mt-1 text-muted-foreground">Talk to our agent or paste a call transcript to extract insights</p>
+      </div>
+
+      <VoiceCard
+        callActive={callActive}
+        analyzing={loading}
+        lines={callLines}
+        onStart={startCall}
+        onEnd={endCall}
+      />
+
+      <div className="flex items-center gap-4 text-xs uppercase tracking-wide text-muted-foreground">
+        <div className="h-px flex-1 bg-white/10" />
+        <span>or paste transcript manually</span>
+        <div className="h-px flex-1 bg-white/10" />
       </div>
 
       <Card className="glass-card animate-fade-in">
@@ -104,6 +191,79 @@ export default function Analyze() {
         </div>
       )}
     </div>
+  )
+}
+
+function VoiceCard({ callActive, analyzing, lines, onStart, onEnd }) {
+  const scrollRef = useRef(null)
+
+  useEffect(() => {
+    const el = scrollRef.current
+    if (el) el.scrollTop = el.scrollHeight
+  }, [lines])
+
+  return (
+    <Card className="glass-card animate-fade-in">
+      <CardContent className="flex flex-col items-center gap-5">
+        <div className="text-center">
+          <h2 className="text-lg font-semibold">Live Voice Analysis</h2>
+          <p className="text-sm text-muted-foreground">Talk to our AI agent and get instant lead scoring</p>
+        </div>
+
+        <div className="flex flex-col items-center gap-3">
+          <button
+            type="button"
+            onClick={callActive ? undefined : onStart}
+            disabled={analyzing}
+            aria-label={callActive ? 'Recording' : 'Start Call'}
+            className={cn(
+              'relative flex size-24 items-center justify-center rounded-full text-white shadow-lg transition-all duration-200 disabled:opacity-60',
+              callActive ? 'bg-red-500 cursor-default' : 'bg-indigo-500 hover:bg-indigo-400 hover:-translate-y-0.5'
+            )}
+          >
+            {callActive && <span className="absolute inset-0 animate-ping rounded-full bg-red-500/60" />}
+            <Mic className="relative size-10" />
+          </button>
+          <span className={cn('text-sm font-medium', callActive ? 'text-red-400' : 'text-indigo-300')}>
+            {analyzing ? 'Analyzing...' : callActive ? 'Recording...' : 'Start Call'}
+          </span>
+          {callActive && (
+            <button
+              type="button"
+              onClick={onEnd}
+              className="inline-flex items-center gap-2 rounded-xl bg-red-500/15 px-4 py-2 text-sm font-medium text-red-300 transition-colors hover:bg-red-500/25"
+            >
+              <PhoneOff className="size-4" />
+              End Call
+            </button>
+          )}
+        </div>
+
+        {(callActive || lines.length > 0) && (
+          <div
+            ref={scrollRef}
+            className="flex h-56 w-full flex-col gap-2 overflow-y-auto rounded-xl border border-white/10 bg-white/5 p-4"
+          >
+            {lines.length === 0 && <p className="text-sm text-muted-foreground">Listening... start speaking.</p>}
+            {lines.map((line, i) => {
+              const isAgent = line.role === 'assistant'
+              return (
+                <div key={i} className={cn('flex', isAgent ? 'justify-start' : 'justify-end')}>
+                  <span
+                    className={cn(
+                      'max-w-[80%] rounded-2xl px-3 py-2 text-sm',
+                      isAgent ? 'bg-white/10 text-gray-300' : 'bg-indigo-500/20 text-indigo-300'
+                    )}
+                  >
+                    {line.text}
+                  </span>
+                </div>
+              )
+            })}
+          </div>
+        )}
+      </CardContent>
+    </Card>
   )
 }
 
