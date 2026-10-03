@@ -50,6 +50,7 @@ from api.models import (  # noqa: E402
     AnalyticsResponse,
     AnalyzeRequest,
     AnalyzeResponse,
+    CallHistoryItem,
     HealthResponse,
     IntentOutput,
     LeadDetail,
@@ -371,10 +372,11 @@ async def get_leads(
             tier=score.tier if score else None,
             sentiment=features.sentiment if features else None,
             intent=features.intent if features else None,
+            call_count=call_count,
             created_at=lead.created_at,
             updated_at=lead.updated_at,
         )
-        for lead, score, features in rows
+        for lead, score, features, call_count in rows
     ]
     return LeadListResponse(total=total, limit=limit, skip=skip, leads=leads)
 
@@ -390,6 +392,7 @@ async def get_lead(lead_id: int, db: AsyncSession = Depends(get_db)) -> LeadDeta
     status-change audit trail."""
     try:
         lead = await crud.get_lead_detail(db, lead_id)
+        call_history = await crud.get_call_history(db, lead_id) if lead is not None else []
     except Exception as exc:
         logger.exception("Failed to fetch lead id=%s.", lead_id)
         raise HTTPException(status_code=500, detail=f"Failed to fetch lead: {exc}") from exc
@@ -454,6 +457,8 @@ async def get_lead(lead_id: int, db: AsyncSession = Depends(get_db)) -> LeadDeta
         sentiment=sentiment,
         intent=intent,
         lead_score=lead_score,
+        call_count=len(call_history) or 1,
+        call_history=[CallHistoryItem(**c) for c in call_history],
         status_history=status_history,
     )
 

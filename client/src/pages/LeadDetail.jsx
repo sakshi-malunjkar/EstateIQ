@@ -85,9 +85,75 @@ export default function LeadDetail() {
             {lead.lead_score && <ScoreCard leadScore={lead.lead_score} />}
             <StatusCard lead={lead} onUpdated={setLead} />
           </div>
+          {lead.call_history?.length > 0 && (
+            <div className="lg:col-span-2">
+              <CallHistoryCard calls={lead.call_history} />
+            </div>
+          )}
         </div>
       )}
     </div>
+  )
+}
+
+function CallHistoryCard({ calls }) {
+  const [openId, setOpenId] = useState(null)
+  return (
+    <Card className="glass-card animate-fade-in">
+      <CardContent className="flex flex-col gap-4">
+        <div className="flex items-center justify-between">
+          <h3 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">Call History</h3>
+          <Badge variant="outline" className="border-gray-200 text-xs">
+            {calls.length} {calls.length === 1 ? 'call' : 'calls'}
+          </Badge>
+        </div>
+        <div className="flex flex-col divide-y divide-gray-200">
+          {calls.map((call, i) => {
+            const tierColor = TIER_COLORS[call.tier] ?? '#94a3b8'
+            const sentimentMeta = SENTIMENT_META[call.sentiment]
+            const open = openId === call.transcript_id
+            return (
+              <div key={call.transcript_id} className="py-3 first:pt-0 last:pb-0">
+                <button
+                  type="button"
+                  onClick={() => setOpenId(open ? null : call.transcript_id)}
+                  className="flex w-full flex-wrap items-center gap-x-4 gap-y-1 text-left"
+                >
+                  <span className="text-sm font-medium">
+                    {new Date(call.created_at).toLocaleString()}
+                    {i === 0 && <span className="ml-2 text-xs font-normal text-muted-foreground">(latest)</span>}
+                  </span>
+                  <span className="text-xs text-muted-foreground capitalize">{call.source}</span>
+                  {call.sentiment && (
+                    <span className="text-sm capitalize" style={{ color: sentimentMeta?.color }}>
+                      {sentimentMeta?.emoji} {call.sentiment}
+                    </span>
+                  )}
+                  {call.intent && <span className="text-sm text-muted-foreground">{call.intent}</span>}
+                  <span className="ml-auto inline-flex items-center gap-2">
+                    {call.score != null && <span className="font-mono text-sm">{call.score.toFixed(1)}</span>}
+                    {call.tier && (
+                      <Badge
+                        className="rounded-full border-0"
+                        style={{ backgroundColor: `${tierColor}20`, color: tierColor }}
+                      >
+                        {TIER_LABELS[call.tier] ?? call.tier}
+                      </Badge>
+                    )}
+                    <span className="text-xs text-muted-foreground">{open ? 'Hide' : 'Show'} transcript</span>
+                  </span>
+                </button>
+                {open && (
+                  <div className="mt-3 max-h-[200px] overflow-y-auto rounded-lg border border-gray-200 bg-gray-50 p-3 text-xs leading-relaxed whitespace-pre-wrap">
+                    {call.transcript}
+                  </div>
+                )}
+              </div>
+            )
+          })}
+        </div>
+      </CardContent>
+    </Card>
   )
 }
 

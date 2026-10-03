@@ -105,6 +105,7 @@ class LeadSummary(BaseModel):
     tier: str | None = None
     sentiment: str | None = None
     intent: str | None = None
+    call_count: int = 1
     created_at: datetime
     updated_at: datetime
 
@@ -114,6 +115,18 @@ class LeadListResponse(BaseModel):
     limit: int
     skip: int
     leads: list[LeadSummary]
+
+
+class CallHistoryItem(BaseModel):
+    transcript_id: int
+    created_at: datetime
+    source: str
+    city: str | None = None
+    transcript: str
+    score: float | None = None
+    tier: str | None = None
+    sentiment: str | None = None
+    intent: str | None = None
 
 
 class LeadDetail(BaseModel):
@@ -130,6 +143,9 @@ class LeadDetail(BaseModel):
     sentiment: SentimentOutput | None = None
     intent: IntentOutput | None = None
     lead_score: LeadScoreOutput | None = None
+
+    call_count: int = 1
+    call_history: list[CallHistoryItem] = Field(default_factory=list)
 
     status_history: list[dict[str, Any]] = Field(default_factory=list)
 

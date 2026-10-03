@@ -9,6 +9,7 @@ SENTIMENT_MODEL_VERSION).
 """
 
 import logging
+import re
 from datetime import datetime, timezone
 
 from sqlalchemy import func, nulls_last, select
@@ -35,6 +36,21 @@ def _utcnow() -> datetime:
     return datetime.now(timezone.utc)
 
 
+def normalize_phone(phone: str | None) -> str | None:
+    """Strips spaces, dashes, dots and brackets so "+91 98765-43210" and
+    "+919876543210" identify the same client. Blank -> None."""
+    if not phone:
+        return None
+    cleaned = re.sub(r"[\s\-().]", "", phone)
+    return cleaned or None
+
+
+async def find_lead_by_phone(db: AsyncSession, phone: str) -> Lead | None:
+    """The earliest lead with this (normalized) phone number, or None."""
+    result = await db.execute(select(Lead).where(Lead.contact_phone == phone).order_by(Lead.id).limit(1))
+    return result.scalars().first()
+
+
 async def persist_analysis(
     db: AsyncSession,
     *,
@@ -46,7 +62,7 @@ async def persist_analysis(
     contact_phone: str | None = None,
     contact_name: str | None = None,
     contact_email: str | None = None,
-) -> Lead:
+) -> tuple[Lead, bool]:
     """Persist one full analysis run (NER + sentiment + intent + lead
     score) as a new Lead + Transcript + LeadFeatures + LeadScore, with an
     initial "New" LeadStatusEvent. `combined` is predict_combined()'s
@@ -57,15 +73,37 @@ async def persist_analysis(
     none, since it isn't tied to a real call. `contact_name` and
     `contact_email` come from the same source (the website's
     pre-call form); the city goes on the Transcript via `city`.
+
+    One lead per client, identified by phone number: if a lead with the
+    same (normalized) phone already exists this is a returning client, so
+    the new transcript / features / score are attached to that lead and its
+    current score is moved to the latest one -- no new lead is created and
+    no new "New" status event is written (the lead's status is left
+    exactly as the sales team set it). Calls with no phone number can't be
+    matched and always create a new lead.
+
+    Returns (lead, is_new_lead).
     """
-    lead = Lead(
-        current_status=LeadStatus.NEW,
-        name=contact_name,
-        contact_phone=contact_phone,
-        contact_email=contact_email,
-    )
-    db.add(lead)
-    await db.flush()
+    contact_phone = normalize_phone(contact_phone)
+    lead = await find_lead_by_phone(db, contact_phone) if contact_phone else None
+    is_new_lead = lead is None
+
+    if is_new_lead:
+        lead = Lead(
+            current_status=LeadStatus.NEW,
+            name=contact_name,
+            contact_phone=contact_phone,
+            contact_email=contact_email,
+        )
+        db.add(lead)
+        await db.flush()
+    else:
+        # Fill in details we didn't have before, but never overwrite what
+        # the team already has on file.
+        if contact_name and not lead.name:
+            lead.name = contact_name
+        if contact_email and not lead.contact_email:
+            lead.contact_email = contact_email
 
     transcript = Transcript(lead_id=lead.id, raw_text=raw_text, city=city, source=source)
     db.add(transcript)
@@ -115,12 +153,19 @@ async def persist_analysis(
     await db.flush()
 
     lead.current_score_id = lead_score.id
-    db.add(LeadStatusEvent(lead_id=lead.id, status_from=None, status_to=LeadStatus.NEW, changed_by="system"))
+    lead.updated_at = _utcnow()
+    if is_new_lead:
+        db.add(LeadStatusEvent(lead_id=lead.id, status_from=None, status_to=LeadStatus.NEW, changed_by="system"))
 
     await db.commit()
     await db.refresh(lead)
-    logger.info("Persisted lead id=%s score=%.2f tier=%s", lead.id, lead_score.score, lead_score.tier)
-    return lead
+    if is_new_lead:
+        logger.info("New client - created new lead id=%s score=%.2f tier=%s", lead.id, lead_score.score, lead_score.tier)
+    else:
+        logger.info(
+            "Returning client - updated existing lead id=%s score=%.2f tier=%s", lead.id, lead_score.score, lead_score.tier
+        )
+    return lead, is_new_lead
 
 
 async def list_leads(
@@ -131,12 +176,15 @@ async def list_leads(
     intent: str | None = None,
     limit: int = 20,
     skip: int = 0,
-) -> tuple[int, list[tuple[Lead, LeadScore | None, LeadFeatures | None]]]:
+) -> tuple[int, list[tuple[Lead, LeadScore | None, LeadFeatures | None, int]]]:
     """Returns (total_matching, rows) where each row is
-    (Lead, current LeadScore or None, current LeadFeatures or None),
-    sorted by score descending (leads with no score yet sort last)."""
+    (Lead, current LeadScore or None, current LeadFeatures or None,
+    call_count), sorted by score descending (leads with no score yet sort last)."""
+    call_count = (
+        select(func.count(Transcript.id)).where(Transcript.lead_id == Lead.id).correlate(Lead).scalar_subquery()
+    )
     base = (
-        select(Lead, LeadScore, LeadFeatures)
+        select(Lead, LeadScore, LeadFeatures, call_count.label("call_count"))
         .select_from(Lead)
         .outerjoin(LeadScore, Lead.current_score_id == LeadScore.id)
         .outerjoin(LeadFeatures, LeadScore.lead_features_id == LeadFeatures.id)
@@ -153,7 +201,7 @@ async def list_leads(
 
     query = base.order_by(nulls_last(LeadScore.score.desc())).limit(limit).offset(skip)
     result = await db.execute(query)
-    rows = [(r[0], r[1], r[2]) for r in result.all()]
+    rows = [(r[0], r[1], r[2], r[3]) for r in result.all()]
     return total, rows
 
 
@@ -173,6 +221,40 @@ async def get_lead_detail(db: AsyncSession, lead_id: int) -> Lead | None:
     )
     result = await db.execute(query)
     return result.scalar_one_or_none()
+
+
+async def get_call_history(db: AsyncSession, lead_id: int) -> list[dict]:
+    """Every call (transcript) from this lead, newest first, each with
+    its latest score / sentiment / intent."""
+    query = (
+        select(Transcript, LeadFeatures, LeadScore)
+        .select_from(Transcript)
+        .outerjoin(LeadFeatures, LeadFeatures.transcript_id == Transcript.id)
+        .outerjoin(LeadScore, LeadScore.lead_features_id == LeadFeatures.id)
+        .where(Transcript.lead_id == lead_id)
+        .order_by(Transcript.created_at.desc(), Transcript.id.desc(), LeadScore.id.desc())
+    )
+    result = await db.execute(query)
+    history: list[dict] = []
+    seen: set[int] = set()
+    for transcript, features, score in result.all():
+        if transcript.id in seen:  # a transcript re-scored later appears more than once; keep the latest score
+            continue
+        seen.add(transcript.id)
+        history.append(
+            {
+                "transcript_id": transcript.id,
+                "created_at": transcript.created_at,
+                "source": transcript.source,
+                "city": transcript.city,
+                "transcript": transcript.raw_text,
+                "score": score.score if score else None,
+                "tier": score.tier if score else None,
+                "sentiment": features.sentiment if features else None,
+                "intent": features.intent if features else None,
+            }
+        )
+    return history
 
 
 async def update_lead_status(

@@ -183,7 +183,18 @@ export default function Dashboard() {
                     onClick={() => navigate(`/leads/${lead.id}`)}
                   >
                     <TableCell className="font-medium">
-                      {lead.name || lead.contact_phone || `Lead #${lead.id}`}
+                      <span className="inline-flex items-center gap-2">
+                        {lead.name || lead.contact_phone || `Lead #${lead.id}`}
+                        {lead.call_count > 1 && (
+                          <Badge
+                            variant="outline"
+                            className="rounded-full border-indigo-200 bg-indigo-50 text-indigo-700"
+                            title={`${lead.call_count} calls from this client`}
+                          >
+                            {lead.call_count} calls
+                          </Badge>
+                        )}
+                      </span>
                     </TableCell>
                     <TableCell>
                       {sentimentMeta ? (
