@@ -52,6 +52,7 @@ async def get_current_user(authorization: str | None = Header(default=None)) -> 
     """FastAPI dependency: returns the Supabase user (a dict with at least
     `id` and `email`) for a valid bearer token, else raises 401."""
     if not authorization or not authorization.lower().startswith("bearer "):
+        logger.warning("Auth rejected: missing/malformed Authorization header (got %r)", (authorization or "")[:15])
         raise HTTPException(status_code=401, detail="Not authenticated")
     token = authorization[7:].strip()
     if not token:
@@ -73,7 +74,9 @@ async def get_current_user(authorization: str | None = Header(default=None)) -> 
         logger.exception("Could not reach Supabase to verify a token.")
         raise HTTPException(status_code=503, detail="Authentication service unavailable.") from exc
 
+    logger.info("Supabase /auth/v1/user -> %s (token len=%d, prefix=%s...)", resp.status_code, len(token), token[:8])
     if resp.status_code in (401, 403):
+        logger.warning("Auth rejected by Supabase: %s %s", resp.status_code, resp.text[:200])
         raise HTTPException(status_code=401, detail="Invalid or expired token")
     if resp.status_code != 200:
         logger.error("Unexpected Supabase auth response: %s", resp.status_code)

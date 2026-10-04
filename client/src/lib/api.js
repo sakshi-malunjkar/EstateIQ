@@ -9,6 +9,10 @@ const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000'
 export const api = axios.create({
   baseURL: API_URL,
   timeout: 30000,
+  // ngrok's free tier serves an HTML interstitial (without CORS headers) to
+  // browser requests unless this header is present; the browser then reports
+  // it as a network error.
+  headers: { 'ngrok-skip-browser-warning': 'true' },
 })
 
 // Attach the signed-in user's Supabase access token to every request; the
