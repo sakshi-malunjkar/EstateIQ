@@ -127,11 +127,15 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
-# Allow all origins for now -- the React frontend's final origin isn't
-# fixed yet. Tighten before production.
+# Local Vite dev servers plus any Vercel / ngrok-hosted frontend.
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=[
+        "http://localhost:5173",
+        "http://localhost:5174",
+        "http://localhost:5175",
+    ],
+    allow_origin_regex=r"https://.*\.(vercel\.app|ngrok-free\.app)",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
