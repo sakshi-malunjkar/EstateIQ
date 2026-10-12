@@ -1,5 +1,5 @@
-import { useId, useState, type FormEvent, type ReactNode } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useId, useState, type FormEvent, type ReactNode } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Eye, EyeOff, LogOut, ShieldCheck } from "lucide-react";
 import { useTheme, type ThemeMode } from "@/lib/theme";
 import { setForcedReducedMotion, useForcedReducedMotion } from "@/lib/motion";
@@ -63,6 +63,13 @@ const input = (bad: unknown) =>
 
 function AccountSection({ onSaved }: { onSaved: (m: string) => void }) {
   const session = useAdminSession();
+  // "Change password" in the avatar menu links here (#change-password): scroll to the form and focus it.
+  const { hash } = useLocation();
+  useEffect(() => {
+    if (hash !== "#change-password") return;
+    document.getElementById("change-password")?.scrollIntoView({ block: "start" });
+    document.getElementById("st-cur")?.focus({ preventScroll: true });
+  }, [hash]);
   const [name, setName] = useState(session?.name ?? "");
   const [email, setEmail] = useState(session?.email ?? "");
   const [triedProfile, setTriedProfile] = useState(false);
@@ -127,7 +134,7 @@ function AccountSection({ onSaved }: { onSaved: (m: string) => void }) {
 
       <div className="border-t border-border my-6" />
 
-      <form onSubmit={savePassword} noValidate className="space-y-4" aria-label="Change password">
+      <form id="change-password" onSubmit={savePassword} noValidate className="space-y-4 scroll-mt-24" aria-label="Change password">
         <div className="flex flex-wrap items-baseline justify-between gap-2">
           <h3 className="font-medium text-body">Change password</h3>
           <span className="text-small text-ink-muted">Mock — not sent to a server yet.</span>

@@ -14,6 +14,7 @@ import type { Analytics } from "@/lib/mappings";
 import { MODELS, SENTIMENT_CONFIDENCE_THRESHOLD, fmtDuration, type AdminLead, type AdminLeadDetail } from "../format";
 import { changeLeadStatus, useStatusSync, withStatus } from "../leadsStore";
 import { LoadError, Loading } from "../components/LoadState";
+import { useLeadSearch } from "../leadSearch";
 import { FilterTabs } from "./Overview";
 
 const PAGE = 20;
@@ -66,7 +67,7 @@ export function Leads() {
     return () => { live = false; };
   }, [attempt]);
 
-  const [q, setQ] = useState("");
+  const [q, setQ] = useLeadSearch(); // shared with the header search box (lives in the URL)
   const [city, setCity] = useState<"" | City>("");
   const [status, setStatus] = useState<"" | LeadStatus>("");
   const [band, setBand] = useState("");

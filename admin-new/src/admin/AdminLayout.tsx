@@ -3,6 +3,8 @@ import { Search } from "lucide-react";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { NAV } from "./nav";
 import { AdminSidebar } from "./AdminSidebar";
+import { UserMenu } from "./components/UserMenu";
+import { useLeadSearch } from "./leadSearch";
 import { TypewriterTitle } from "./components/TypewriterTitle";
 
 /**
@@ -11,6 +13,7 @@ import { TypewriterTitle } from "./components/TypewriterTitle";
  */
 export function AdminLayout() {
   const { pathname } = useLocation();
+  const [q, setQ] = useLeadSearch();
   const current = NAV.find((n) => (n.to === "/" ? pathname === "/" : pathname.startsWith(n.to)));
 
   return (
@@ -27,13 +30,14 @@ export function AdminLayout() {
           <label className="ml-auto hidden md:flex items-center gap-2 h-9 w-72 px-3 rounded-control border border-border bg-surface focus-within:shadow-focus">
             <Search size={16} strokeWidth={1.5} className="text-ink-muted" aria-hidden="true" />
             <span className="sr-only">Search leads by name or phone</span>
-            <input type="search" placeholder="Search name or phone" className="flex-1 bg-transparent outline-none text-body placeholder:text-ink-muted" />
+            <input
+              type="search" value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search name or phone"
+              className="flex-1 min-w-0 bg-transparent border-0 outline-none shadow-none focus-visible:shadow-none text-body placeholder:text-ink-muted"
+            />
           </label>
           <div className="ml-auto md:ml-0 flex items-center gap-3">
             <ThemeToggle />
-            <span className="w-9 h-9 rounded-pill bg-surface-hover border border-border grid place-items-center text-small font-semibold" aria-label="Signed in as Admin">
-              AD
-            </span>
+            <UserMenu />
           </div>
         </header>
 
