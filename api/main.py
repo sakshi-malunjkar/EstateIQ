@@ -136,6 +136,8 @@ app.add_middleware(
         "http://localhost:5174",
         "http://localhost:5175",
         "https://cruncher-thee-matcher.ngrok-free.dev",
+        "https://estateiq-admin.vercel.app",
+        "https://estateiqclient.vercel.app",
     ],
     allow_origin_regex=r"https://.*\.(vercel\.app|ngrok-free\.app|ngrok-free\.dev)",
     allow_credentials=True,
