@@ -1,0 +1,137 @@
+@import "./styles/tokens.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  background: rgb(var(--bg));
+  color: rgb(var(--ink));
+  font-family: Inter, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Visible focus ring everywhere (§15) — keyboard only, not on mouse click. */
+:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+.tnum {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Signature motion / widget animations (transform + opacity only) */
+@keyframes eq-risein {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: none; }
+}
+.eq-risein { animation: eq-risein 0.5s var(--ease-out) both; }
+
+/* ---------- Public landing (§17.3) — transform + opacity only ---------- */
+
+/* Scroll reveal: useInView adds .is-visible; --i staggers siblings. */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity var(--dur-reveal) var(--ease-out), transform var(--dur-reveal) var(--ease-out);
+  transition-delay: calc(var(--i, 0) * var(--stagger));
+}
+.reveal.is-visible { opacity: 1; transform: none; }
+
+/* Typewriter caret — opacity blink only. */
+@keyframes eq-caret { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
+.eq-caret { display: inline-block; margin-left: 1px; color: rgb(var(--accent)); animation: eq-caret 1s steps(1) infinite; }
+
+/* Dialog / overlay entrance — opacity only, so it never fights a centering transform. */
+@keyframes eq-fade { from { opacity: 0; } to { opacity: 1; } }
+.eq-fade { animation: eq-fade var(--dur-base) var(--ease-out) both; }
+
+/* Admin Overview KPI card: hover lift, spring-open preview (grid-rows 0fr→1fr fits content exactly). */
+.eq-kpi {
+  background: rgb(var(--surface));
+  border: 1px solid rgb(var(--border));
+  border-radius: var(--radius-card);
+  padding: var(--space-4) var(--space-6);
+  cursor: pointer;
+  transition: border-color .25s ease, box-shadow .25s ease, transform .25s ease;
+}
+.eq-kpi--hl { background: rgb(var(--accent-soft)); border-color: rgb(var(--accent)); }
+.eq-kpi:hover { transform: translateY(-2px); border-color: rgb(var(--accent)); box-shadow: 0 6px 20px rgb(var(--accent) / .12); }
+.eq-kpi.is-expanded { border-color: rgb(var(--accent)); box-shadow: 0 8px 28px rgb(var(--accent) / .16); }
+.eq-kpi__drawer { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .45s cubic-bezier(.34, 1.56, .64, 1); }
+.eq-kpi.is-expanded .eq-kpi__drawer { grid-template-rows: 1fr; }
+.eq-kpi__drawer > div { overflow: hidden; min-height: 0; }
+.eq-kpi__row { opacity: 0; transform: translateY(6px); transition: opacity .3s ease, transform .3s ease; }
+.eq-kpi.is-expanded .eq-kpi__row { opacity: 1; transform: none; transition-delay: calc(280ms + var(--i, 0) * 60ms); /* after the number settles */ }
+
+/* Auto-height expand (Leads row detail): grid-rows 0fr → 1fr fits content exactly, soft spring. */
+.eq-expand { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .45s cubic-bezier(.34, 1.25, .64, 1); }
+.eq-expand.is-open { grid-template-rows: 1fr; }
+.eq-expand > div { overflow: hidden; min-height: 0; }
+
+/* Transcript paper/linen texture. Lives on ::before so it never touches text; bubbles keep
+   their own solid fills, so the grain only shows in the gaps between them. */
+.eq-transcript {
+  position: relative;
+  isolation: isolate;
+  background-color: rgb(var(--surface));
+  border-radius: var(--radius-card);
+  padding: var(--space-4);
+}
+.eq-transcript::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  pointer-events: none;
+  background-image: url("/images/transcript-texture.png");
+  background-size: 320px;
+  /* Light: multiply the near-white tile into the surface → faint grey grain, not a white sheet. */
+  mix-blend-mode: multiply;
+  opacity: 0.7;
+}
+/* Dark: the tile is mostly transparent (alpha ≤ 53/255), so an inverted soft-light layer was
+   invisible. Screen its light weave onto the dark surface instead — a subtle grain; panel stays
+   dark (lightest gap ≈ #2a2b29; --ink 12.5:1, --ink-soft 6.7:1). */
+[data-theme="dark"] .eq-transcript::before {
+  mix-blend-mode: screen;
+  opacity: 0.22;
+}
+
+/* Right-side sheet (drill-down drawer) */
+@keyframes eq-sheet-in { from { opacity: 0; transform: translateX(100%); } to { opacity: 1; transform: none; } }
+.eq-sheet { animation: eq-sheet-in .35s var(--ease-out) both; }
+
+@media (prefers-reduced-motion: reduce) {
+  .eq-risein, .eq-fade { animation: none; }
+  .reveal { opacity: 1; transform: none; }
+  .eq-kpi, .eq-kpi__drawer, .eq-kpi__row, .eq-expand { transition: none !important; }
+  .eq-kpi:hover { transform: none; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* In-app "Reduce motion" (Settings) — same rules as the OS media query above. */
+:root[data-reduced-motion="true"] .eq-risein, :root[data-reduced-motion="true"] .eq-fade { animation: none; }
+:root[data-reduced-motion="true"] .reveal { opacity: 1; transform: none; }
+:root[data-reduced-motion="true"] .eq-kpi, :root[data-reduced-motion="true"] .eq-kpi__drawer, :root[data-reduced-motion="true"] .eq-kpi__row, :root[data-reduced-motion="true"] .eq-expand { transition: none !important; }
+:root[data-reduced-motion="true"] .eq-kpi:hover { transform: none; }
+:root[data-reduced-motion="true"] *, :root[data-reduced-motion="true"] *::before, :root[data-reduced-motion="true"] *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}
+

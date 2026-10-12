@@ -33,17 +33,23 @@ Design notes:
 """
 
 import enum
+import uuid
 from datetime import datetime, timezone
 
 from sqlalchemy import (
     JSON,
+    CheckConstraint,
+    DateTime,
     Enum,
     Float,
     ForeignKey,
     Integer,
+    Numeric,
     String,
     Text,
+    Uuid,
 )
+from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 
 
@@ -222,3 +228,70 @@ class LeadStatusEvent(Base):
     changed_at: Mapped[datetime] = mapped_column(default=_utcnow)
 
     lead: Mapped["Lead"] = relationship(back_populates="status_events")
+
+
+# ---------------------------------------------------------------------------
+# Public catalog: projects -> properties (what the landing page shows and the
+# admin edits). Independent of the lead tables above. The SQL equivalent, plus
+# seed data, is migrations/001_projects_properties.sql.
+# ---------------------------------------------------------------------------
+
+_JSON_LIST = JSON().with_variant(JSONB(), "postgresql")
+_TS = DateTime(timezone=True)
+
+
+class Project(Base):
+    __tablename__ = "projects"
+    __table_args__ = (
+        CheckConstraint("city IN ('Nashik','Pune')", name="projects_city_check"),
+        CheckConstraint("status IN ('Ready to move','Under construction','New launch')", name="projects_status_check"),
+        CheckConstraint("total_units IS NULL OR total_units >= 0", name="projects_total_units_check"),
+        CheckConstraint("available_units IS NULL OR available_units >= 0", name="projects_available_units_check"),
+    )
+
+    id: Mapped[uuid.UUID] = mapped_column(Uuid, primary_key=True, default=uuid.uuid4)
+    name: Mapped[str] = mapped_column(String(120), nullable=False)
+    city: Mapped[str] = mapped_column(String(20), nullable=False, index=True)
+    locality: Mapped[str] = mapped_column(String(120), nullable=False)
+    status: Mapped[str] = mapped_column(String(30), nullable=False)
+    features: Mapped[list] = mapped_column(_JSON_LIST, nullable=False, default=list)
+    total_units: Mapped[int | None] = mapped_column(Integer, nullable=True)
+    available_units: Mapped[int | None] = mapped_column(Integer, nullable=True)
+    description: Mapped[str | None] = mapped_column(Text, nullable=True)
+    image: Mapped[str | None] = mapped_column(String(500), nullable=True)
+    created_at: Mapped[datetime] = mapped_column(_TS, default=_utcnow)
+    updated_at: Mapped[datetime] = mapped_column(_TS, default=_utcnow, onupdate=_utcnow)
+
+    properties: Mapped[list["Property"]] = relationship(
+        back_populates="project", cascade="all, delete-orphan", passive_deletes=True, order_by="Property.created_at"
+    )
+
+
+class Property(Base):
+    __tablename__ = "properties"
+    __table_args__ = (
+        CheckConstraint("property_type IN ('Apartment','Villa','Row house','Penthouse','Plot')", name="properties_type_check"),
+        CheckConstraint("status IN ('available','sold','hold')", name="properties_status_check"),
+        CheckConstraint("furnishing IS NULL OR furnishing IN ('Unfurnished','Semi-furnished','Fully furnished')", name="properties_furnishing_check"),
+        CheckConstraint("price_lakh > 0", name="properties_price_check"),
+        CheckConstraint("beds >= 0 AND baths >= 0", name="properties_rooms_check"),
+        CheckConstraint("bhk IS NULL OR bhk >= 0", name="properties_bhk_check"),
+        CheckConstraint("area_sqft IS NULL OR area_sqft > 0", name="properties_area_check"),
+    )
+
+    id: Mapped[uuid.UUID] = mapped_column(Uuid, primary_key=True, default=uuid.uuid4)
+    project_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("projects.id", ondelete="CASCADE"), nullable=False, index=True)
+    property_type: Mapped[str] = mapped_column(String(20), nullable=False)
+    bhk: Mapped[int | None] = mapped_column(Integer, nullable=True)
+    price_lakh: Mapped[float] = mapped_column(Numeric(10, 2, asdecimal=False), nullable=False)
+    area_sqft: Mapped[int | None] = mapped_column(Integer, nullable=True)
+    furnishing: Mapped[str | None] = mapped_column(String(20), nullable=True)
+    beds: Mapped[int] = mapped_column(Integer, nullable=False)
+    baths: Mapped[int] = mapped_column(Integer, nullable=False)
+    tags: Mapped[list] = mapped_column(_JSON_LIST, nullable=False, default=list)
+    status: Mapped[str] = mapped_column(String(10), nullable=False, default="available")
+    image: Mapped[str | None] = mapped_column(String(500), nullable=True)
+    created_at: Mapped[datetime] = mapped_column(_TS, default=_utcnow)
+    updated_at: Mapped[datetime] = mapped_column(_TS, default=_utcnow, onupdate=_utcnow)
+
+    project: Mapped["Project"] = relationship(back_populates="properties")

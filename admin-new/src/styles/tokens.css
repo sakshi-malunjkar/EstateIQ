@@ -1,0 +1,140 @@
+/* EstateIQ design tokens — generated from the Design System (tokens.json).
+   Single source of truth for color, type, spacing, radius, shadow and z-index.
+
+   Colors are stored as space-separated RGB CHANNELS (e.g. "246 245 243"), not hex, so
+   Tailwind can apply opacity modifiers: tailwind.config maps each to
+   rgb(var(--x) / <alpha-value>). Use rgb(var(--x)) if you need a raw color in plain CSS.
+
+   THEMES: colour tokens are theme-scoped. :root = LIGHT; [data-theme="dark"] = DARK.
+   The app sets data-theme on <html> (system preference by default, user choice persisted).
+   Always-dark areas (video hero, signals band, globe band, footer) set data-theme="dark" on
+   their own element, so inside them every token resolves to its dark value in BOTH themes.
+
+   Contrast rules (WCAG, text >= 4.5:1):
+   - --accent is for FILLS / rules / borders. Orange TEXT uses --accent-ink (deeper in light).
+   - Text on an --accent fill uses --on-accent (dark), never white.
+   - Media overlays use --scrim / --on-scrim, which stay dark/light in both themes. */
+:root {
+  /* color — core (RGB channels) — LIGHT */
+  --bg: 247 247 242;          /* #f7f7f2 */
+  --surface: 255 255 255;     /* #ffffff */
+  --surface-hover: 241 240 233;
+  --surface-dark: 23 24 23;   /* legacy alias for dark bands */
+  --ink: 23 24 23;            /* #171817 */
+  --ink-soft: 85 84 78;       /* #55544e */
+  --ink-muted: 111 108 100;   /* #6f6c64 — spec #8f8c84 is 3.1:1 on --bg; darkened to 4.9:1 */
+  --border: 228 226 218;      /* #e4e2da */
+
+  /* color — accent (amber-orange) */
+  --accent: 255 138 0;        /* #ff8a00 — fills, rules, active borders */
+  --accent-ink: 166 83 0;     /* #a65300 — orange TEXT on light (5.1:1 on --bg) */
+  --accent-soft: 255 242 224; /* #fff2e0 */
+  --on-accent: 23 24 23;      /* text on --accent fills (7.5:1) */
+
+  /* color — fixed, theme-independent (media overlays) */
+  --scrim: 23 24 23;
+  --on-scrim: 243 240 232;
+
+  /* color — meaning (same in both themes) */
+  --hot: 229 72 77;
+  --warm: 245 165 36;
+  --cold: 62 123 250;
+  --positive: 46 155 106;
+  --neutral: 142 142 137;
+  --negative: 229 72 77;
+
+  /* color — pastels (bento / stat cards) */
+  --pastel-yellow: 255 240 196;
+  --pastel-green: 214 238 210;
+  --pastel-pink: 252 222 214;
+  --pastel-lavender: 236 232 222;
+
+  /* color — legacy glow tokens (no longer used for accents) */
+  --glow-orange: 255 138 0;
+  --glow-purple: 255 178 92;
+
+  /* shadow */
+  --shadow-sm: 0 4px 12px rgba(23, 24, 23, 0.06);
+  --shadow-md: 0 8px 24px rgba(23, 24, 23, 0.08);
+  --shadow-lg: 0 16px 48px rgba(23, 24, 23, 0.12);
+  color-scheme: light;
+}
+
+[data-theme="dark"] {
+  --bg: 23 24 23;             /* #171817 */
+  --surface: 32 33 31;        /* #20211f */
+  --surface-hover: 39 40 37;
+  --surface-dark: 23 24 23;
+  --ink: 243 240 232;         /* #f3f0e8 */
+  --ink-soft: 181 178 168;    /* #b5b2a8 */
+  --ink-muted: 143 140 132;   /* #8f8c84 — 5.3:1 on --bg */
+  --border: 44 45 42;         /* #2c2d2a */
+
+  --accent: 255 138 0;
+  --accent-ink: 255 138 0;    /* orange text reads fine on dark (7.5:1) */
+  --accent-soft: 42 35 22;    /* #2a2316 */
+  --on-accent: 23 24 23;
+
+  /* deep, desaturated pastels so light --ink text stays >= 4.5:1 */
+  --pastel-yellow: 58 50 24;
+  --pastel-green: 30 50 36;
+  --pastel-pink: 60 36 32;
+  --pastel-lavender: 44 42 38;
+
+  --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.35);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.45);
+  --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.55);
+  color-scheme: dark;
+}
+
+:root {
+
+  /* typography (§6, §21) */
+  --text-display: 44px;
+  --text-display-lg: 72px; /* public hero headline on desktop */
+  --text-h1: 28px;
+  --text-h2: 20px;
+  --text-h3: 16px;
+  --text-body: 14px;
+  --text-small: 12px;
+  --text-kpi: 32px;
+  --leading-body: 1.5;
+  --leading-heading: 1.2;
+
+  /* radius — small, structural (border-driven layout); pills stay round */
+  --radius-control: 4px;
+  --radius-card: 4px;
+  --radius-pill: 9999px;
+
+  /* focus ring uses the text-safe accent so it clears 3:1 against the background in both themes */
+  --focus-ring: 0 0 0 2px rgb(var(--bg)), 0 0 0 4px rgb(var(--accent-ink));
+
+  /* spacing (4-based) — Tailwind's default scale already matches these */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+  --space-16: 64px;
+
+  /* z-index ladder */
+  --z-base: 0;
+  --z-sticky-nav: 100;
+  --z-dropdown: 200;
+  --z-widget: 300;
+  --z-modal-backdrop: 400;
+  --z-modal: 410;
+  --z-toast: 500;
+  --z-tooltip: 600;
+
+  /* motion */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 150ms;
+  --dur-base: 250ms;
+  --dur-slow: 500ms;
+  --dur-reveal: 700ms;
+  --stagger: 70ms;
+}

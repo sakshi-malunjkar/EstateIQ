@@ -46,6 +46,7 @@ from app.lead_scoring.predict_lead_score import predict_lead_score  # noqa: E402
 
 from api import crud  # noqa: E402
 from api.auth import get_current_user  # noqa: E402
+from api.catalog import router as catalog_router  # noqa: E402
 from api.download_models import download_models  # noqa: E402
 from api.database import get_db, init_db  # noqa: E402
 from api.models import (  # noqa: E402
@@ -141,6 +142,10 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+# Public projects/properties catalog (GET open, writes need the same bearer token as /leads).
+app.include_router(catalog_router)
 
 
 @app.middleware("http")

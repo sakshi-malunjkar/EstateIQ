@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EstateIQ Admin</title>
+    <script>
+      /* Set the theme BEFORE first paint (no light/dark flash): stored choice, else system preference. */
+      (function () {
+        var t = null;
+        try { t = localStorage.getItem("eq-theme"); } catch (e) {}
+        if (t !== "light" && t !== "dark") {
+          t = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        }
+        document.documentElement.setAttribute("data-theme", t);
+      })();
+      /* In-app "Reduce motion" setting, also before first paint. */
+      (function () {
+        var r = false;
+        try { r = localStorage.getItem("eq-reduced-motion") === "1"; } catch (e) {}
+        document.documentElement.setAttribute("data-reduced-motion", r ? "true" : "false");
+      })();
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Inter+Tight:wght@500;600&family=Noto+Sans+Devanagari:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
