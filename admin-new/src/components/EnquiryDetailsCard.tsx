@@ -7,12 +7,14 @@ import { Card } from "./Card";
  * never a guessed value. `friendly` gives the client-facing labels (§10.3).
  */
 export function EnquiryDetailsCard({ details, friendly = true }: { details: EnquiryDetails; friendly?: boolean }) {
+  // Admin view folds BHK into "Property type" (e.g. "2BHK, Apartment"); the client view keeps its own "Home type" row.
+  const propertyType = friendly ? details.propertyType : [details.bhk, details.propertyType].filter(Boolean).join(", ") || null;
   const rows: [string, string | null][] = [
-    [friendly ? "Home type" : "BHK", details.bhk],
+    ...(friendly ? ([["Home type", details.bhk]] as [string, string | null][]) : []),
     ["Budget", details.budget],
     ["City", details.city],
     [friendly ? "Area" : "Locality / area", details.locality],
-    ["Property type", details.propertyType],
+    ["Property type", propertyType],
     ["Amenities", details.amenities],
     ["Furnishing", details.furnishing],
   ];
