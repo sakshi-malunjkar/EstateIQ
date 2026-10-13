@@ -29,7 +29,7 @@ const SCORE_BANDS = [
   { id: "0", label: "Under 40", test: (s: number) => s < 40 },
 ];
 
-const fmtDate = (t: number) => new Date(t).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" });
+const fmtDate = (t: number) => new Date(t).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric", timeZone: "Asia/Kolkata" });
 const lastCall = (l: AdminLead) => l.calls[l.calls.length - 1].at;
 
 /**
@@ -273,7 +273,7 @@ export function Leads() {
 /* ---------------- expanded row card ---------------- */
 
 const fmtCallTime = (t: number) =>
-  new Date(t).toLocaleString("en-IN", { day: "numeric", month: "short", year: "numeric", hour: "numeric", minute: "2-digit" });
+  new Date(t).toLocaleString("en-IN", { day: "numeric", month: "short", year: "numeric", timeZone: "Asia/Kolkata", hour: "numeric", minute: "2-digit" });
 
 /** Quick summary under a clicked row. The full story (transcript, SHAP) lives on Lead Detail. */
 function LeadCard({ lead: l }: { lead: AdminLead }) {

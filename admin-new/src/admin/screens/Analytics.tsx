@@ -9,7 +9,7 @@ import { PROJECTS } from "@/api/mock";
 import { STATUS_LABEL } from "@/api/status";
 import { Button } from "@/components/Button";
 import { cn } from "@/lib/utils";
-import { DAY_MS, SENTIMENT_LABELS, leadInsights, type AdminLead } from "../format";
+import { DAY_MS, fmtDayIST, hourIST, SENTIMENT_LABELS, leadInsights, type AdminLead } from "../format";
 import { useLeadsData } from "../leadsStore";
 import { LoadError, Loading } from "../components/LoadState";
 import { useChartColors, type ChartColors } from "../useChartColors";
@@ -28,11 +28,10 @@ function buckets(range: Range, from: number, weeklyFor30 = false) {
   const n = Math.max(1, Math.ceil((Date.now() - from) / step));
   return Array.from({ length: n }, (_, i) => {
     const start = from + i * step;
-    const d = new Date(start);
     const label =
-      range === "today" ? `${d.getHours()}:00`
-      : step === DAY_MS ? d.toLocaleDateString("en-IN", { day: "numeric", month: "short" })
-      : `Wk of ${d.toLocaleDateString("en-IN", { day: "numeric", month: "short" })}`;
+      range === "today" ? `${hourIST(start)}:00`
+      : step === DAY_MS ? fmtDayIST(start)
+      : `Wk of ${fmtDayIST(start)}`;
     return { start, end: start + step, label };
   });
 }

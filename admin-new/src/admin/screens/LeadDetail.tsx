@@ -16,8 +16,8 @@ import { LoadError, Loading } from "../components/LoadState";
 import { StatusSelect } from "./Leads";
 
 const fmtDateTime = (t: number) =>
-  new Date(t).toLocaleString("en-IN", { day: "numeric", month: "short", year: "numeric", hour: "numeric", minute: "2-digit" });
-const fmtDate = (t: number) => new Date(t).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" });
+  new Date(t).toLocaleString("en-IN", { day: "numeric", month: "short", year: "numeric", timeZone: "Asia/Kolkata", hour: "numeric", minute: "2-digit" });
+const fmtDate = (t: number) => new Date(t).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric", timeZone: "Asia/Kolkata" });
 
 /** Lead Detail (§11.3) — everything about one lead, loaded from GET /leads/{id}. */
 export function LeadDetail() {

@@ -15,7 +15,7 @@ import { ScoreBadge } from "@/components/ScoreBadge";
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
 import { HaloTabs, HaloTabsIndicator, HaloTabsList, HaloTabsTrigger } from "@/components/ui/halo-tabs";
 import { cn } from "@/lib/utils";
-import { DAY_MS, INTENT_LABELS, MODELS, SENTIMENT_LABELS, fmtAgo, fmtNum, type AdminLead } from "../format";
+import { DAY_MS, fmtDayIST, hourIST, startOfDayIST, INTENT_LABELS, MODELS, SENTIMENT_LABELS, fmtAgo, fmtNum, type AdminLead } from "../format";
 import { setLeadStatus, useLeadsData } from "../leadsStore";
 import { getAnalytics } from "@/api/leads";
 import type { Analytics } from "@/lib/mappings";
@@ -35,9 +35,11 @@ export const RANGES: { id: Range; label: string }[] = [
 /** [from, to) for the selected range and the equal-length period before it. */
 export function windows(range: Range) {
   const now = Date.now();
-  const startOfToday = now - (new Date(now).getHours() * 3_600_000 + new Date(now).getMinutes() * 60_000);
-  const len = range === "today" ? now - startOfToday : (range === "7d" ? 7 : 30) * DAY_MS;
-  const from = range === "today" ? startOfToday : now - len;
+  // Calendar days in IST: "7d" is today plus the 6 IST days before it.
+  const startOfToday = startOfDayIST(now);
+  const days = range === "7d" ? 7 : 30;
+  const len = range === "today" ? now - startOfToday : days * DAY_MS;
+  const from = range === "today" ? startOfToday : startOfToday - (days - 1) * DAY_MS;
   const prevLen = range === "today" ? DAY_MS : len;
   return { from, to: now, prevFrom: from - prevLen, prevTo: from };
 }
@@ -213,7 +215,7 @@ export function Overview() {
 
 /* ---------------- drill-down ---------------- */
 
-const fmtDate = (t: number) => new Date(t).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" });
+const fmtDate = (t: number) => new Date(t).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric", timeZone: "Asia/Kolkata" });
 
 /** Right-side sheet built on the shared Radix dialog (focus trap, Esc, scroll lock come with it). */
 export function LeadsDrawer({ data, onClose, onMarkContacted }: {
@@ -549,8 +551,8 @@ export function CallsOverTime({ calls, range, from, c, animate }: { calls: Admin
     const step = hourly ? 3_600_000 : DAY_MS;
     const n = Math.max(1, Math.ceil((Date.now() - from) / step));
     const buckets = Array.from({ length: n }, (_, i) => {
-      const d = new Date(from + i * step);
-      return { label: hourly ? `${d.getHours()}:00` : d.toLocaleDateString("en-IN", { day: "numeric", month: "short" }), calls: 0 };
+      const t = from + i * step;
+      return { label: hourly ? `${hourIST(t)}:00` : fmtDayIST(t), calls: 0 };
     });
     for (const call of calls) {
       const i = Math.min(n - 1, Math.floor((call.at - from) / step));

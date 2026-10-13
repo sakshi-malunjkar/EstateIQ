@@ -22,6 +22,13 @@ export const MODELS = {
 
 export const DAY_MS = 86_400_000;
 
+/* ---- IST (Asia/Kolkata, UTC+5:30, no DST): day boundaries and labels never depend on the browser's zone ---- */
+const IST_OFFSET_MS = 19_800_000;
+export const startOfDayIST = (t: number) => Math.floor((t + IST_OFFSET_MS) / DAY_MS) * DAY_MS - IST_OFFSET_MS;
+export const fmtDayIST = (t: number) =>
+  new Date(t).toLocaleDateString("en-IN", { day: "numeric", month: "short", timeZone: "Asia/Kolkata" });
+export const hourIST = (t: number) => Math.floor((((t + IST_OFFSET_MS) % DAY_MS) + DAY_MS) % DAY_MS / 3_600_000);
+
 /* ---- lead types ---- */
 export interface AdminCall {
   id: string;
