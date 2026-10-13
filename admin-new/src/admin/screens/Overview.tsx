@@ -23,25 +23,27 @@ import { LoadError, Loading } from "../components/LoadState";
 import { useChartColors, type ChartColors } from "../useChartColors";
 import { getAdminPrefs } from "../prefs";
 
-export type Range = "today" | "7d" | "30d";
+export type Range = "today" | "all";
 export type CityFilter = "All" | City;
 
 export const RANGES: { id: Range; label: string }[] = [
   { id: "today", label: "Today" },
-  { id: "7d", label: "7d" },
-  { id: "30d", label: "30d" },
+  { id: "all", label: "All" },
 ];
 
-/** [from, to) for the selected range and the equal-length period before it. */
+/** [from, to) for the selected range and the period before it. "all" has no filter and no comparison. */
 export function windows(range: Range) {
   const now = Date.now();
-  // Calendar days in IST: "7d" is today plus the 6 IST days before it.
-  const startOfToday = startOfDayIST(now);
-  const days = range === "7d" ? 7 : 30;
-  const len = range === "today" ? now - startOfToday : days * DAY_MS;
-  const from = range === "today" ? startOfToday : startOfToday - (days - 1) * DAY_MS;
-  const prevLen = range === "today" ? DAY_MS : len;
-  return { from, to: now, prevFrom: from - prevLen, prevTo: from };
+  if (range === "all") return { from: 0, to: now, prevFrom: 0, prevTo: 0 };
+  // "Today" is the current IST calendar day; it is compared with the whole of yesterday (IST).
+  const from = startOfDayIST(now);
+  return { from, to: now, prevFrom: from - DAY_MS, prevTo: from };
+}
+
+/** Start of a chart's x-axis: the range start, or for "all" the IST day of the earliest event. */
+export function chartFrom(range: Range, from: number, times: number[]) {
+  if (range !== "all") return from;
+  return startOfDayIST(times.length ? Math.min(Date.now(), ...times) : Date.now());
 }
 
 const inRange = (t: number, a: number, b: number) => t >= a && t < b + 1;
@@ -103,6 +105,7 @@ export function Overview() {
   }, []);
   const scoped = useMemo(() => (city === "All" ? all : all.filter((l) => l.city === city)), [all, city]);
   const w = windows(range);
+  const cmp = range !== "all"; // no period comparison when there is no date filter
   const cur = useMemo(() => metrics(scoped, w.from, w.to), [scoped, w.from, w.to]);
   const prev = useMemo(() => metrics(scoped, w.prevFrom, w.prevTo), [scoped, w.prevFrom, w.prevTo]);
   // Derived, current state (not range-bound): contacted and nothing happened for 3+ days.
@@ -111,8 +114,7 @@ export function Overview() {
     [scoped],
   );
   const followUp = followUpList.length;
-  const periodWord = range === "today" ? "yesterday" : `previous ${range}`;
-  const markContacted = (id: string) => setLeadStatus(id, "contacted");
+    const markContacted = (id: string) => setLeadStatus(id, "contacted");
 
   // Drill-down: one card open at a time; "View all" / chart clicks open the side drawer.
   const [open, setOpen] = useState<string | null>(null);
@@ -136,7 +138,7 @@ export function Overview() {
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div className="flex flex-wrap items-center gap-3">
           <FilterTabs label="Date range" value={range} onChange={setRange} options={RANGES} />
-          <p className="text-small text-ink-muted">Compared with {periodWord}</p>
+          {range === "today" && <p className="text-small text-ink-muted">Compared with yesterday</p>}
         </div>
         <FilterTabs
           label="City"
@@ -161,17 +163,17 @@ export function Overview() {
       <section aria-label="Key numbers" className="space-y-3">
         {/* items-start: an expanded card grows on its own without stretching its row-mates */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 items-start">
-          <Kpi label="Total Enquiries" value={fmtNum(cur.totalCalls)} delta={pct(cur.totalCalls, prev.totalCalls)} {...card("calls", "Total enquiries", (c) => c.cur.lists.callers)} />
-          <Kpi label="Conversion rate" value={`${(cur.conversion * 100).toFixed(1)}%`} delta={pts(cur.conversion, prev.conversion)} hint="Converted ÷ leads" {...card("conv", "Converted leads", (c) => c.cur.lists.converted)} />
-          <Kpi label="Avg. lead score" value={cur.avgScore.toFixed(1)} delta={pct(cur.avgScore, prev.avgScore)} hint="Out of 100" {...card("score", "Leads", (c) => c.cur.lists.leads)} />
+          <Kpi label="Total Enquiries" value={fmtNum(cur.totalCalls)} delta={cmp ? pct(cur.totalCalls, prev.totalCalls) : null} {...card("calls", "Total enquiries", (c) => c.cur.lists.callers)} />
+          <Kpi label="Conversion rate" value={`${(cur.conversion * 100).toFixed(1)}%`} delta={cmp ? pts(cur.conversion, prev.conversion) : null} hint="Converted ÷ leads" {...card("conv", "Converted leads", (c) => c.cur.lists.converted)} />
+          <Kpi label="Avg. lead score" value={cur.avgScore.toFixed(1)} delta={cmp ? pct(cur.avgScore, prev.avgScore) : null} hint="Out of 100" {...card("score", "Leads", (c) => c.cur.lists.leads)} />
           <Kpi label="Hot leads" dot="bg-hot" value={fmtNum(cur.hot)} hint="Score ≥ 75 · all leads" {...card("hot", "Hot leads", (c) => c.cur.lists.hot)} />
           <Kpi label="Warm leads" dot="bg-warm" value={fmtNum(cur.warm)} hint="Score 40–74 · all leads" {...card("warm", "Warm leads", (c) => c.cur.lists.warm)} />
           <Kpi label="Cold leads" dot="bg-cold" value={fmtNum(cur.cold)} hint="Score < 40 · all leads" {...card("cold", "Cold leads", (c) => c.cur.lists.cold)} />
-          <Kpi label="Visit requests" value={fmtNum(cur.visits)} delta={pct(cur.visits, prev.visits)} hint="Intent = Schedule visit" {...card("visits", "Visit requests", (c) => c.cur.lists.visits)} />
+          <Kpi label="Visit requests" value={fmtNum(cur.visits)} delta={cmp ? pct(cur.visits, prev.visits) : null} hint="Intent = Schedule visit" {...card("visits", "Visit requests", (c) => c.cur.lists.visits)} />
           <Kpi
             label="Hot leads not contacted"
             value={fmtNum(cur.hotUncontacted)}
-            delta={pct(cur.hotUncontacted, prev.hotUncontacted)}
+            delta={cmp ? pct(cur.hotUncontacted, prev.hotUncontacted) : null}
             upIsBad
             highlight
             hint="Hot + status New — call these today"
@@ -545,21 +547,23 @@ function ActivityFeed({ leads, from }: { leads: AdminLead[]; from: number }) {
 
 const H = "h-56";
 
-export function CallsOverTime({ calls, range, from, c, animate }: { calls: AdminLead["calls"]; range: Range; from: number; c: ChartColors; animate: boolean }) {
+export function CallsOverTime({ calls, range, from: rangeFrom, c, animate }: { calls: AdminLead["calls"]; range: Range; from: number; c: ChartColors; animate: boolean }) {
   const data = useMemo(() => {
+    const from = chartFrom(range, rangeFrom, calls.map((x) => x.at));
     const hourly = range === "today";
-    const step = hourly ? 3_600_000 : DAY_MS;
+    // "All" can span months: go weekly past ~2 months so the axis stays readable.
+    const step = hourly ? 3_600_000 : Date.now() - from > 60 * DAY_MS ? 7 * DAY_MS : DAY_MS;
     const n = Math.max(1, Math.ceil((Date.now() - from) / step));
     const buckets = Array.from({ length: n }, (_, i) => {
       const t = from + i * step;
-      return { label: hourly ? `${hourIST(t)}:00` : fmtDayIST(t), calls: 0 };
+      return { label: hourly ? `${hourIST(t)}:00` : step === DAY_MS ? fmtDayIST(t) : `Wk of ${fmtDayIST(t)}`, calls: 0 };
     });
     for (const call of calls) {
       const i = Math.min(n - 1, Math.floor((call.at - from) / step));
       if (i >= 0) buckets[i].calls++;
     }
     return buckets;
-  }, [calls, range, from]);
+  }, [calls, range, rangeFrom]);
   return (
     <div className={H}>
       <ResponsiveContainer>

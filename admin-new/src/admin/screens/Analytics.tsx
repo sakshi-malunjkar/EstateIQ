@@ -14,7 +14,7 @@ import { useLeadsData } from "../leadsStore";
 import { LoadError, Loading } from "../components/LoadState";
 import { useChartColors, type ChartColors } from "../useChartColors";
 import {
-  Budget, CallsOverTime, CitySplit, FilterTabs, Funnel, HBar, LeadsDrawer, Panel, RANGES, TopProjects, axis, metrics, outlineCell, tooltip, windows,
+  Budget, CallsOverTime, CitySplit, FilterTabs, Funnel, HBar, LeadsDrawer, Panel, RANGES, TopProjects, chartFrom, axis, metrics, outlineCell, tooltip, windows,
   type CityFilter, type Range,
 } from "./Overview";
 
@@ -23,8 +23,9 @@ const pct = (n: number, d: number) => (d ? Math.round((n / d) * 1000) / 10 : 0);
 const isConverted = (s: LeadStatus) => s === "converted";
 
 /** Trend buckets: hourly for Today, daily for 7d, and (for the noisier ratios) weekly for 30d. */
-function buckets(range: Range, from: number, weeklyFor30 = false) {
-  const step = range === "today" ? 3_600_000 : range === "30d" && weeklyFor30 ? 7 * DAY_MS : DAY_MS;
+function buckets(range: Range, from: number, weeklyForLong = false) {
+  // weekly for the noisier ratios once the span passes ~a month ("All" can be much longer)
+  const step = range === "today" ? 3_600_000 : weeklyForLong && Date.now() - from > 31 * DAY_MS ? 7 * DAY_MS : DAY_MS;
   const n = Math.max(1, Math.ceil((Date.now() - from) / step));
   return Array.from({ length: n }, (_, i) => {
     const start = from + i * step;
@@ -49,7 +50,7 @@ const SCORE_BANDS: { name: string; test: (s: number) => boolean }[] = [
  * date-range, city and project filters, all from the same shared lead state as the Overview.
  */
 export function Analytics() {
-  const [range, setRange] = useState<Range>("30d");
+  const [range, setRange] = useState<Range>("all");
   const [city, setCity] = useState<CityFilter>("All");
   const [project, setProject] = useState("");
   const c = useChartColors();
@@ -66,23 +67,28 @@ export function Analytics() {
   const w = windows(range);
   const cur = useMemo(() => metrics(scoped, w.from, w.to), [scoped, w.from, w.to]);
   const leads = cur.leads;
+  // x-axis start for the trend charts: the range start, or the earliest lead/call for "All"
+  const tFrom = useMemo(
+    () => chartFrom(range, w.from, scoped.flatMap((l) => [l.createdAt, ...l.calls.map((c) => c.at)])),
+    [range, w.from, scoped],
+  );
 
   /* ---- Trends ---- */
   const conversionTrend = useMemo(
-    () => buckets(range, w.from, true).map((b) => {
+    () => buckets(range, tFrom, true).map((b) => {
       const ls = leads.filter((l) => l.createdAt >= b.start && l.createdAt < b.end);
       return { label: b.label, rate: pct(ls.filter((l) => isConverted(l.status)).length, ls.length), n: ls.length };
     }),
-    [leads, range, w.from],
+    [leads, range, tFrom],
   );
   const sentimentTrend = useMemo(
-    () => buckets(range, w.from, true).map((b) => {
+    () => buckets(range, tFrom, true).map((b) => {
       const calls = cur.calls.filter((x) => x.at >= b.start && x.at < b.end);
       const row: Record<string, number | string> = { label: b.label };
       for (const s of SENTIMENT_LABELS) row[s] = pct(calls.filter((x) => x.sentiment === s).length, calls.length);
       return row;
     }),
-    [cur.calls, range, w.from],
+    [cur.calls, range, tFrom],
   );
 
   /* ---- Performance ---- */
@@ -198,7 +204,7 @@ export function Analytics() {
           <Panel title="Enquiries over time" sub="Calls received" className="md:col-span-2" empty={!cur.totalCalls}>
             <CallsOverTime calls={cur.calls} range={range} from={w.from} c={c} animate={animate} />
           </Panel>
-          <Panel title="Conversion rate trend" sub={range === "30d" ? "Week over week · by lead created" : "By lead created"} empty={!cur.totalLeads}>
+          <Panel title="Conversion rate trend" sub={range === "all" && Date.now() - tFrom > 31 * DAY_MS ? "Week over week · by lead created" : "By lead created"} empty={!cur.totalLeads}>
             <PctLine data={conversionTrend} c={c} animate={animate} />
           </Panel>
           <Panel title="Sentiment trend" sub="Share of calls" className="md:col-span-2" empty={!cur.totalCalls}>

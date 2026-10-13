@@ -1,7 +1,7 @@
 /** Admin preferences (mock, localStorage). Read by the Dashboard and the sign-in redirect. */
 import { useSyncExternalStore } from "react";
 
-export type DefaultRange = "today" | "7d" | "30d";
+export type DefaultRange = "today" | "all";
 export interface AdminPrefs { defaultRange: DefaultRange; startPage: string }
 
 const KEY = "eq-admin-prefs";
@@ -10,11 +10,12 @@ export const START_PAGES = [
   { to: "/leads", label: "Leads / Calls" },
   { to: "/analytics", label: "Analytics" },
 ] as const;
-const DEFAULTS: AdminPrefs = { defaultRange: "7d", startPage: "/" };
+const DEFAULTS: AdminPrefs = { defaultRange: "all", startPage: "/" };
 
 const read = (): AdminPrefs => {
   try {
     const saved = { ...DEFAULTS, ...(JSON.parse(localStorage.getItem(KEY) ?? "{}") as Partial<AdminPrefs>) };
+    if (saved.defaultRange !== "today" && saved.defaultRange !== "all") saved.defaultRange = DEFAULTS.defaultRange; // old "7d"/"30d"
     return START_PAGES.some((p) => p.to === saved.startPage) ? saved : { ...saved, startPage: DEFAULTS.startPage };
   } catch { return DEFAULTS; }
 };

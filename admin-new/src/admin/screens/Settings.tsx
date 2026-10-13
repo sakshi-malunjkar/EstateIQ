@@ -205,7 +205,7 @@ function AppearanceSection({ onSaved }: { onSaved: (m: string) => void }) {
               label="Default dashboard date range"
               value={range}
               onChange={setRange}
-              options={[{ id: "today", label: "Today" }, { id: "7d", label: "7d" }, { id: "30d", label: "30d" }]}
+              options={[{ id: "today", label: "Today" }, { id: "all", label: "All" }]}
             />
           </Row>
           <Row label="Start page after sign-in">
