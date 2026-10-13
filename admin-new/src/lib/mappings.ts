@@ -293,7 +293,7 @@ export function adaptLead(b: BackendLead): AdminLead {
         confidence: confidence ?? 1,
         intent: intentBackendToFrontend(c.intent),
       }))
-    : [{ id: `${b.id}-latest`, at: lastActivityAt, durationSec: 0, sentiment, confidence: confidence ?? 1, intent }];
+    : [{ id: `${b.id}-latest`, at: createdAt || lastActivityAt, durationSec: 0, sentiment, confidence: confidence ?? 1, intent }];
 
   // sentiment of the call before the latest, for the "sentiment shift" events
   const prev = calls.length > 1 ? calls[calls.length - 2].sentiment : null;

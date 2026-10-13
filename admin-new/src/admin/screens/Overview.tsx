@@ -48,16 +48,21 @@ export function metrics(leads: AdminLead[], from: number, to: number) {
   const ls = leads.filter((l) => inRange(l.createdAt, from, to));
   const calls = leads.flatMap((l) => l.calls).filter((c) => inRange(c.at, from, to));
   const count = (f: (l: AdminLead) => boolean) => ls.filter(f).length;
+  // Tier counts are a snapshot of ALL leads, not just those created in the window.
+  const countAll = (f: (l: AdminLead) => boolean) => leads.filter(f).length;
+  // Leads with a call in the window: what the intent/sentiment splits describe.
+  const active = leads.filter((l) => l.calls.some((c) => inRange(c.at, from, to)));
   // Lead lists behind each KPI (drill-down). Highest score first.
   const sorted = (xs: AdminLead[]) => [...xs].sort((a, b) => b.score - a.score);
   return {
     leads: ls,
+    activeLeads: active,
     calls,
     totalCalls: calls.length,
     totalLeads: ls.length,
-    hot: count((l) => l.band === "Hot"),
-    warm: count((l) => l.band === "Warm"),
-    cold: count((l) => l.band === "Cold"),
+    hot: countAll((l) => l.band === "Hot"),
+    warm: countAll((l) => l.band === "Warm"),
+    cold: countAll((l) => l.band === "Cold"),
     conversion: ls.length ? count((l) => l.status === "converted") / ls.length : 0,
     avgScore: ls.length ? ls.reduce((s, l) => s + l.score, 0) / ls.length : 0,
     hotUncontacted: count((l) => l.band === "Hot" && l.status === "not_contacted"),
@@ -66,9 +71,9 @@ export function metrics(leads: AdminLead[], from: number, to: number) {
       callers: sorted(leads.filter((l) => l.calls.some((c) => inRange(c.at, from, to)))),
       leads: sorted(ls),
       converted: sorted(ls.filter((l) => l.status === "converted")),
-      hot: sorted(ls.filter((l) => l.band === "Hot")),
-      warm: sorted(ls.filter((l) => l.band === "Warm")),
-      cold: sorted(ls.filter((l) => l.band === "Cold")),
+      hot: sorted(leads.filter((l) => l.band === "Hot")),
+      warm: sorted(leads.filter((l) => l.band === "Warm")),
+      cold: sorted(leads.filter((l) => l.band === "Cold")),
       hotUncontacted: sorted(ls.filter((l) => l.band === "Hot" && l.status === "not_contacted")),
       visits: sorted(ls.filter((l) => l.intent === "Schedule visit")),
     },
@@ -157,9 +162,9 @@ export function Overview() {
           <Kpi label="Total Enquiries" value={fmtNum(cur.totalCalls)} delta={pct(cur.totalCalls, prev.totalCalls)} {...card("calls", "Total enquiries", (c) => c.cur.lists.callers)} />
           <Kpi label="Conversion rate" value={`${(cur.conversion * 100).toFixed(1)}%`} delta={pts(cur.conversion, prev.conversion)} hint="Converted ÷ leads" {...card("conv", "Converted leads", (c) => c.cur.lists.converted)} />
           <Kpi label="Avg. lead score" value={cur.avgScore.toFixed(1)} delta={pct(cur.avgScore, prev.avgScore)} hint="Out of 100" {...card("score", "Leads", (c) => c.cur.lists.leads)} />
-          <Kpi label="Hot leads" dot="bg-hot" value={fmtNum(cur.hot)} delta={pct(cur.hot, prev.hot)} hint="Score ≥ 75" {...card("hot", "Hot leads", (c) => c.cur.lists.hot)} />
-          <Kpi label="Warm leads" dot="bg-warm" value={fmtNum(cur.warm)} delta={pct(cur.warm, prev.warm)} hint="Score 40–74" {...card("warm", "Warm leads", (c) => c.cur.lists.warm)} />
-          <Kpi label="Cold leads" dot="bg-cold" value={fmtNum(cur.cold)} delta={pct(cur.cold, prev.cold)} hint="Score < 40" {...card("cold", "Cold leads", (c) => c.cur.lists.cold)} />
+          <Kpi label="Hot leads" dot="bg-hot" value={fmtNum(cur.hot)} hint="Score ≥ 75 · all leads" {...card("hot", "Hot leads", (c) => c.cur.lists.hot)} />
+          <Kpi label="Warm leads" dot="bg-warm" value={fmtNum(cur.warm)} hint="Score 40–74 · all leads" {...card("warm", "Warm leads", (c) => c.cur.lists.warm)} />
+          <Kpi label="Cold leads" dot="bg-cold" value={fmtNum(cur.cold)} hint="Score < 40 · all leads" {...card("cold", "Cold leads", (c) => c.cur.lists.cold)} />
           <Kpi label="Visit requests" value={fmtNum(cur.visits)} delta={pct(cur.visits, prev.visits)} hint="Intent = Schedule visit" {...card("visits", "Visit requests", (c) => c.cur.lists.visits)} />
           <Kpi
             label="Hot leads not contacted"
@@ -187,11 +192,11 @@ export function Overview() {
             <CallsOverTime calls={cur.calls} range={range} from={w.from} c={c} animate={animate} />
           </Panel>
           <div className="grid md:grid-cols-2 gap-4">
-            <Panel title="Intent split" empty={!cur.totalLeads}>
-              <IntentSplit leads={cur.leads} c={c} animate={animate} />
+            <Panel title="Intent split" empty={!cur.activeLeads.length}>
+              <IntentSplit leads={cur.activeLeads} c={c} animate={animate} />
             </Panel>
-            <Panel title="Sentiment split" sub="Latest call" empty={!cur.totalLeads}>
-              <SentimentSplit leads={cur.leads} c={c} animate={animate} onPick={(name) => segment(`${name} sentiment`, (l) => l.sentiment === name)} />
+            <Panel title="Sentiment split" sub="Latest call" empty={!cur.activeLeads.length}>
+              <SentimentSplit leads={cur.activeLeads} c={c} animate={animate} onPick={(name) => segment(`${name} sentiment`, (l) => l.sentiment === name)} />
             </Panel>
           </div>
         </div>
