@@ -163,7 +163,7 @@ export function Overview() {
       <section aria-label="Key numbers" className="space-y-3">
         {/* items-start: an expanded card grows on its own without stretching its row-mates */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 items-start">
-          <Kpi label="Total Enquiries" value={fmtNum(cur.totalCalls)} delta={cmp ? pct(cur.totalCalls, prev.totalCalls) : null} {...card("calls", "Total enquiries", (c) => c.cur.lists.callers)} />
+          <Kpi label="Total Enquiries" value={fmtNum(cur.totalLeads)} delta={cmp ? pct(cur.totalLeads, prev.totalLeads) : null} hint={cmp ? "Leads created today (IST)" : "All leads"} {...card("calls", "Total enquiries", (c) => c.cur.lists.leads)} />
           <Kpi label="Conversion rate" value={`${(cur.conversion * 100).toFixed(1)}%`} delta={cmp ? pts(cur.conversion, prev.conversion) : null} hint="Converted ÷ leads" {...card("conv", "Converted leads", (c) => c.cur.lists.converted)} />
           <Kpi label="Avg. lead score" value={cur.avgScore.toFixed(1)} delta={cmp ? pct(cur.avgScore, prev.avgScore) : null} hint="Out of 100" {...card("score", "Leads", (c) => c.cur.lists.leads)} />
           <Kpi label="Hot leads" dot="bg-hot" value={fmtNum(cur.hot)} hint="Score ≥ 75 · all leads" {...card("hot", "Hot leads", (c) => c.cur.lists.hot)} />
@@ -801,15 +801,16 @@ function MarkContactedButton({ onClick, name, compact = false }: { onClick: () =
 }
 
 function PriorityCalls({ leads }: { leads: AdminLead[] }) {
-  // Queue = leads nobody has contacted yet (contacted ones move on to "Follow-up pending").
-  const ranked = useMemo(
+  // Queue = hot leads nobody has contacted yet, all-time (the date filter doesn't apply here;
+  // contacted ones move on to "Follow-up pending"). Top 8 are shown, the heading counts them all.
+  const queue = useMemo(
     () => leads
-      .filter((l) => l.status === "not_contacted")
+      .filter((l) => l.band === "Hot" && l.status === "not_contacted")
       .map((l) => ({ l, u: urgency(l) }))
-      .sort((a, b) => b.u - a.u)
-      .slice(0, 8),
+      .sort((a, b) => b.u - a.u),
     [leads],
   );
+  const ranked = useMemo(() => queue.slice(0, 8), [queue]);
   const [last, setLast] = useState<AdminLead | null>(null);
   const mark = (l: AdminLead) => { setLeadStatus(l.id, "contacted"); setLast(l); };
   const undo = () => { if (last) setLeadStatus(last.id, "not_contacted"); setLast(null); };
@@ -819,7 +820,7 @@ function PriorityCalls({ leads }: { leads: AdminLead[] }) {
       <div className="flex flex-wrap items-end justify-between gap-2 px-4 lg:px-6 pt-4 pb-3 border-b border-border">
         <div>
           <h2 id="priority-title" className="font-semibold text-h2">
-            Today&apos;s priority calls <span className="text-ink-muted font-normal tnum">({ranked.length})</span>
+            Today&apos;s priority calls <span className="text-ink-muted font-normal tnum">({queue.length})</span>
           </h2>
           <p className="text-small text-ink-muted mt-0.5">Ranked by urgency · score, not-yet-contacted, recent call, intent, tone</p>
         </div>
