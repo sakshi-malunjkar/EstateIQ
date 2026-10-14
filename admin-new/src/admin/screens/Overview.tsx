@@ -21,7 +21,6 @@ import { getAnalytics } from "@/api/leads";
 import type { Analytics } from "@/lib/mappings";
 import { LoadError, Loading } from "../components/LoadState";
 import { useChartColors, type ChartColors } from "../useChartColors";
-import { getAdminPrefs } from "../prefs";
 
 export type Range = "today" | "all";
 export type CityFilter = "All" | City;
@@ -50,7 +49,6 @@ const inRange = (t: number, a: number, b: number) => t >= a && t < b + 1;
 
 export function metrics(leads: AdminLead[], from: number, to: number) {
   const ls = leads.filter((l) => inRange(l.createdAt, from, to));
-  if (from > 0) console.debug("[metrics] IST window", new Date(from).toISOString(), "→", new Date(to).toISOString(), `${ls.length}/${leads.length} leads in range`, leads.map((l) => new Date(l.createdAt).toISOString()));
   const calls = leads.flatMap((l) => l.calls).filter((c) => inRange(c.at, from, to));
   const count = (f: (l: AdminLead) => boolean) => ls.filter(f).length;
   // Tier counts are a snapshot of ALL leads, not just those created in the window.
@@ -88,7 +86,7 @@ export function metrics(leads: AdminLead[], from: number, to: number) {
 /* ------------------------------------------------------------------ */
 
 export function Overview() {
-  const [range, setRange] = useState<Range>(() => getAdminPrefs().defaultRange); // Settings → default range
+  const range: Range = "all"; // the dashboard always shows all-time data
   const [city, setCity] = useState<CityFilter>("All");
   const c = useChartColors();
   const reduced = useReducedMotion();
@@ -106,9 +104,7 @@ export function Overview() {
   }, []);
   const scoped = useMemo(() => (city === "All" ? all : all.filter((l) => l.city === city)), [all, city]);
   const w = windows(range);
-  const cmp = range !== "all"; // no period comparison when there is no date filter
   const cur = useMemo(() => metrics(scoped, w.from, w.to), [scoped, w.from, w.to]);
-  const prev = useMemo(() => metrics(scoped, w.prevFrom, w.prevTo), [scoped, w.prevFrom, w.prevTo]);
   // Derived, current state (not range-bound): contacted and nothing happened for 3+ days.
   const followUpList = useMemo(
     () => scoped.filter((l) => l.status === "contacted" && Date.now() - l.lastActivityAt >= 3 * DAY_MS).sort((a, b) => a.lastActivityAt - b.lastActivityAt),
@@ -137,10 +133,7 @@ export function Overview() {
     <div className="space-y-6 max-w-screen-2xl">
       {/* Filters — drive the whole page. Range left, city far right; wraps on narrow screens. */}
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <div className="flex flex-wrap items-center gap-3">
-          <FilterTabs label="Date range" value={range} onChange={setRange} options={RANGES} />
-          {range === "today" && <p className="text-small text-ink-muted">Compared with yesterday</p>}
-        </div>
+        <FilterTabs label="Date range" value="all" onChange={() => {}} options={[{ id: "all", label: "All" }]} />
         <FilterTabs
           label="City"
           value={city}
@@ -164,17 +157,17 @@ export function Overview() {
       <section aria-label="Key numbers" className="space-y-3">
         {/* items-start: an expanded card grows on its own without stretching its row-mates */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 items-start">
-          <Kpi label="Total Enquiries" value={fmtNum(cur.totalLeads)} delta={cmp ? pct(cur.totalLeads, prev.totalLeads) : null} hint={cmp ? "Leads created today (IST)" : "All leads"} {...card("calls", "Total enquiries", (c) => c.cur.lists.leads)} />
-          <Kpi label="Conversion rate" value={`${(cur.conversion * 100).toFixed(1)}%`} delta={cmp ? pts(cur.conversion, prev.conversion) : null} hint="Converted ÷ leads" {...card("conv", "Converted leads", (c) => c.cur.lists.converted)} />
-          <Kpi label="Avg. lead score" value={cur.avgScore.toFixed(1)} delta={cmp ? pct(cur.avgScore, prev.avgScore) : null} hint="Out of 100" {...card("score", "Leads", (c) => c.cur.lists.leads)} />
+          <Kpi label="Total Enquiries" value={fmtNum(cur.totalLeads)} hint="All leads" {...card("calls", "Total enquiries", (c) => c.cur.lists.leads)} />
+          <Kpi label="Conversion rate" value={`${(cur.conversion * 100).toFixed(1)}%`} hint="Converted ÷ leads" {...card("conv", "Converted leads", (c) => c.cur.lists.converted)} />
+          <Kpi label="Avg. lead score" value={cur.avgScore.toFixed(1)} hint="Out of 100" {...card("score", "Leads", (c) => c.cur.lists.leads)} />
           <Kpi label="Hot leads" dot="bg-hot" value={fmtNum(cur.hot)} hint="Score ≥ 75 · all leads" {...card("hot", "Hot leads", (c) => c.cur.lists.hot)} />
           <Kpi label="Warm leads" dot="bg-warm" value={fmtNum(cur.warm)} hint="Score 40–74 · all leads" {...card("warm", "Warm leads", (c) => c.cur.lists.warm)} />
           <Kpi label="Cold leads" dot="bg-cold" value={fmtNum(cur.cold)} hint="Score < 40 · all leads" {...card("cold", "Cold leads", (c) => c.cur.lists.cold)} />
-          <Kpi label="Visit requests" value={fmtNum(cur.visits)} delta={cmp ? pct(cur.visits, prev.visits) : null} hint="Intent = Schedule visit" {...card("visits", "Visit requests", (c) => c.cur.lists.visits)} />
+          <Kpi label="Visit requests" value={fmtNum(cur.visits)} hint="Intent = Schedule visit" {...card("visits", "Visit requests", (c) => c.cur.lists.visits)} />
           <Kpi
             label="Hot leads not contacted"
             value={fmtNum(cur.hotUncontacted)}
-            delta={cmp ? pct(cur.hotUncontacted, prev.hotUncontacted) : null}
+           
             upIsBad
             highlight
             hint="Hot + status New — call these today"
@@ -337,15 +330,6 @@ function useTypewriter(text: string, active: boolean) {
 const SHIFT: Transition = { type: "spring", bounce: 0.2, duration: 0.5 };
 
 type Delta = { text: string; dir: "up" | "down" | "flat" } | null;
-const pct = (a: number, b: number): Delta => {
-  if (!b) return a ? { text: "new", dir: "up" } : null;
-  const v = ((a - b) / b) * 100;
-  return { text: `${Math.abs(v).toFixed(0)}%`, dir: Math.abs(v) < 0.5 ? "flat" : v > 0 ? "up" : "down" };
-};
-const pts = (a: number, b: number): Delta => {
-  const v = (a - b) * 100;
-  return { text: `${Math.abs(v).toFixed(1)} pts`, dir: Math.abs(v) < 0.05 ? "flat" : v > 0 ? "up" : "down" };
-};
 
 function Kpi({ label, value, delta, hint, dot, highlight, upIsBad, leads, expanded, onToggle, onViewAll, onMarkContacted }: {
   label: string; value: string; delta?: Delta; hint?: string; dot?: string; highlight?: boolean; upIsBad?: boolean;
