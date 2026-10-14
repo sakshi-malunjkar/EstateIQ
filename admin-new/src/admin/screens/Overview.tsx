@@ -50,6 +50,7 @@ const inRange = (t: number, a: number, b: number) => t >= a && t < b + 1;
 
 export function metrics(leads: AdminLead[], from: number, to: number) {
   const ls = leads.filter((l) => inRange(l.createdAt, from, to));
+  if (from > 0) console.debug("[metrics] IST window", new Date(from).toISOString(), "→", new Date(to).toISOString(), `${ls.length}/${leads.length} leads in range`, leads.map((l) => new Date(l.createdAt).toISOString()));
   const calls = leads.flatMap((l) => l.calls).filter((c) => inRange(c.at, from, to));
   const count = (f: (l: AdminLead) => boolean) => ls.filter(f).length;
   // Tier counts are a snapshot of ALL leads, not just those created in the window.

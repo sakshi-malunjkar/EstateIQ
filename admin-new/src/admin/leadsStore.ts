@@ -72,8 +72,16 @@ async function load() {
   const mine = ++inflight;
   set({ loading: true, error: null });
   try {
-    const page = await getLeadsPage(); // newest 200 by score; page.total says if there are more
-    if (mine === inflight) set({ leads: page.leads, total: page.total, loading: false });
+    // The API orders by score (not date) and caps a page at 200, so a new low-score lead can fall off
+    // page 1 and never reach the Today filter. Keep fetching until we have them all.
+    const page = await getLeadsPage();
+    const leads = [...page.leads];
+    while (leads.length < page.total) {
+      const next = await getLeadsPage({ skip: leads.length });
+      if (!next.leads.length) break;
+      leads.push(...next.leads);
+    }
+    if (mine === inflight) set({ leads, total: page.total, loading: false });
   } catch (e) {
     if (mine === inflight) set({ loading: false, error: e instanceof Error ? e.message : "Could not load leads." });
   }
