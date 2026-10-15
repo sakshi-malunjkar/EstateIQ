@@ -26,7 +26,7 @@ from transformers import AutoModelForTokenClassification, AutoTokenizer
 
 sys.path.insert(0, str(Path(__file__).parent))
 from prepare_ner_data import tokenize_with_offsets  # same word tokenizer used for training
-from entity_rules import extract_city, find_budget_text, normalize_amenities, parse_budget, split_turns
+from entity_rules import canonical_locality, extract_city, find_budget_text, normalize_amenities, parse_budget, split_turns
 
 DEFAULT_MODEL_DIR = Path(__file__).parent.parent.parent / "models_artifacts" / "muril_ner"
 
@@ -162,7 +162,7 @@ def extract_all(text, model_dir=DEFAULT_MODEL_DIR):
     """
     entities = predict_raw_entities(client_only_text(text), model_dir=model_dir)
 
-    locations = [_strip_city_suffix(e["text"]) for e in entities if e["label"] == "LOCATION"]
+    locations = [canonical_locality(_strip_city_suffix(e["text"])) for e in entities if e["label"] == "LOCATION"]
     # Several areas usually means the agent listed examples; the client's
     # actual preference is most likely the last one mentioned.
     location = locations[-1:]

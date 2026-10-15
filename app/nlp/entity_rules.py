@@ -45,6 +45,35 @@ LOCALITY_TO_CITY = {
 }
 
 
+def _load_known_localities():
+    with open(DATA_DIR / "locations.csv", encoding="utf-8") as f:
+        return {r["area"].strip().lower(): r["area"].strip() for r in csv.DictReader(f) if r["area"].strip()}
+
+
+KNOWN_LOCALITIES = _load_known_localities()  # lowercase -> display form
+LOCALITY_ALIASES = {"bane": "baner", "gangapur road area": "gangapur road"}
+
+
+def canonical_locality(raw):
+    """Clean an extracted locality to the form in locations.csv: trims,
+    ignores case, drops a trailing "area", applies known aliases and snaps
+    truncated names ("Bane") to the known locality they are a prefix of.
+    Unknown names are returned trimmed and title-cased."""
+    v = re.sub(r"\s+", " ", (raw or "").strip().lower())
+    v = LOCALITY_ALIASES.get(v, v)
+    if v.endswith(" area"):
+        v = v[: -len(" area")].strip()
+    v = LOCALITY_ALIASES.get(v, v)
+    if v in KNOWN_LOCALITIES:
+        return KNOWN_LOCALITIES[v]
+    if len(v) >= 3:
+        # truncated / partial name: the longest known locality that contains it
+        hits = sorted((k for k in KNOWN_LOCALITIES if k.startswith(v) or v in k), key=len)
+        if len(hits) == 1:
+            return KNOWN_LOCALITIES[hits[0]]
+    return v.title()
+
+
 def _is_agent(speaker):
     s = speaker.strip().lower()
     return "agent" in s or "assistant" in s or s in ("ai", "bot", "system")

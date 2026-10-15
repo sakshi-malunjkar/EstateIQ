@@ -42,3 +42,11 @@ def test_budget():
     assert parse_budget("1.5 crore")[1] == 15_000_000
     assert parse_budget("50 se 80 lakh") == (5_000_000, 8_000_000)
     assert parse_budget("nothing") == (None, None)
+
+
+def test_canonical_locality():
+    from entity_rules import canonical_locality as c
+    assert c("Bane") == "Baner"
+    assert c("  gangapur road ") == "Gangapur Road"
+    assert c("Gangapur Road area") == "Gangapur Road"
+    assert c("Nagar") == "Nagar"  # ambiguous, left alone

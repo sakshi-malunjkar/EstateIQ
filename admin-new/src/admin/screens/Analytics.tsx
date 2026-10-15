@@ -149,7 +149,23 @@ export function Analytics() {
     for (const v of values) if (v && v.trim() && v.trim().toLowerCase() !== "not mentioned") n.set(v, (n.get(v) ?? 0) + 1);
     return [...n].map(([name, value]) => ({ name, value })).sort((a, b) => b.value - a.value || a.name.localeCompare(b.name));
   };
-  const localities = useMemo(() => tally(leads.map((l) => leadInsights(l).details.locality)).slice(0, 10), [leads]);
+  // Locality clean-up: lowercase/trim, merge known variants, fold truncated names into the longer one, title-case.
+  const LOCALITY_ALIASES: Record<string, string> = { bane: "baner", "gangapur road area": "gangapur road" };
+  const rawLocalities = (l: AdminLead) =>
+    (leadInsights(l).details.locality?.split(",") ?? [])
+      .map((v) => v.trim().toLowerCase().replace(/\s+/g, " "))
+      .filter((v) => v && v !== "not mentioned" && v !== "—")
+      .map((v) => LOCALITY_ALIASES[v] ?? v);
+  const localityFold = useMemo(() => {
+    const known = [...new Set(leads.flatMap(rawLocalities))];
+    const title = (v: string) => v.replace(/\w/g, (ch) => ch.toUpperCase());
+    // a name contained in exactly one longer name is a truncation of it ("bane" → "baner")
+    return (v: string) => {
+      const longer = known.filter((k) => k.length > v.length && k.includes(v));
+      return title(longer.length === 1 && v.length >= 3 ? longer[0] : v);
+    };
+  }, [leads]);
+  const localities = useMemo(() => tally(leads.flatMap(rawLocalities).map(localityFold)).slice(0, 10), [leads, localityFold]);
   const amenities = useMemo(() => tally(leads.flatMap(amenitiesOf)).slice(0, 10), [leads]);
   const bhk = useMemo(
     () => tally(leads.map((l) => leadInsights(l).details.bhk)).sort((a, b) => parseInt(a.name) - parseInt(b.name)),
@@ -272,7 +288,7 @@ export function Analytics() {
         <div className="grid md:grid-cols-2 gap-4 mt-4">
           <Panel title="Top localities requested" sub={`From the locations callers mentioned. ${NER_NOTE}`} empty={!localities.length}>
             <HBar data={localities} c={c} animate={animate} fill={c.accent} width={112} className="h-80"
-              onPick={(name) => segment(`Asked about ${name}`, (l) => leadInsights(l).details.locality === name)} />
+              onPick={(name) => segment(`Asked about ${name}`, (l) => rawLocalities(l).map(localityFold).includes(name))} />
           </Panel>
           <Panel title="Most requested amenities" sub={`From amenities callers mentioned. ${NER_NOTE}`} empty={!amenities.length}>
             <HBar outline data={amenities} c={c} animate={animate} fill={c.accent} width={124} className="h-80"
