@@ -108,6 +108,7 @@ class LeadSummary(BaseModel):
     call_count: int = 1
     extracted_city: str | None = None  # city found in the transcript by the NLP pipeline
     form_city: str | None = None  # city from the Vapi pre-call form
+    ner: NEROutput | None = None  # extracted entities, for list-level analytics
     created_at: datetime
     updated_at: datetime
 

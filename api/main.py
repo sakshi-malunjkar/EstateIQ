@@ -401,6 +401,12 @@ async def get_leads(
             call_count=call_count,
             extracted_city=nlp_city(lead, features),
             form_city=transcripts[lead.id].city if lead.id in transcripts else None,
+            ner=NEROutput(
+                location=[features.location] if features.location else [],
+                property_type=[features.property_type] if features.property_type else [],
+                amenities=features.amenities or [],
+                budget=features.budget_raw,
+            ) if features else None,
             created_at=lead.created_at,
             updated_at=lead.updated_at,
         )

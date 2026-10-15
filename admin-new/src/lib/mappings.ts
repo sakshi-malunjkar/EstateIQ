@@ -153,6 +153,7 @@ export interface BackendLeadSummary {
   call_count: number;
   extracted_city?: string | null;
   form_city?: string | null;
+  ner?: BackendNer | null;
   created_at: string;
   updated_at: string;
 }
@@ -236,7 +237,7 @@ export function adaptEnquiry(ner: BackendNer | null | undefined, cityHint?: stri
   const city = locs.find((l) => CITIES.some((c) => l.toLowerCase() === c.toLowerCase())) ?? cityHint ?? null;
   const locality = locs.filter((l) => l !== city).join(", ") || null;
   const ptype = ner?.property_type ?? [];
-  const bhk = ptype.find((p) => /\bbhk\b|\brk\b/i.test(p)) ?? null;
+  const bhk = ptype.find((p) => /bhk|\brk\b/i.test(p)) ?? null;
   const propertyType = ptype.filter((p) => p !== bhk).join(", ") || null;
   const budgetLakh = parseBudgetLakh(ner?.budget);
   return {
@@ -300,7 +301,7 @@ export function adaptLead(b: BackendLead): AdminLead {
   // sentiment of the call before the latest, for the "sentiment shift" events
   const prev = calls.length > 1 ? calls[calls.length - 2].sentiment : null;
 
-  const ner = detail?.ner;
+  const ner = detail ? detail.ner : (b as BackendLeadSummary).ner;
   const budgetLakh = parseBudgetLakh(ner?.budget);
   const cityHint = history.map((c) => c.city).find(Boolean) ?? null;
   // List rows: NLP-extracted city first, the Vapi form city only when NLP found none.
@@ -325,7 +326,7 @@ export function adaptLead(b: BackendLead): AdminLead {
     statusChangedAt: lastStatusEvent ? toMs(lastStatusEvent.changed_at) : lastActivityAt,
     prevSentiment: prev && prev !== sentiment ? prev : null,
     calls,
-    ...(detail ? { details: adaptEnquiry(ner, cityHint) } : {}),
+    ...(ner ? { details: adaptEnquiry(ner, cityHint) } : {}),
   };
 }
 
