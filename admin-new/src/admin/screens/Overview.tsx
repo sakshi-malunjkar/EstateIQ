@@ -10,7 +10,6 @@ import {
 import { ArrowDownRight, ArrowUpRight, Check, Minus, Phone, PhoneIncoming, RefreshCw, Smile, Undo2 } from "lucide-react";
 import type { City, LeadStatus } from "@/api/types";
 import { STATUS_LABEL } from "@/api/status";
-import { PROJECTS } from "@/api/mock";
 import { ScoreBadge } from "@/components/ScoreBadge";
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
 import { HaloTabs, HaloTabsIndicator, HaloTabsList, HaloTabsTrigger } from "@/components/ui/halo-tabs";
@@ -654,13 +653,6 @@ export const outlineCell = (c: ChartColors, on: boolean) => ({
   strokeWidth: 1,
   style: { transition: "fill var(--dur-fast) var(--ease-out)" },
 });
-
-export function TopProjects({ leads, c, animate, onPick, outline }: ChartProps & { outline?: boolean }) {
-  const data = PROJECTS.map((p) => ({ name: p.name, value: leads.filter((l) => l.projectId === p.id).length }))
-    .filter((d) => d.value)
-    .sort((a, b) => b.value - a.value);
-  return <HBar data={data} c={c} animate={animate} fill={c.accent} width={110} onPick={onPick} outline={outline} />;
-}
 
 function IntentSplit({ leads, c, animate }: ChartProps) {
   const data = INTENT_LABELS.map((i) => ({ name: i, value: leads.filter((l) => l.intent === i).length }));

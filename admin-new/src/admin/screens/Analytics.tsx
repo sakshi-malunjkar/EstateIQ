@@ -14,7 +14,7 @@ import { useLeadsData } from "../leadsStore";
 import { LoadError, Loading } from "../components/LoadState";
 import { useChartColors, type ChartColors } from "../useChartColors";
 import {
-  Budget, CallsOverTime, CitySplit, FilterTabs, Funnel, HBar, LeadsDrawer, Panel, RANGES, TopProjects, chartFrom, axis, metrics, outlineCell, tooltip, windows,
+  Budget, CallsOverTime, CitySplit, FilterTabs, Funnel, HBar, LeadsDrawer, Panel, RANGES, chartFrom, axis, metrics, outlineCell, tooltip, windows,
   type CityFilter, type Range,
 } from "./Overview";
 
@@ -240,9 +240,6 @@ export function Analytics() {
       {/* 3. Demand insights */}
       <Section title="Demand insights" sub="What callers are asking for — from our transcript extraction (NER).">
         <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-4">
-          <Panel title="Top projects by enquiries" empty={!cur.totalLeads}>
-            <TopProjects outline leads={leads} c={c} animate={animate} onPick={(name) => segment(name, (l) => l.project === name)} />
-          </Panel>
           <Panel title="Budget distribution" sub={`From extracted budget · ${NER_NOTE}`} empty={!cur.totalLeads}>
             <Budget leads={leads} c={c} animate={animate} />
           </Panel>
