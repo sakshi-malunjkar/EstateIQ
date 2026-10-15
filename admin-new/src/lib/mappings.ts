@@ -151,6 +151,8 @@ export interface BackendLeadSummary {
   sentiment: string | null;
   intent: string | null;
   call_count: number;
+  extracted_city?: string | null;
+  form_city?: string | null;
   created_at: string;
   updated_at: string;
 }
@@ -301,6 +303,8 @@ export function adaptLead(b: BackendLead): AdminLead {
   const ner = detail?.ner;
   const budgetLakh = parseBudgetLakh(ner?.budget);
   const cityHint = history.map((c) => c.city).find(Boolean) ?? null;
+  // List rows: NLP-extracted city first, the Vapi form city only when NLP found none.
+  const listCity = detail ? null : (b as BackendLeadSummary).extracted_city?.trim() || (b as BackendLeadSummary).form_city?.trim() || null;
 
   return {
     id: String(b.id),
@@ -308,7 +312,7 @@ export function adaptLead(b: BackendLead): AdminLead {
     phone: b.contact_phone ?? "",
     projectId: "",
     project: "—",
-    city: asCity(cityHint, ...(ner?.location ?? [])),
+    city: asCity(listCity ?? cityHint, ...(ner?.location ?? [])),
     locality: ner?.location?.find((l) => !CITIES.some((c) => c.toLowerCase() === l.toLowerCase())) ?? "—",
     score,
     band: bandFromTier(tier, score),

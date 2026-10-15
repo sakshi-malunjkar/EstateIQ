@@ -205,6 +205,16 @@ async def list_leads(
     return total, rows
 
 
+async def latest_transcripts(db: AsyncSession, lead_ids: list[int]) -> dict[int, Transcript]:
+    """Most recent Transcript per lead id (one query), for list-row city lookup."""
+    if not lead_ids:
+        return {}
+    result = await db.execute(
+        select(Transcript).where(Transcript.lead_id.in_(lead_ids)).order_by(Transcript.id)
+    )
+    return {t.lead_id: t for t in result.scalars().all()}  # later ids overwrite earlier
+
+
 async def get_lead_detail(db: AsyncSession, lead_id: int) -> Lead | None:
     """Loads a single lead with its transcripts, current score (+ its
     lead_features), and full status-event history eagerly, so

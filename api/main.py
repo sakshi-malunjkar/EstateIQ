@@ -42,6 +42,7 @@ for _p in (str(PROJECT_ROOT), str(NLP_DIR)):
         sys.path.insert(0, _p)
 
 from combined_predict import predict_combined  # noqa: E402
+from entity_rules import extract_city  # noqa: E402
 from app.lead_scoring.predict_lead_score import predict_lead_score  # noqa: E402
 
 from api import crud  # noqa: E402
@@ -381,6 +382,12 @@ async def get_leads(
         logger.exception("Failed to query leads.")
         raise HTTPException(status_code=500, detail=f"Failed to query leads: {exc}") from exc
 
+    transcripts = await crud.latest_transcripts(db, [r[0].id for r in rows])
+
+    def nlp_city(lead, features):
+        t = transcripts.get(lead.id)
+        return extract_city(t.raw_text, locality=features.location if features else None) if t else None
+
     leads = [
         LeadSummary(
             id=lead.id,
@@ -392,6 +399,8 @@ async def get_leads(
             sentiment=features.sentiment if features else None,
             intent=features.intent if features else None,
             call_count=call_count,
+            extracted_city=nlp_city(lead, features),
+            form_city=transcripts[lead.id].city if lead.id in transcripts else None,
             created_at=lead.created_at,
             updated_at=lead.updated_at,
         )

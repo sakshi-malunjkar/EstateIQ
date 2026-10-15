@@ -106,6 +106,8 @@ class LeadSummary(BaseModel):
     sentiment: str | None = None
     intent: str | None = None
     call_count: int = 1
+    extracted_city: str | None = None  # city found in the transcript by the NLP pipeline
+    form_city: str | None = None  # city from the Vapi pre-call form
     created_at: datetime
     updated_at: datetime
 
