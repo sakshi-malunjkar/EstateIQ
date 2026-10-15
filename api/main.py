@@ -346,7 +346,7 @@ async def vapi_webhook(request: Request, db: AsyncSession = Depends(get_db)) -> 
         await crud.persist_analysis(
             db,
             raw_text=transcript,
-            city=customer["city"],
+            city=customer["city"] or combined.get("city"),
             source="vapi",
             contact_phone=customer["phone"],
             contact_name=customer["name"],

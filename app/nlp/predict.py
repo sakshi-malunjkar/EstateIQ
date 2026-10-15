@@ -26,6 +26,7 @@ from transformers import AutoModelForTokenClassification, AutoTokenizer
 
 sys.path.insert(0, str(Path(__file__).parent))
 from prepare_ner_data import tokenize_with_offsets  # same word tokenizer used for training
+from entity_rules import extract_city, find_budget_text, normalize_amenities, parse_budget, split_turns
 
 DEFAULT_MODEL_DIR = Path(__file__).parent.parent.parent / "models_artifacts" / "muril_ner"
 
@@ -49,30 +50,15 @@ def normalize_transcript(text):
     return _BHK_SPACED.sub(lambda m: f"{m.group(1)}BHK", text)
 
 
-_TURN_PREFIX = re.compile(r"^\s*(agent|client)\s*:\s*", re.IGNORECASE)
-
-
 def client_only_text(text):
-    """Keep only what the client said. Agents list example areas and
-    amenities that the client never asked for, so those must not be
-    extracted as the client's requirements.
-
-    A line starting "Client:" opens a client turn and "Agent:" closes it;
-    unprefixed lines continue whichever turn is open. Text with no
-    Agent:/Client: markers (a bare freeform string) is returned unchanged,
-    as is a transcript with no Client: turns at all."""
-    kept = []
-    speaker = None
-    saw_marker = False
-    for line in text.splitlines():
-        m = _TURN_PREFIX.match(line)
-        if m:
-            saw_marker = True
-            speaker = m.group(1).lower()
-            line = line[m.end():]
-        if speaker == "client" or speaker is None:
-            kept.append(line)
-    if not saw_marker or not any(l.strip() for l in kept):
+    """Keep only what the customer said. Agents ("Agent:", "Property
+    assistant:") list example areas and amenities the customer never asked
+    for, so those must not be extracted as the customer's requirements.
+    Any non-agent speaker label (Client:, a customer's name) counts as the
+    customer; unprefixed lines continue the open turn. Text with no
+    customer turns is returned unchanged."""
+    kept = [line for is_agent, line in split_turns(text) if not is_agent]
+    if not any(l.strip() for l in kept):
         return text
     return " ".join(kept)
 
@@ -172,7 +158,7 @@ def predict_raw_entities(text, model_dir=DEFAULT_MODEL_DIR, max_length=192):
 
 def extract_all(text, model_dir=DEFAULT_MODEL_DIR):
     """Same shape as rule_extractor.extract_all():
-    {"location": [...], "property_type": [...], "amenities": [...], "budget": str|None}
+    {"location": [...], "property_type": [...], "amenities": [...], "budget": str|None, "city": str|None}
     """
     entities = predict_raw_entities(client_only_text(text), model_dir=model_dir)
 
@@ -181,14 +167,24 @@ def extract_all(text, model_dir=DEFAULT_MODEL_DIR):
     # actual preference is most likely the last one mentioned.
     location = locations[-1:]
     property_type = _dedupe(e["text"] for e in entities if e["label"] in ("PROPERTY_TYPE", "BHK"))
-    amenities = _dedupe(e["text"] for e in entities if e["label"] == "AMENITY")
+    client_text = client_only_text(text)
+    ner_amenities = [e["text"] for e in entities if e["label"] == "AMENITY"]
+    amenities = normalize_amenities(" , ".join(ner_amenities), client_text)
     budgets = [e["text"] for e in entities if e["label"] == "BUDGET"]
+    # The model sometimes cuts a span short ("50 se" of "50 se 80 lakh");
+    # trust the regex when it finds a range or when the span is unparseable.
+    regex_budget = find_budget_text(client_text)
+    if regex_budget and (not budgets or parse_budget(budgets[0])[1] is None
+                         or parse_budget(regex_budget)[0] != parse_budget(regex_budget)[1]):
+        budgets = [regex_budget]
+    city = extract_city(text, locality=location)
 
     return {
         "location": location,
         "property_type": property_type,
         "amenities": amenities,
         "budget": budgets[0] if budgets else None,
+        "city": city,
     }
 
 

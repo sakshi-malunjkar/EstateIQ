@@ -23,6 +23,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent / "nlp"))
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))  # project root, for `app.lead_scoring.*` imports
 from predict import extract_all  # noqa: E402
+from entity_rules import parse_budget  # noqa: E402
 from sentiment_predict import predict_sentiment  # noqa: E402
 
 from app.lead_scoring.db import get_session, init_db
@@ -31,19 +32,11 @@ from app.lead_scoring.models import Lead, LeadFeatures, LeadStatus, LeadStatusEv
 NER_MODEL_VERSION = "muril_ner_v1"
 SENTIMENT_MODEL_VERSION = "sentiment_v6"
 
-_BUDGET_RE = re.compile(r"(\d+\.?\d*)\s*(lakh|lakhs|l|crore|cr)\b", re.IGNORECASE)
-_UNIT_MULTIPLIER = {"lakh": 100_000, "lakhs": 100_000, "l": 100_000, "crore": 10_000_000, "cr": 10_000_000}
-
 
 def parse_budget_amount(budget_text):
-    """'50 lakhs' -> 5_000_000, '1.2 crore' -> 12_000_000, None if unparseable."""
-    if not budget_text:
-        return None
-    m = _BUDGET_RE.search(budget_text)
-    if not m:
-        return None
-    value, unit = m.groups()
-    return float(value) * _UNIT_MULTIPLIER[unit.lower()]
+    """'50 lakhs' -> 5_000_000, '1.2 crore' -> 12_000_000, '50 se 80 lakh'
+    -> 8_000_000 (the upper bound), None if unparseable."""
+    return parse_budget(budget_text)[1]
 
 
 def client_only_text(transcript_text):
