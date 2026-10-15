@@ -89,7 +89,7 @@ export interface AdminLeadDetail extends AdminLead {
 }
 
 export const EMPTY_DETAILS: EnquiryDetails = {
-  bhk: null, budget: null, city: null, locality: null, propertyType: null, amenities: null, furnishing: null,
+  bhk: null, budget: null, city: null, locality: null, propertyType: null, amenities: null,
 };
 
 /** Requirements for a lead. Only a lead loaded via getLead() has them; list rows show "Not mentioned". */

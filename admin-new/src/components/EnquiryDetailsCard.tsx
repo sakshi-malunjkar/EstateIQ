@@ -16,7 +16,6 @@ export function EnquiryDetailsCard({ details, friendly = true }: { details: Enqu
     [friendly ? "Area" : "Locality / area", details.locality],
     ["Property type", propertyType],
     ["Amenities", details.amenities],
-    ["Furnishing", details.furnishing],
   ];
   return (
     <Card className="p-4 font-text">

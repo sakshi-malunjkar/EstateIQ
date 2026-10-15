@@ -247,7 +247,6 @@ export function adaptEnquiry(ner: BackendNer | null | undefined, cityHint?: stri
     locality,
     propertyType,
     amenities: joinOrNull(ner?.amenities),
-    furnishing: null, // not extracted by the NER model
   };
 }
 

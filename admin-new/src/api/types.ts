@@ -64,7 +64,6 @@ export interface EnquiryDetails {
   locality: string | null;
   propertyType: string | null;
   amenities: string | null;
-  furnishing: string | null;
 }
 
 export interface TranscriptTurn {
