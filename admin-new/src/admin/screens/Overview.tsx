@@ -708,7 +708,6 @@ export function Budget({ leads, c, animate }: ChartProps) {
     { name: "< ₹50L", value: b((x) => x < 50) },
     { name: "₹50L – 1Cr", value: b((x) => x >= 50 && x <= 100) },
     { name: "> ₹1Cr", value: b((x) => x > 100) },
-    { name: "Not mentioned", value: leads.filter((l) => l.budgetLakh === null).length },
   ];
   return (
     <div className={H}>

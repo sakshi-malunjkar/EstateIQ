@@ -122,10 +122,31 @@ export function Analytics() {
     : "Not enough leads in this range to compare score bands.";
 
   /* ---- Demand (NER) ---- */
-  const amenitiesOf = (l: AdminLead) => leadInsights(l).details.amenities?.split(", ").filter(Boolean) ?? [];
+  // Whitelisted amenities only; variants are merged and anything else (NER noise) is skipped.
+  const AMENITY_PATTERNS: [string, RegExp][] = [
+    ["gym", /^gym(nasium)?$/],
+    ["swimming pool", /^(swimming\s*)?pool$/],
+    ["parking", /^parking( area| bay| lot| space)?$/],
+    ["security", /^(24\/7 |24x7 )?security( guards?)?$/],
+    ["garden", /^garden$/],
+    ["clubhouse", /^club\s*house$/],
+    ["playground", /^(playground|(children'?s?|kids'?) ?play ?(area|ground)|play area)$/],
+    ["lift", /^(lifts?|elevators?)$/],
+    ["power backup", /^power\s*back-?up$/],
+    ["intercom", /^intercom$/],
+    ["cctv", /^cctv( cameras?)?$/],
+  ];
+  const canonAmenity = (raw: string) => {
+    const v = raw.trim().toLowerCase();
+    return AMENITY_PATTERNS.find(([, rx]) => rx.test(v))?.[0] ?? null;
+  };
+  const amenitiesOf = (l: AdminLead) => {
+    const found = (leadInsights(l).details.amenities?.split(",") ?? []).map(canonAmenity);
+    return [...new Set(found.filter((a): a is string => !!a))]; // once per lead
+  };
   const tally = (values: (string | null | undefined)[]) => {
     const n = new Map<string, number>();
-    for (const v of values) if (v) n.set(v, (n.get(v) ?? 0) + 1);
+    for (const v of values) if (v && v.trim() && v.trim().toLowerCase() !== "not mentioned") n.set(v, (n.get(v) ?? 0) + 1);
     return [...n].map(([name, value]) => ({ name, value })).sort((a, b) => b.value - a.value || a.name.localeCompare(b.name));
   };
   const localities = useMemo(() => tally(leads.map((l) => leadInsights(l).details.locality)).slice(0, 10), [leads]);
@@ -240,7 +261,7 @@ export function Analytics() {
       {/* 3. Demand insights */}
       <Section title="Demand insights" sub="What callers are asking for — from our transcript extraction (NER).">
         <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-4">
-          <Panel title="Budget distribution" sub={`From extracted budget · ${NER_NOTE}`} empty={!cur.totalLeads}>
+          <Panel title="Budget distribution" sub={`From extracted budget · ${NER_NOTE}`} empty={!leads.some((l) => l.budgetLakh !== null)}>
             <Budget leads={leads} c={c} animate={animate} />
           </Panel>
           <Panel title="BHK demand" sub={NER_NOTE} empty={!bhk.length}>
